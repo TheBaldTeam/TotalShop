@@ -1,12 +1,12 @@
 package com.serviceImp;
 
+import com.dao.Md5Util;
 import com.dao.UserMapper;
 import com.entity.User;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.MessageDigest;
 import java.util.Map;
 
 @Service
@@ -27,8 +27,8 @@ public class UserServiceImple implements UserService {
 
     @Override
     public int insertSelective(User record) {
-
-
+        Md5Util md5Util = new Md5Util();
+        record.setPassword(md5Util.md5Encoder(record.getPassword()));
         return userMapper.insertSelective(record);
     }
 
@@ -49,14 +49,14 @@ public class UserServiceImple implements UserService {
 
     @Override
     public User login(Map<String, Object> map) {
+        Md5Util md5Util = new Md5Util();
+        map.put("password", md5Util.md5Encoder(map.get("password").toString()));
         return userMapper.login(map);
     }
-
 
     @Override
     public User selectAddressByUserId(Integer userid) {
         return userMapper.selectAddressByUserId(userid);
     }
-
 
 }

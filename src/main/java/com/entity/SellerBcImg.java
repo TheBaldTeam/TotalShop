@@ -5,7 +5,7 @@ public class SellerBcImg {
 
     private String img;
 
-    private Integer sellerId;
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class SellerBcImg {
         this.img = img == null ? null : img.trim();
     }
 
-    public Integer getSellerId() {
-        return sellerId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

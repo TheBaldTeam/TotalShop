@@ -4,7 +4,6 @@ import com.entity.User;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -44,7 +43,7 @@ public class UserController {
                 map.put("info", 0);//0为普通用户
                 map.put("userId", newUser.getId());
             }
-        }else{
+        } else {
             map.put("status", "no");//用户不存在
             map.put("info", -1);//-1为用户不存在
         }
@@ -53,15 +52,15 @@ public class UserController {
 
     //用户注册
     @RequestMapping(value = "/registered")
-    public Map registered(User user){
+    public Map registered(User user) {
         /*System.out.println(username+"      "+tel);
           return null*/
         int isOk = userService.insertSelective(user);
-        Map<String ,Object> map = new HashMap<>();
-        if (isOk>0){
+        Map<String, Object> map = new HashMap<>();
+        if (isOk > 0) {
             map.put("status", "ok");
             map.put("info", 1);//1代表注册成功
-        }else {
+        } else {
             map.put("status", "no");
             map.put("info", -1);//1代表注册失败
         }
@@ -70,7 +69,7 @@ public class UserController {
 
     //关联地址表查询用户信息
     @RequestMapping(value = "/selectWithAddress")
-    public User selectWithAddress(Integer userid){
+    public User selectWithAddress(Integer userid) {
         User user = userService.selectAddressByUserId(userid);
         return user;
     }

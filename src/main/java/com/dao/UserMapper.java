@@ -2,6 +2,7 @@ package com.dao;
 
 import com.entity.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserMapper {
@@ -21,4 +22,7 @@ public interface UserMapper {
 
     //根据userid关联查询address
     User selectAddressByUserId(Integer userid);
+
+    //查询已提交商家入驻申请但未确认的用户
+    List<User> selectUnconfirmed();
 }

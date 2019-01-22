@@ -9,6 +9,8 @@ public class Seller {
 
     private Integer userId;
 
+
+
     public Integer getId() {
         return id;
     }

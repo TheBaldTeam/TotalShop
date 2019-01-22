@@ -7,6 +7,7 @@ import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -52,6 +53,11 @@ public class UserServiceImple implements UserService {
         Md5Util md5Util = new Md5Util();
         map.put("password", md5Util.md5Encoder(map.get("password").toString()));
         return userMapper.login(map);
+    }
+
+    @Override
+    public List<User> selectUnconfirmed() {
+        return userMapper.selectUnconfirmed();
     }
 
     @Override

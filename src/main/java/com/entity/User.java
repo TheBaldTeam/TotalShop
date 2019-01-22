@@ -1,11 +1,8 @@
 package com.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import java.math.BigDecimal;
 import java.util.List;
 
-@EntityScan
 public class User {
     private Integer id;
 
@@ -24,6 +21,12 @@ public class User {
     private BigDecimal money;
 
     private Integer isAdmin;
+
+    private Integer isApply;
+
+    private BigDecimal applyMoney;
+
+    private String appliedMark;
 
     private List<Address> addressList;
 
@@ -105,5 +108,29 @@ public class User {
 
     public void setIsAdmin(Integer isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public Integer getIsApply() {
+        return isApply;
+    }
+
+    public void setIsApply(Integer isApply) {
+        this.isApply = isApply;
+    }
+
+    public BigDecimal getApplyMoney() {
+        return applyMoney;
+    }
+
+    public void setApplyMoney(BigDecimal applyMoney) {
+        this.applyMoney = applyMoney;
+    }
+
+    public String getAppliedMark() {
+        return appliedMark;
+    }
+
+    public void setAppliedMark(String appliedMark) {
+        this.appliedMark = appliedMark == null ? null : appliedMark.trim();
     }
 }

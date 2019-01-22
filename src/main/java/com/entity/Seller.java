@@ -1,5 +1,7 @@
 package com.entity;
 
+import java.util.List;
+
 public class Seller {
     private Integer id;
 
@@ -9,7 +11,15 @@ public class Seller {
 
     private Integer userId;
 
+    private List<SellerAddress> sellerAddressList;
 
+    public List<SellerAddress> getSellerAddressList() {
+        return sellerAddressList;
+    }
+
+    public void setSellerAddressList(List<SellerAddress> sellerAddressList) {
+        this.sellerAddressList = sellerAddressList;
+    }
 
     public Integer getId() {
         return id;

@@ -1,8 +1,10 @@
 package com.controller;
 
 import com.entity.Seller;
+import com.entity.SellerAddress;
 import com.entity.SellerBcImg;
 import com.entity.User;
+import com.service.SellerAddressService;
 import com.service.SellerBcImgService;
 import com.service.SellerService;
 import com.service.UserService;
@@ -29,6 +31,8 @@ public class SellerController {
     private UserService userService;
     @Autowired(required = false)
     private SellerBcImgService sellerBcImgService;
+    @Autowired(required = false)
+    private SellerAddressService sellerAddressService;
 
     //查看当前申请信息
     @RequestMapping("/showapplyMessage")
@@ -39,7 +43,7 @@ public class SellerController {
 
     //提交入驻申请
     @RequestMapping(value = "/applyforSeller")
-    public Map applyforSeller(Integer userid, @RequestParam(value = "applyMoney", defaultValue = "0") BigDecimal applyMoney, Seller seller) {
+    public Map applyforSeller(Integer userid, @RequestParam(value = "applyMoney", defaultValue = "0") BigDecimal applyMoney, Seller seller, SellerAddress sellerAddress) {
         Map<String, Object> map = new HashMap<>();
         //查询User信息并修改is_seller字段
         User user = userService.selectByPrimaryKey(userid);
@@ -52,6 +56,8 @@ public class SellerController {
                 seller.setUserId(userid);
                 int isOk2 = sellerService.insertSelective(seller);
                 if (isOk2 > 0) {
+                    //插入sellerAddress
+                    int isOk3 = sellerAddressService.insertSelective(sellerAddress);
                     map.put("status", "ok");
                     map.put("info", 1);
                 } else {
@@ -79,7 +85,7 @@ public class SellerController {
             String type = null;
             type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
             if (type != null) {
-                if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase())) {
+                if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase()) || "JPEG".equals(type.toUpperCase())) {
                     // 项目在容器中实际发布运行的根路径
                     String realPath = "D:\\JavaOperation\\IDEA\\TotalShop\\src\\main\\resources\\static\\SellerPhoto\\";
                     File file = new File(realPath);
@@ -114,7 +120,7 @@ public class SellerController {
             }
         } else {
             map.put("status", "no");
-            map.put("info", -2);//没有找到相对应的文件
+            map.put("info", -3);//没有找到相对应的文件
         }
         return map;
     }

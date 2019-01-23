@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.serviceImp","com.controller"})
+@ComponentScan({"com"})
 @MapperScan("com.dao")
 public class TotalshopApplication extends SpringBootServletInitializer {
 

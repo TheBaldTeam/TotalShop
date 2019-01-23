@@ -29,6 +29,7 @@ public class AdminController {
     @Autowired(required = false)
     private SellerAddressService sellerAddressService;
 
+    //查询未批示商户信息
     @RequestMapping("/selectWtihoutConfirm")
     public List<User> selectWtihoutConfirm() {
         Map<String, Object> map = new HashMap<>();
@@ -36,6 +37,13 @@ public class AdminController {
         return userList;
     }
 
+    //查询为批示商户信息详情
+    @RequestMapping("/sellersMessage")
+    public Seller sellersMessage(Integer userid){
+        return null;
+    }
+
+    //回执操作
     @RequestMapping("/sellerRecipt")
     public Map sellerRecipt(User user, Integer operation, Integer sellerid) {
         Map<String, Object> map = new HashMap<>();
@@ -67,7 +75,7 @@ public class AdminController {
                         for (SellerBcImg imgList: sellerBcImgList) {
                             String path = imgList.getImg();
                             FileOperation fileOperation = new FileOperation();
-                            flag = fileOperation.delete(path);
+                            flag = fileOperation.SellerBcImgDelete(path);
                         }
                         if (flag){
                             //删除sellerBcImg数据库资料
@@ -99,4 +107,6 @@ public class AdminController {
         }
         return map;
     }
+
+
 }

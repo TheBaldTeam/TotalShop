@@ -17,7 +17,7 @@ public interface SellerBcImgMapper {
 
     int updateByPrimaryKey(SellerBcImg record);
 
-    int deleteByUserid(Integer userid);
-
     List<SellerBcImg> selectByUserid(Integer userid);
+
+    int deleteByUserid(Integer userid);
 }

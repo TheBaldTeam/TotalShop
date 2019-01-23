@@ -26,4 +26,6 @@ public interface UserService {
     //根据userid关联查询address
     User selectAddressByUserId(Integer userid);
 
+    //查询isSeller为1的User信息+商铺名字
+    User selectWithSeller(Integer userid);
 }

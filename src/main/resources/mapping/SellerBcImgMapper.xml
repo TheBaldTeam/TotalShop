@@ -5,21 +5,15 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="img" jdbcType="VARCHAR" property="img" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="seller_id" jdbcType="INTEGER" property="sellerId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, img, user_id
+    id, img, user_id, seller_id
   </sql>
 
   <!--查询所有-->
   <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select * from seller_bcimg
-  </select>
-
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from seller_bcimg
-    where id = #{id,jdbcType=INTEGER}
   </select>
 
   <!--通过userid查询-->
@@ -31,15 +25,22 @@
   <delete id="deleteByUserid" parameterType="java.lang.Integer">
     delete from seller_bcimg where user_id = #{userid}
   </delete>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from seller_bcimg
+    where id = #{id,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from seller_bcimg
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.entity.SellerBcImg">
-    insert into seller_bcimg (id, img, user_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
-      )
+    insert into seller_bcimg (id, img, user_id, 
+      seller_id)
+    values (#{id,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{sellerId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.SellerBcImg">
     insert into seller_bcimg
@@ -53,6 +54,9 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="sellerId != null">
+        seller_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -63,6 +67,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null">
+        #{sellerId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -75,13 +82,17 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
+      <if test="sellerId != null">
+        seller_id = #{sellerId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.SellerBcImg">
     update seller_bcimg
     set img = #{img,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER}
+      user_id = #{userId,jdbcType=INTEGER},
+      seller_id = #{sellerId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/seller")
@@ -34,13 +32,6 @@ public class SellerController {
     private SellerBcImgService sellerBcImgService;
     @Autowired(required = false)
     private SellerAddressService sellerAddressService;
-
-    //查看当前申请信息
-    @RequestMapping("/showapplyMessage")
-    public User showapplyMessage(Integer userid) {
-        User user = userService.selectByPrimaryKey(userid);
-        return user;
-    }
 
     //提交入驻申请
     @RequestMapping(value = "/applyforSeller")
@@ -88,12 +79,14 @@ public class SellerController {
         Map<String, Object> map = new HashMap<>();
         request.setCharacterEncoding("UTF-8");
         FileOperation fileOperation = new FileOperation();
-        String path = fileOperation.add(image);
-        if(!path.equals("error")){
+        String imgName = fileOperation.SellerBcImgAdd(image);
+        if (!imgName.equals("error")) {
             //新增数据库
+            Seller seller = sellerService.selectByUserid(userid);
             SellerBcImg sellerBcImg = new SellerBcImg();
             sellerBcImg.setUserId(userid);
-            sellerBcImg.setImg(path);
+            sellerBcImg.setSellerId(seller.getId());
+            sellerBcImg.setImg(imgName);
             int isOk = sellerBcImgService.insertSelective(sellerBcImg);
             if (isOk > 0) {
                 map.put("status", "ok");
@@ -102,11 +95,10 @@ public class SellerController {
                 map.put("status", "no");
                 map.put("info", 0);
             }
-        }else {
+        } else {
             map.put("status", "no");
             map.put("info", 0);
         }
-
         return map;
     }
 }

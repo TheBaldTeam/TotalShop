@@ -65,4 +65,9 @@ public class UserServiceImple implements UserService {
         return userMapper.selectAddressByUserId(userid);
     }
 
+    @Override
+    public User selectWithSeller(Integer userid) {
+        return userMapper.selectWithSeller(userid);
+    }
+
 }

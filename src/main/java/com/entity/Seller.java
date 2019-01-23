@@ -13,6 +13,16 @@ public class Seller {
 
     private List<SellerAddress> sellerAddressList;
 
+    private SellerBcImg sellerBcImg;
+
+    public SellerBcImg getSellerBcImg() {
+        return sellerBcImg;
+    }
+
+    public void setSellerBcImg(SellerBcImg sellerBcImg) {
+        this.sellerBcImg = sellerBcImg;
+    }
+
     public List<SellerAddress> getSellerAddressList() {
         return sellerAddressList;
     }

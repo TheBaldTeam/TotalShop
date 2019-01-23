@@ -31,7 +31,8 @@
     <result column="apply_money" jdbcType="DECIMAL" property="applyMoney" />
     <result column="applied_mark" jdbcType="VARCHAR" property="appliedMark" />
       <association property="seller" javaType="com.entity.Seller">
-        <result column="title_name" javaType="VARCHAR" property="titleName"/>
+        <id column="sid" jdbcType="INTEGER" property="id"/>
+        <result column="title_name" jdbcType="VARCHAR" property="titleName"/>
       </association>
   </resultMap>
 
@@ -61,6 +62,19 @@
     id, username, password, is_vip, is_seller, tel, score, money, is_admin, is_apply, 
     apply_money, applied_mark
   </sql>
+
+  <!--联合查询User和Seller信息-->
+  <select id="selectWithSeller" resultMap="WithSeller" parameterType="java.lang.Integer">
+    SELECT
+      u.*,
+      s.id as sid,
+      s.title_name
+    FROM
+      user u
+    INNER JOIN seller s ON u.id = s.user_id
+    WHERE
+      u.is_apply=1 and u.id = #{userid}
+  </select>
 
   <!--查询已提交商家入驻申请但未确认的用户-->
   <select id="selectUnconfirmed" resultMap="BaseResultMap" >

@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  mvc:
+    static-path-pattern: /**
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/totalshop?zeroDateTimeBehavior=convertToNull

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class FileOperation {
-    public boolean delete(String path){
+    public boolean SellerBcImgDelete(String path){
         File file = new File(path);
         if (file == null || !file.exists()) {
             return false;
@@ -34,11 +34,12 @@ public class FileOperation {
         return false;
     }
 
-    public String add(MultipartFile image){
+    public String SellerBcImgAdd(MultipartFile image){
         if (!image.isEmpty()) {
             String fileName = image.getOriginalFilename();
             String path = null;
             String type = null;
+            String trueFileName = null;
             type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
             if (type != null) {
                 if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase()) || "JPEG".equals(type.toUpperCase())) {
@@ -50,7 +51,7 @@ public class FileOperation {
                     }
                     // 自定义的文件名称
                     String uuid = UUID.randomUUID().toString();
-                    String trueFileName = uuid + "." + type;
+                    trueFileName = uuid + "." + type;
                     // 设置存放图片文件的路径
                     path = realPath + trueFileName;
                     try {
@@ -59,11 +60,11 @@ public class FileOperation {
                         System.out.println("文件路径不存在");
                         e.printStackTrace();
                     }
-                    return path;
+                    return trueFileName;
                 }
-                return path;
+                return trueFileName;
             }
-            return path;
+            return trueFileName;
         }
         return "error";
     }

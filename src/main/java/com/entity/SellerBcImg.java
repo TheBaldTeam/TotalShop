@@ -7,6 +7,8 @@ public class SellerBcImg {
 
     private Integer userId;
 
+    private Integer sellerId;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class SellerBcImg {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
     }
 }

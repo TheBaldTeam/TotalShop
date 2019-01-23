@@ -1,128 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.SellerMapper">
-  <resultMap id="BaseResultMap" type="com.entity.Seller">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="tel" jdbcType="BIGINT" property="tel" />
-    <result column="title_name" jdbcType="VARCHAR" property="titleName" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, tel, title_name, user_id
-  </sql>
+    <resultMap id="BaseResultMap" type="com.entity.Seller">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="tel" jdbcType="BIGINT" property="tel"/>
+        <result column="title_name" jdbcType="VARCHAR" property="titleName"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
 
-  <!--通过userid查找-->
-  <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select * from seller where user_id = #{userid}
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from seller
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from seller
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByUserid" parameterType="java.lang.Integer">
-    delete from seller where user_id = #{userid}
-  </delete>
-  <insert id="insert" parameterType="com.entity.Seller">
-    insert into seller (id, tel, title_name, 
-      user_id)
-    values (#{id,jdbcType=INTEGER}, #{tel,jdbcType=BIGINT}, #{titleName,jdbcType=VARCHAR}, 
-      #{userId,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.entity.Seller">
-    insert into seller
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="tel != null">
-        tel,
-      </if>
-      <if test="titleName != null">
-        title_name,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="tel != null">
-        #{tel,jdbcType=BIGINT},
-      </if>
-      <if test="titleName != null">
-        #{titleName,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+    <!--一对一商户图片查询-->
+    <resultMap id="WithSellerBcImg" type="com.entity.Seller">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="tel" jdbcType="BIGINT" property="tel"/>
+        <result column="title_name" jdbcType="VARCHAR" property="titleName"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <association property="sellerBcImg" javaType="com.entity.SellerBcImg">
+            <result column="img" jdbcType="VARCHAR" property="img"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, tel, title_name, user_id
+    </sql>
 
-  <!--selectKey-->
-  <insert id="selectKey" parameterType="com.entity.Seller" >
-    insert into seller
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="tel != null">
-        tel,
-      </if>
-      <if test="titleName != null">
-        title_name,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="tel != null">
-        #{tel,jdbcType=BIGINT},
-      </if>
-      <if test="titleName != null">
-        #{titleName,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-    </trim>
-      <selectKey keyProperty="id" resultType="Integer" order="AFTER">
-        SELECT LAST_INSERT_ID() as id
-      </selectKey>
-  </insert>
+    <!--一对一联合查询商户信息（包括图片）-->
+    <select id="selectWithBcImg" resultMap="WithSellerBcImg" parameterType="java.lang.Integer">
+        SELECT
+            s.id,
+            s.tel,
+            s.title_name,
+            s.user_id,
+            bc.img
+        FROM
+            seller s
+        INNER JOIN seller_bcimg bc ON s.user_id = bc.user_id
+        WHERE
+            s.user_id = #{userid}
+    </select>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Seller">
-    update seller
-    <set>
-      <if test="tel != null">
-        tel = #{tel,jdbcType=BIGINT},
-      </if>
-      <if test="titleName != null">
+    <!--通过userid查找-->
+    <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from seller where user_id = #{userid}
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from seller
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from seller
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByUserid" parameterType="java.lang.Integer">
+        delete from seller where user_id = #{userid}
+    </delete>
+    <insert id="insert" parameterType="com.entity.Seller">
+        insert into seller (id, tel, title_name,
+        user_id)
+        values (#{id,jdbcType=INTEGER}, #{tel,jdbcType=BIGINT}, #{titleName,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.entity.Seller">
+        insert into seller
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="titleName != null">
+                title_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="titleName != null">
+                #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <!--selectKey-->
+    <insert id="selectKey" parameterType="com.entity.Seller">
+        insert into seller
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="titleName != null">
+                title_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="titleName != null">
+                #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.Seller">
+        update seller
+        <set>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="titleName != null">
+                title_name = #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.Seller">
+        update seller
+        set tel = #{tel,jdbcType=BIGINT},
         title_name = #{titleName,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.entity.Seller">
-    update seller
-    set tel = #{tel,jdbcType=BIGINT},
-      title_name = #{titleName,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        user_id = #{userId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>

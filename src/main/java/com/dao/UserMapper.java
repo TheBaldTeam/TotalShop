@@ -25,4 +25,7 @@ public interface UserMapper {
 
     //查询已提交商家入驻申请但未确认的用户
     List<User> selectUnconfirmed();
+
+    //查询isSeller为1的User信息+商铺名字
+    User selectWithSeller(Integer userid);
 }

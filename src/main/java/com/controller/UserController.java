@@ -24,7 +24,7 @@ public class UserController {
         usermap.put("username", user.getUsername());
         usermap.put("password", user.getPassword());
         usermap.put("tel", user.getTel());
-        if (usermap.get("username").equals("") || usermap.get("password").equals("") || usermap.get("tel").equals("")) {
+        if (usermap.get("password").equals("") || usermap.get("tel").equals("")) {
             map.put("status", "no");//用户不存在
             map.put("info", -1);//-1为用户不存在
         } else {

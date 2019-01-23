@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dao.FileOperation;
 import com.entity.Seller;
 import com.entity.SellerAddress;
 import com.entity.SellerBcImg;
@@ -36,7 +37,7 @@ public class SellerController {
 
     //查看当前申请信息
     @RequestMapping("/showapplyMessage")
-    public User showapplyMessage(Integer userid){
+    public User showapplyMessage(Integer userid) {
         User user = userService.selectByPrimaryKey(userid);
         return user;
     }
@@ -54,12 +55,19 @@ public class SellerController {
             if (isOk > 0) {
                 //插入Seller数据
                 seller.setUserId(userid);
-                int isOk2 = sellerService.insertSelective(seller);
+                int isOk2 = sellerService.selectKey(seller);
                 if (isOk2 > 0) {
                     //插入sellerAddress
+                    sellerAddress.setSellerName(user.getUsername());
+                    sellerAddress.setSellerId(seller.getId());
                     int isOk3 = sellerAddressService.insertSelective(sellerAddress);
-                    map.put("status", "ok");
-                    map.put("info", 1);
+                    if (isOk3 > 0) {
+                        map.put("status", "ok");
+                        map.put("info", 1);
+                    } else {
+                        map.put("status", "no");
+                        map.put("info", -1);
+                    }
                 } else {
                     map.put("status", "no");
                     map.put("info", -1);
@@ -68,9 +76,9 @@ public class SellerController {
                 map.put("status", "no");
                 map.put("info", -1);
             }
-        } else if (user.getIsSeller() == 1) {
+        } else if (user.getIsApply() == 1) {
             map.put("status", "no");
-            map.put("info", -9);//-9为已是商家，不予重新注册
+            map.put("info", -9);//-9为已提交注册，不予重新注册
         }
         return map;
     }
@@ -79,49 +87,26 @@ public class SellerController {
     public Map upload(Integer userid, HttpServletRequest request, @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
         Map<String, Object> map = new HashMap<>();
         request.setCharacterEncoding("UTF-8");
-        if (!image.isEmpty()) {
-            String fileName = image.getOriginalFilename();
-            String path = null;
-            String type = null;
-            type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
-            if (type != null) {
-                if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase()) || "JPEG".equals(type.toUpperCase())) {
-                    // 项目在容器中实际发布运行的根路径
-                    String realPath = "D:\\JavaOperation\\IDEA\\TotalShop\\src\\main\\resources\\static\\SellerPhoto\\";
-                    File file = new File(realPath);
-                    if(!file.exists()){
-                        file.mkdirs();
-                    }
-                    // 自定义的文件名称
-                    String uuid = UUID.randomUUID().toString();
-                    String trueFileName = uuid + "." + type;
-                    // 设置存放图片文件的路径
-                    path = realPath + trueFileName;
-                    image.transferTo(new File(path));
-                    //新增数据库
-                    SellerBcImg sellerBcImg = new SellerBcImg();
-                    sellerBcImg.setUserId(userid);
-                    sellerBcImg.setImg(path);
-                    int isOk = sellerBcImgService.insertSelective(sellerBcImg);
-                    if (isOk > 0) {
-                        map.put("status", "ok");
-                        map.put("info", 1);
-                    } else {
-                        map.put("status", "no");
-                        map.put("info", 0);
-                    }
-                } else {
-                    map.put("status", "no");
-                    map.put("info", -1);//不是我们想要的文件类型,请按要求重新上传
-                }
+        FileOperation fileOperation = new FileOperation();
+        String path = fileOperation.add(image);
+        if(!path.equals("error")){
+            //新增数据库
+            SellerBcImg sellerBcImg = new SellerBcImg();
+            sellerBcImg.setUserId(userid);
+            sellerBcImg.setImg(path);
+            int isOk = sellerBcImgService.insertSelective(sellerBcImg);
+            if (isOk > 0) {
+                map.put("status", "ok");
+                map.put("info", 1);
             } else {
                 map.put("status", "no");
-                map.put("info", -2);//文件类型为空
+                map.put("info", 0);
             }
-        } else {
+        }else {
             map.put("status", "no");
-            map.put("info", -3);//没有找到相对应的文件
+            map.put("info", 0);
         }
+
         return map;
     }
 }

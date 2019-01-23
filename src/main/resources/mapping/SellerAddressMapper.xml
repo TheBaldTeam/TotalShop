@@ -24,6 +24,12 @@
     from seller_address
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--根据sellerid删除数据-->
+  <delete id="deleteBySellerId" parameterType="java.lang.Integer">
+    delete from seller_address where seller_id = #{sellerid}
+  </delete>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from seller_address
     where id = #{id,jdbcType=INTEGER}

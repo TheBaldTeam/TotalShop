@@ -48,4 +48,9 @@ public class SellerAddressServiceImple implements SellerAddressService {
     public List<SellerAddress> selectByUserId(Integer userid) {
         return sellerAddressMapper.selectByUserId(userid);
     }
+
+    @Override
+    public int deleteBySellerId(Integer sellerid) {
+        return sellerAddressMapper.deleteBySellerId(sellerid);
+    }
 }

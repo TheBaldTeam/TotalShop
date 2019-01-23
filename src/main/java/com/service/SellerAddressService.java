@@ -19,4 +19,6 @@ public interface SellerAddressService {
     int updateByPrimaryKey(SellerAddress record);
 
     List<SellerAddress> selectByUserId(Integer sellerid);
+
+    int deleteBySellerId(Integer sellerid);
 }

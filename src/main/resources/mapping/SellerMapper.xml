@@ -10,6 +10,11 @@
   <sql id="Base_Column_List">
     id, tel, title_name, user_id
   </sql>
+
+  <!--通过userid查找-->
+  <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from seller where user_id = #{userid}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -19,6 +24,9 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from seller
     where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByUserid" parameterType="java.lang.Integer">
+    delete from seller where user_id = #{userid}
   </delete>
   <insert id="insert" parameterType="com.entity.Seller">
     insert into seller (id, tel, title_name, 
@@ -57,6 +65,43 @@
       </if>
     </trim>
   </insert>
+
+  <!--selectKey-->
+  <insert id="selectKey" parameterType="com.entity.Seller" >
+    insert into seller
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="titleName != null">
+        title_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=BIGINT},
+      </if>
+      <if test="titleName != null">
+        #{titleName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+      <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+        SELECT LAST_INSERT_ID() as id
+      </selectKey>
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.Seller">
     update seller
     <set>

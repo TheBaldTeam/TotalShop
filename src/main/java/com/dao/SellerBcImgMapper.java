@@ -2,6 +2,8 @@ package com.dao;
 
 import com.entity.SellerBcImg;
 
+import java.util.List;
+
 public interface SellerBcImgMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,8 @@ public interface SellerBcImgMapper {
     int updateByPrimaryKeySelective(SellerBcImg record);
 
     int updateByPrimaryKey(SellerBcImg record);
+
+    int deleteByUserid(Integer userid);
+
+    List<SellerBcImg> selectByUserid(Integer userid);
 }

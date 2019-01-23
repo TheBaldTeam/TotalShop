@@ -41,4 +41,19 @@ public class SellerServiceImple implements SellerService {
     public int updateByPrimaryKey(Seller record) {
         return sellerMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public int selectKey(Seller record) {
+        return sellerMapper.selectKey(record);
+    }
+
+    @Override
+    public Seller selectByUserid(Integer userid) {
+        return sellerMapper.selectByUserid(userid);
+    }
+
+    @Override
+    public int deleteByUserid(Integer userid) {
+        return sellerMapper.deleteByUserid(userid);
+    }
 }

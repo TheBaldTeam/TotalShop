@@ -16,6 +16,25 @@
     <result column="applied_mark" jdbcType="VARCHAR" property="appliedMark" />
   </resultMap>
 
+  <!--一对一关联Seller-->
+  <resultMap id="WithSeller" type="com.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="is_vip" jdbcType="INTEGER" property="isVip" />
+    <result column="is_seller" jdbcType="INTEGER" property="isSeller" />
+    <result column="tel" jdbcType="BIGINT" property="tel" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="is_admin" jdbcType="INTEGER" property="isAdmin" />
+    <result column="is_apply" jdbcType="INTEGER" property="isApply" />
+    <result column="apply_money" jdbcType="DECIMAL" property="applyMoney" />
+    <result column="applied_mark" jdbcType="VARCHAR" property="appliedMark" />
+      <association property="seller" javaType="com.entity.Seller">
+        <result column="title_name" javaType="VARCHAR" property="titleName"/>
+      </association>
+  </resultMap>
+
   <!--一对多关联Address-->
   <resultMap id="WithAddress" type="com.entity.User">
     <id column="id" property="id" jdbcType="INTEGER" />

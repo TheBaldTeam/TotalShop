@@ -14,4 +14,13 @@ public interface SellerMapper {
     int updateByPrimaryKeySelective(Seller record);
 
     int updateByPrimaryKey(Seller record);
+
+    //selectKey
+    int selectKey(Seller record);
+
+    //selectByUserid
+    Seller selectByUserid(Integer userid);
+
+    //deleteByUserid
+    int deleteByUserid(Integer userid);
 }

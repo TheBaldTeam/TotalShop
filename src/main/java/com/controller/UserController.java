@@ -24,28 +24,33 @@ public class UserController {
         usermap.put("username", user.getUsername());
         usermap.put("password", user.getPassword());
         usermap.put("tel", user.getTel());
-        User newUser = userService.login(usermap);
-        if (newUser != null) {
-            if (newUser.getIsAdmin() == 1) {
-                map.put("status", "ok");
-                map.put("info", 1);//1为管理员
-                map.put("userId", newUser.getId());
-            } else if (newUser.getIsSeller() == 1) {
-                map.put("status", "ok");
-                map.put("info", 2);//2为商家
-                map.put("userId", newUser.getId());
-            } else if (newUser.getIsVip() == 1) {
-                map.put("status", "ok");
-                map.put("info", 3);//3为vip
-                map.put("userId", newUser.getId());
-            } else {
-                map.put("status", "yes");
-                map.put("info", 0);//0为普通用户
-                map.put("userId", newUser.getId());
-            }
-        } else {
+        if (usermap.get("username").equals("") || usermap.get("password").equals("") || usermap.get("tel").equals("")) {
             map.put("status", "no");//用户不存在
             map.put("info", -1);//-1为用户不存在
+        } else {
+            User newUser = userService.login(usermap);
+            if (newUser != null) {
+                if (newUser.getIsAdmin() == 1) {
+                    map.put("status", "ok");
+                    map.put("info", 1);//1为管理员
+                    map.put("userId", newUser.getId());
+                } else if (newUser.getIsSeller() == 1) {
+                    map.put("status", "ok");
+                    map.put("info", 2);//2为商家
+                    map.put("userId", newUser.getId());
+                } else if (newUser.getIsVip() == 1) {
+                    map.put("status", "ok");
+                    map.put("info", 3);//3为vip
+                    map.put("userId", newUser.getId());
+                } else {
+                    map.put("status", "yes");
+                    map.put("info", 0);//0为普通用户
+                    map.put("userId", newUser.getId());
+                }
+            } else {
+                map.put("status", "no");//用户不存在
+                map.put("info", -1);//-1为用户不存在
+            }
         }
         return map;
     }

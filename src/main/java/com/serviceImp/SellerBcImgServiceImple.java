@@ -6,6 +6,8 @@ import com.service.SellerBcImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SellerBcImgServiceImple implements SellerBcImgService {
 
@@ -40,6 +42,16 @@ public class SellerBcImgServiceImple implements SellerBcImgService {
     @Override
     public int updateByPrimaryKey(SellerBcImg record) {
         return sellerBcImgMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public int deleteByUserid(Integer userid) {
+        return sellerBcImgMapper.deleteByUserid(userid);
+    }
+
+    @Override
+    public List<SellerBcImg> selectByUserid(Integer userid) {
+        return sellerBcImgMapper.selectByUserid(userid);
     }
 
 

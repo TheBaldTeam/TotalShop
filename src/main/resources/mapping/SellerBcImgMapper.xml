@@ -21,6 +21,16 @@
     from seller_bcimg
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--通过userid查询-->
+  <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from seller_bcimg where user_id = #{userid}
+  </select>
+
+  <!--通过userid删除数据-->
+  <delete id="deleteByUserid" parameterType="java.lang.Integer">
+    delete from seller_bcimg where user_id = #{userid}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from seller_bcimg
     where id = #{id,jdbcType=INTEGER}

@@ -30,6 +30,16 @@ public class User {
 
     private List<Address> addressList;
 
+    private Seller seller;
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
     public List<Address> getAddressList() {
         return addressList;
     }

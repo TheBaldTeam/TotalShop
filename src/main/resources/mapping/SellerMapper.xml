@@ -8,6 +8,24 @@
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
     </resultMap>
 
+    <!-- 一对多查询 -->
+    <resultMap id="WithAddressImg" type="com.entity.Seller">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="tel" jdbcType="BIGINT" property="tel"/>
+        <result column="title_name" jdbcType="VARCHAR" property="titleName"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <collection property="sellerBcImgList" ofType="com.entity.SellerBcImg">
+            <result column="img" jdbcType="VARCHAR" property="img" />
+            <result column="user_id" jdbcType="INTEGER" property="userId" />
+            <result column="seller_id" jdbcType="INTEGER" property="sellerId" />
+        </collection>
+        <collection property="sellerAddressList" ofType="com.entity.SellerAddress">
+            <result column="address" property="address" jdbcType="VARCHAR" />
+            <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+            <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
     <!--一对一商户图片查询-->
     <resultMap id="WithSellerBcImg" type="com.entity.Seller">
         <id column="id" jdbcType="INTEGER" property="id"/>
@@ -22,6 +40,20 @@
         id, tel, title_name, user_id
     </sql>
 
+    <!--查询未审批商户详情信息-->
+    <select id="selectUnconfirmDetial" resultMap="WithAddressImg" parameterType="java.lang.Integer">
+        SELECT
+            s.*,
+            sa.address,
+            img.img
+        FROM
+            seller s
+        INNER JOIN seller_address sa ON s.id = sa.seller_id
+        INNER JOIN seller_bcimg img ON img.seller_id
+        where
+            s.id = #{seller_id}
+    </select>
+    
     <!--一对一联合查询商户信息（包括图片）-->
     <select id="selectWithBcImg" resultMap="WithSellerBcImg" parameterType="java.lang.Integer">
         SELECT
@@ -41,6 +73,7 @@
     <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select * from seller where user_id = #{userid}
     </select>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

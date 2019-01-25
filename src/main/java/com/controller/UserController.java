@@ -55,19 +55,24 @@ public class UserController {
         return map;
     }
 
+
     //用户注册
     @RequestMapping(value = "/registered")
     public Map registered(User user) {
-        /*System.out.println(username+"      "+tel);
-          return null*/
-        int isOk = userService.insertSelective(user);
         Map<String, Object> map = new HashMap<>();
-        if (isOk > 0) {
-            map.put("status", "ok");
-            map.put("info", 1);//1代表注册成功
-        } else {
+        User userCheck = userService.checkTel(user.getTel());
+        if(userCheck != null){
             map.put("status", "no");
-            map.put("info", -1);//1代表注册失败
+            map.put("info", -9);//电话号码已存在
+        }else{
+            int isOk = userService.insertSelective(user);
+            if (isOk > 0) {
+                map.put("status", "ok");
+                map.put("info", 1);//1代表注册成功
+            } else {
+                map.put("status", "no");
+                map.put("info", -1);//1代表注册失败
+            }
         }
         return map;
     }
@@ -77,5 +82,18 @@ public class UserController {
     public User selectWithAddress(Integer userid) {
         User user = userService.selectAddressByUserId(userid);
         return user;
+    }
+
+    //查询是否为isApply
+    @RequestMapping("/checkIsApply")
+    public Integer checkIsApply(Integer userid){
+        return userService.selectUnconfirmByUserId(userid);
+    }
+
+    //查询用户applied_mark字段
+    @RequestMapping("/selectMark")
+    public String selectMark(Integer userid){
+        User user = userService.selectByPrimaryKey(userid);
+        return user.getAppliedMark();
     }
 }

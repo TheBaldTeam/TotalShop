@@ -101,5 +101,11 @@ public class SellerController {
         }
         return map;
     }
+
+    @RequestMapping("/isSeller")
+    public Integer checkIsSeller(Integer userid){
+        User user = userService.selectByPrimaryKey(userid);
+        return user.getIsSeller();
+    }
 }
 

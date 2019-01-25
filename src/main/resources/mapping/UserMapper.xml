@@ -63,8 +63,8 @@
     apply_money, applied_mark
   </sql>
 
-  <!--联合查询User和Seller信息-->
-  <select id="selectWithSeller" resultMap="WithSeller" parameterType="java.lang.Integer">
+  <!--查询已提交商家入驻申请但未确认的用户-->
+  <select id="selectUnconfirmed" resultMap="WithSeller">
     SELECT
       u.*,
       s.id as sid,
@@ -73,18 +73,16 @@
       user u
     INNER JOIN seller s ON u.id = s.user_id
     WHERE
-      u.is_apply=1 and u.id = #{userid}
+      u.is_apply=1 and u.is_seller = 0
   </select>
 
-  <!--查询已提交商家入驻申请但未确认的用户-->
-  <select id="selectUnconfirmed" resultMap="BaseResultMap" >
-    SELECT
-      *
-    FROM
-      USER
-    WHERE
-      is_apply = 1
-      AND is_seller = 0
+  <select id="checkTel" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select * from user where tel = #{tel}
+  </select>
+
+  <!--单独查询未批准用户信息-->
+  <select id="selectUnconfirmByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from user where is_apply = 1 and id = #{userid}
   </select>
 
   <!--登录验证-->

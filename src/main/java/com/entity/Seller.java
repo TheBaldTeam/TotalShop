@@ -13,14 +13,14 @@ public class Seller {
 
     private List<SellerAddress> sellerAddressList;
 
-    private SellerBcImg sellerBcImg;
+    private List<SellerBcImg> sellerBcImgList;
 
-    public SellerBcImg getSellerBcImg() {
-        return sellerBcImg;
+    public List<SellerBcImg> getSellerBcImgList() {
+        return sellerBcImgList;
     }
 
-    public void setSellerBcImg(SellerBcImg sellerBcImg) {
-        this.sellerBcImg = sellerBcImg;
+    public void setSellerBcImgList(List<SellerBcImg> sellerBcImgList) {
+        this.sellerBcImgList = sellerBcImgList;
     }
 
     public List<SellerAddress> getSellerAddressList() {

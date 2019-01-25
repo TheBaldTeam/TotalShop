@@ -28,4 +28,10 @@ public interface UserService {
 
     //查询isSeller为1的User信息+商铺名字
     User selectWithSeller(Integer userid);
+
+    //注册验证手机号码
+    User checkTel(Long tel);
+
+    //通过userid查询是否为提交申请用户
+    Integer selectUnconfirmByUserId(Integer userid);
 }

@@ -23,4 +23,7 @@ public interface SellerMapper {
 
     //deleteByUserid
     int deleteByUserid(Integer userid);
+
+    //查询未审批详情
+    Seller selectUnconfirmDetial(Integer sellerid);
 }

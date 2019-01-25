@@ -70,4 +70,15 @@ public class UserServiceImple implements UserService {
         return userMapper.selectWithSeller(userid);
     }
 
+    @Override
+    public User checkTel(Long tel) {
+        return userMapper.checkTel(tel);
+    }
+
+    @Override
+    public Integer selectUnconfirmByUserId(Integer userid) {
+        User user = userMapper.selectUnconfirmByUserId(userid);
+        return user.getIsApply();
+    }
+
 }

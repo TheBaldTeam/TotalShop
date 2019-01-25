@@ -49,7 +49,7 @@ public class ProductShowController {
         return map;
     }
 
-    @RequestMapping(value = "/testHtml" , method = RequestMethod.GET)
+    @RequestMapping(value = "/testHtml")
     public String testHtml(){
         return "TestHtml";
     }

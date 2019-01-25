@@ -56,4 +56,9 @@ public class SellerServiceImple implements SellerService {
     public int deleteByUserid(Integer userid) {
         return sellerMapper.deleteByUserid(userid);
     }
+
+    @Override
+    public Seller selectUnconfirmDetial(Integer sellerid) {
+        return sellerMapper.selectUnconfirmDetial(sellerid);
+    }
 }

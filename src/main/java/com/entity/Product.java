@@ -1,10 +1,7 @@
 package com.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import java.util.Date;
 
-@EntityScan
 public class Product {
     private Integer id;
 
@@ -27,6 +24,8 @@ public class Product {
     private Date created;
 
     private Date updated;
+
+    private Integer isGroup;
 
     public Integer getId() {
         return id;
@@ -114,5 +113,13 @@ public class Product {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Integer getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(Integer isGroup) {
+        this.isGroup = isGroup;
     }
 }

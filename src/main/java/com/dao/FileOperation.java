@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class FileOperation {
     public boolean SellerBcImgDelete(String imgName){
-        String path = "C:\\Users\\70681\\Desktop\\SellerBcImg\\";
+        String path = "C:\\Users\\70681\\Desktop\\Img\\";
         File file = new File(path+imgName);
         if (file == null || !file.exists()) {
             return false;

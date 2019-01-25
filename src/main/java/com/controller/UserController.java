@@ -90,10 +90,14 @@ public class UserController {
         return userService.selectUnconfirmByUserId(userid);
     }
 
-    //查询用户applied_mark字段
+    //查询用户applied_mark, username字段
     @RequestMapping("/selectMark")
-    public String selectMark(Integer userid){
+    public Map selectMark(Integer userid){
         User user = userService.selectByPrimaryKey(userid);
-        return user.getAppliedMark();
+        Map<String, Object> map = new HashMap<>();
+        map.put("mark", user.getAppliedMark());
+        map.put("username", user.getUsername());
+        map.put("score", user.getScore());
+        return map;
     }
 }

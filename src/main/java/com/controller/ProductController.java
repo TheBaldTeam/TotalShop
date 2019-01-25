@@ -1,14 +1,14 @@
 package com.controller;
 
 import com.entity.Product;
+import com.entity.Version;
 import com.service.ProductService;
+import com.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +22,12 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
-public class ProductShowController {
+public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private VersionService versionService;
 
     @RequestMapping("/getAll")
     @ResponseBody
@@ -34,9 +36,12 @@ public class ProductShowController {
         return productLsit;
     }
 
-    @RequestMapping(value = "/insertP", method = RequestMethod.GET)
+    @RequestMapping(value = "/insertP")
     @ResponseBody
-    public Map insertP(Product product){
+    public Map insertP(Product product, Version version){
+        if(product.getGroupPrice() != 0){
+
+        }
         int isOk = productService.insertSelective(product);
         Map<String, Object> map = new HashMap<>();
         if (isOk > 0){
@@ -54,12 +59,6 @@ public class ProductShowController {
         return "TestHtml";
     }
 
-    @RequestMapping(value = "/addFile", method = RequestMethod.POST)
-    @ResponseBody
-    public String addFile(HttpServletRequest request){
-
-        return "";
-    }
 
 
 }

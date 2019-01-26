@@ -100,4 +100,7 @@ public class UserController {
         map.put("score", user.getScore());
         return map;
     }
+
+
+
 }

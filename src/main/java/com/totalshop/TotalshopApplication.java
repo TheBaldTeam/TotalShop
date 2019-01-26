@@ -21,15 +21,5 @@ public class TotalshopApplication extends SpringBootServletInitializer {
         //这里指向原先用main方法执行的Application启动类
         return builder.sources(TotalshopApplication.class);
     }
-    /*@Bean
-    MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        //文件最大
-        factory.setMaxFileSize("5MB");
-        /// 设置总上传数据总大小
-        factory.setMaxRequestSize("10MB");
-        return factory.createMultipartConfig();
-    }*/
-
 }
 

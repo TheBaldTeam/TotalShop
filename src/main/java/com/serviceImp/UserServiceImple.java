@@ -29,7 +29,7 @@ public class UserServiceImple implements UserService {
     @Override
     public int insertSelective(User record) {
         Md5Util md5Util = new Md5Util();
-        record.setPassword(md5Util.md5Encoder(record.getPassword()));
+        record.setPassword(md5Util.md5(record.getPassword()));
         return userMapper.insertSelective(record);
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImple implements UserService {
     @Override
     public User login(Map<String, Object> map) {
         Md5Util md5Util = new Md5Util();
-        map.put("password", md5Util.md5Encoder(map.get("password").toString()));
+        map.put("password", md5Util.md5(map.get("password").toString()));
         return userMapper.login(map);
     }
 

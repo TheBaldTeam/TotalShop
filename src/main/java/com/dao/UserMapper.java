@@ -34,4 +34,6 @@ public interface UserMapper {
 
     //通过userid查询是否为提交申请用户
     User selectUnconfirmByUserId(Integer userid);
+
+    //
 }

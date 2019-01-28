@@ -2,6 +2,8 @@ package com.dao;
 
 import com.entity.Shop;
 
+import java.util.List;
+
 public interface ShopMapper {
     int deleteByPrimaryKey(Integer classId);
 
@@ -14,4 +16,8 @@ public interface ShopMapper {
     int updateByPrimaryKeySelective(Shop record);
 
     int updateByPrimaryKey(Shop record);
+
+    List<Shop> selectAll();
+
+    List<Shop> selectTwo();
 }

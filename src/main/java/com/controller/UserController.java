@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dao.FileOperation;
 import com.entity.User;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,10 @@ public class UserController {
         return map;
     }
 
-
+    @RequestMapping("/callTomcat")
+    public void callTomcat(){
+        FileOperation fileOperation = new FileOperation();
+        fileOperation.callTomcat();
+    }
 
 }

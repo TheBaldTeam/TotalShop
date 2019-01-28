@@ -35,6 +35,20 @@ public class FileOperation {
         return false;
     }
 
+    public void callTomcat(){
+        String path = System.getProperty("user.dir");//user.dir指定了当前的路径
+        System.out.println(path);
+        final Runtime runtime = Runtime.getRuntime();
+        Process process = null;
+        String cmd = "shutdown.bat";
+        try {
+            process = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", cmd});
+        } catch (IOException e) {
+            System.out.println("失效");
+            e.printStackTrace();
+        }
+    }
+
     public String SellerBcImgAdd(MultipartFile image){
         if (!image.isEmpty()) {
             String fileName = image.getOriginalFilename();

@@ -2,6 +2,8 @@ package com.entity;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+import java.util.List;
+
 @EntityScan
 public class Shop {
     private Integer classId;
@@ -15,6 +17,16 @@ public class Shop {
     private Integer ondelect;
 
     private String images;
+
+    private List<Shop> twoLevelName;
+
+    public List<Shop> getTowLevelName() {
+        return twoLevelName;
+    }
+
+    public void setTowLevelName(List<Shop> twoLevelName) {
+        this.twoLevelName = twoLevelName;
+    }
 
     public Integer getClassId() {
         return classId;

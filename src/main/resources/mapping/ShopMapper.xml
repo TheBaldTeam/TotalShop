@@ -9,6 +9,25 @@
     <result column="ondelect" property="ondelect" jdbcType="INTEGER" />
     <result column="images" property="images" jdbcType="VARCHAR" />
   </resultMap>
+
+  <!--关联二级目录-->
+  <resultMap id="selectTwo" type="com.entity.Shop" >
+    <id column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="class_key" property="classKey" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="ondelect" property="ondelect" jdbcType="INTEGER" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <collection property="twoLevelName" ofType="com.entity.Shop">
+      <id column="c2id" property="classId" jdbcType="INTEGER" />
+      <result column="c2name" property="className" jdbcType="VARCHAR" />
+      <result column="c2key" property="classKey" jdbcType="INTEGER" />
+      <result column="c2level" property="level" jdbcType="INTEGER" />
+      <result column="c2ondelect" property="ondelect" jdbcType="INTEGER" />
+      <result column="c2images" property="images" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     class_id, class_name, class_key, level, ondelect, images
   </sql>
@@ -18,6 +37,31 @@
     from shop_classify
     where class_id = #{classId,jdbcType=INTEGER}
   </select>
+
+  <!--一二级目录查询-->
+  <select id="selectTwo" resultMap="selectTwo">
+    SELECT
+      c1.*,
+      c2.class_id c2id,
+      c2.class_name c2name,
+      c2.class_key c2key,
+      c2.LEVEL c2level,
+      c2.ondelect c2ondelect,
+      c2.images c2images
+    FROM
+      shop_classify c1,
+      shop_classify c2
+    WHERE
+      c1.class_id = c2.class_key
+      AND c2.ondelect =0
+  </select>
+
+
+  <!--查询所有-->
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select * from shop_classify
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from shop_classify
     where class_id = #{classId,jdbcType=INTEGER}

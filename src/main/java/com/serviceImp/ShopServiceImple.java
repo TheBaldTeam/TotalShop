@@ -6,8 +6,11 @@ import com.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ShopServiceImple implements ShopService {
+public class ShopServiceImple implements ShopService
+{
 
     @Autowired(required = false)
     private ShopMapper shopClassifyMapper;
@@ -41,4 +44,16 @@ public class ShopServiceImple implements ShopService {
     public int updateByPrimaryKey(Shop record) {
         return shopClassifyMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public List<Shop> selectAll() {
+        return shopClassifyMapper.selectAll();
+    }
+
+    @Override
+    public List<Shop> selectTwo() {
+        return shopClassifyMapper.selectTwo();
+    }
+
+
 }

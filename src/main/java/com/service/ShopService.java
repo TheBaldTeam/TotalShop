@@ -2,6 +2,8 @@ package com.service;
 
 import com.entity.Shop;
 
+import java.util.List;
+
 public interface ShopService {
     int deleteByPrimaryKey(Integer classId);
 
@@ -14,4 +16,9 @@ public interface ShopService {
     int updateByPrimaryKeySelective(Shop record);
 
     int updateByPrimaryKey(Shop record);
+
+    List<Shop> selectAll();
+
+    //查询二级目录
+    List<Shop> selectTwo();
 }

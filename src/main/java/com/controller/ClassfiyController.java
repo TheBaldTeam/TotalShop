@@ -15,7 +15,7 @@ public class ClassfiyController {
     @Autowired
     private ShopService shopService;
 
-    @RequestMapping("/getStaticImg")
+    @RequestMapping("/selectLevel")
     public List<Shop> getStaticImg(){
         return shopService.selectTwo();
     }

@@ -2,14 +2,16 @@ package com.dao;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.UUID;
 
 public class FileOperation {
-    public boolean SellerBcImgDelete(String imgName){
+    public boolean SellerBcImgDelete(String imgName) {
         String path = "C:\\Users\\70681\\Desktop\\Img\\";
-        File file = new File(path+imgName);
+        File file = new File(path + imgName);
         if (file == null || !file.exists()) {
             return false;
         }
@@ -35,21 +37,27 @@ public class FileOperation {
         return false;
     }
 
-    public void callTomcat(){
-        String path = System.getProperty("user.dir");//user.dir指定了当前的路径
-        System.out.println(path);
-        final Runtime runtime = Runtime.getRuntime();
+    public void callTomcat() {
+        String path = System.getProperty("user.dir");
+        String command = path+"\\shutdown.bat";//关闭tomcat命令
+        Runtime runtime = Runtime.getRuntime();//返回与当前的Java应用相关的运行时对象
+        //指示Java虚拟机创建一个子进程执行指定的可执行程序，并返回与该子进程对应的Process对象实例
         Process process = null;
-        String cmd = "shutdown.bat";
         try {
-            process = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", cmd});
+            process = runtime.exec(command);
+            runtime.gc();//运行垃圾回收器
+            String line = null;
+            String content = "";
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = br.readLine()) != null) {
+                content += line + "\r\n";
+            }
         } catch (IOException e) {
-            System.out.println("失效");
             e.printStackTrace();
         }
     }
 
-    public String SellerBcImgAdd(MultipartFile image){
+    public String SellerBcImgAdd(MultipartFile image) {
         if (!image.isEmpty()) {
             String fileName = image.getOriginalFilename();
             String path = null;

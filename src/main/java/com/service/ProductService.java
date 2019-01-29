@@ -17,5 +17,12 @@ public interface ProductService {
 
     int updateByPrimaryKey(Product record);
 
+    //查询所有（包括商品封面）
     List<Product> selectAll();
+
+    //selectKey
+    int selectKey(Product record);
+
+    //查询商品详情
+    Product selectProductDetail(Integer productid);
 }

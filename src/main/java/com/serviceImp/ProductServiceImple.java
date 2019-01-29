@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImple implements ProductService {
+public class ProductServiceImple implements ProductService
+{
 
     @Autowired(required = false)
     private ProductMapper productMapper;
@@ -47,6 +48,16 @@ public class ProductServiceImple implements ProductService {
     @Override
     public List<Product> selectAll() {
         return productMapper.selectAll();
+    }
+
+    @Override
+    public int selectKey(Product record) {
+        return productMapper.selectKey(record);
+    }
+
+    @Override
+    public Product selectProductDetail(Integer productid) {
+        return productMapper.selectProductDetail(productid);
     }
 
 

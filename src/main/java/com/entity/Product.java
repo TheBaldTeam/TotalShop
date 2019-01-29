@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Product {
     private Integer id;
@@ -13,9 +14,9 @@ public class Product {
 
     private Integer groupPrice;
 
-    private Integer num;
+    private Integer isGroup;
 
-    private String image;
+    private Integer num;
 
     private Integer cid;
 
@@ -25,7 +26,15 @@ public class Product {
 
     private Date updated;
 
-    private Integer isGroup;
+    private List<ProductImg> productImgList;
+
+    public List<ProductImg> getProductImgList() {
+        return productImgList;
+    }
+
+    public void setProductImgList(List<ProductImg> productImgList) {
+        this.productImgList = productImgList;
+    }
 
     public Integer getId() {
         return id;
@@ -67,20 +76,20 @@ public class Product {
         this.groupPrice = groupPrice;
     }
 
+    public Integer getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(Integer isGroup) {
+        this.isGroup = isGroup;
+    }
+
     public Integer getNum() {
         return num;
     }
 
     public void setNum(Integer num) {
         this.num = num;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image == null ? null : image.trim();
     }
 
     public Integer getCid() {
@@ -113,13 +122,5 @@ public class Product {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public Integer getIsGroup() {
-        return isGroup;
-    }
-
-    public void setIsGroup(Integer isGroup) {
-        this.isGroup = isGroup;
     }
 }

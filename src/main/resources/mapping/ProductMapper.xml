@@ -1,180 +1,295 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dao.ProductMapper" >
-  <resultMap id="BaseResultMap" type="com.entity.Product" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="sell_point" property="sellPoint" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="INTEGER" />
-    <result column="group_price" property="groupPrice" jdbcType="INTEGER" />
-    <result column="num" property="num" jdbcType="INTEGER" />
-    <result column="image" property="image" jdbcType="VARCHAR" />
-    <result column="cid" property="cid" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="created" property="created" jdbcType="TIMESTAMP" />
-    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
-    <result column="is_group" property="isGroup" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, title, sell_point, price, group_price, num, image, cid, status, created, updated, 
-    is_group
-  </sql>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select * from product_item
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from product_item
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from product_item
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.entity.Product" >
-    insert into product_item (id, title, sell_point, 
-      price, group_price, num, 
-      image, cid, status, 
-      created, updated, is_group
-      )
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sellPoint,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER}, #{groupPrice,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
-      #{image,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{isGroup,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.entity.Product" >
-    insert into product_item
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="sellPoint != null" >
-        sell_point,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="groupPrice != null" >
-        group_price,
-      </if>
-      <if test="num != null" >
-        num,
-      </if>
-      <if test="image != null" >
-        image,
-      </if>
-      <if test="cid != null" >
-        cid,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="created != null" >
-        created,
-      </if>
-      <if test="updated != null" >
-        updated,
-      </if>
-      <if test="isGroup != null" >
-        is_group,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="sellPoint != null" >
-        #{sellPoint,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=INTEGER},
-      </if>
-      <if test="groupPrice != null" >
-        #{groupPrice,jdbcType=INTEGER},
-      </if>
-      <if test="num != null" >
-        #{num,jdbcType=INTEGER},
-      </if>
-      <if test="image != null" >
-        #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="created != null" >
-        #{created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updated != null" >
-        #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isGroup != null" >
-        #{isGroup,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Product" >
-    update product_item
-    <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="sellPoint != null" >
-        sell_point = #{sellPoint,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
-      </if>
-      <if test="groupPrice != null" >
-        group_price = #{groupPrice,jdbcType=INTEGER},
-      </if>
-      <if test="num != null" >
-        num = #{num,jdbcType=INTEGER},
-      </if>
-      <if test="image != null" >
-        image = #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="cid != null" >
-        cid = #{cid,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
-      </if>
-      <if test="created != null" >
-        created = #{created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isGroup != null" >
-        is_group = #{isGroup,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.entity.Product" >
-    update product_item
-    set title = #{title,jdbcType=VARCHAR},
-      sell_point = #{sellPoint,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER},
-      group_price = #{groupPrice,jdbcType=INTEGER},
-      num = #{num,jdbcType=INTEGER},
-      image = #{image,jdbcType=VARCHAR},
-      cid = #{cid,jdbcType=INTEGER},
-      status = #{status,jdbcType=TINYINT},
-      created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP},
-      is_group = #{isGroup,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.dao.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.entity.Product">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="group_price" property="groupPrice" jdbcType="INTEGER"/>
+        <result column="is_group" property="isGroup" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="cid" property="cid" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--关联商品图片-->
+    <resultMap id="WithProductImg" type="com.entity.Product">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="group_price" property="groupPrice" jdbcType="INTEGER"/>
+        <result column="is_group" property="isGroup" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="cid" property="cid" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
+        <collection property="productImgList" ofType="com.entity.ProductImg">
+            <id column="imgid" property="id" jdbcType="INTEGER"/>
+            <result column="product_id" property="productId" jdbcType="INTEGER"/>
+            <result column="image" property="image" jdbcType="VARCHAR"/>
+            <result column="is_cover" property="isCover" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, sell_point, price, group_price, is_group, num, cid, status, created, updated
+    </sql>
+
+    <!--查询所有（包括封面）-->
+    <select id="selectAll" resultMap="WithProductImg">
+        SELECT p.*, i.image
+        FROM product_item p
+                 INNER JOIN product_img i ON p.id = i.product_id
+        WHERE i.is_cover = 1
+    </select>
+
+    <!--查询详情-->
+    <select id="selectProductDetail" resultMap="WithProductImg" parameterType="java.lang.Integer">
+        SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
+        FROM product_item p
+                 INNER JOIN product_img i ON p.id = i.product_id
+        WHERE p.id = #{productid}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from product_item
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from product_item
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.entity.Product">
+        insert into product_item (id,
+                                  title,
+                                  sell_point,
+                                  price,
+                                  group_price,
+                                  is_group,
+                                  num,
+                                  cid,
+                                  status,
+                                  created,
+                                  updated)
+        values (#{id,jdbcType=INTEGER},
+                #{title,jdbcType=VARCHAR},
+                #{sellPoint,jdbcType=VARCHAR},
+                #{price,jdbcType=INTEGER},
+                #{groupPrice,jdbcType=INTEGER},
+                #{isGroup,jdbcType=INTEGER},
+                #{num,jdbcType=INTEGER},
+                #{cid,jdbcType=INTEGER},
+                #{status,jdbcType=TINYINT},
+                #{created,jdbcType=TIMESTAMP},
+                #{updated,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.entity.Product">
+        insert into product_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="sellPoint != null">
+                sell_point,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="groupPrice != null">
+                group_price,
+            </if>
+            <if test="isGroup != null">
+                is_group,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="updated != null">
+                updated,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="sellPoint != null">
+                #{sellPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=INTEGER},
+            </if>
+            <if test="groupPrice != null">
+                #{groupPrice,jdbcType=INTEGER},
+            </if>
+            <if test="isGroup != null">
+                #{isGroup,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                #{updated,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="selectKey" parameterType="com.entity.Product">
+        insert into product_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="sellPoint != null">
+                sell_point,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="groupPrice != null">
+                group_price,
+            </if>
+            <if test="isGroup != null">
+                is_group,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="updated != null">
+                updated,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="sellPoint != null">
+                #{sellPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=INTEGER},
+            </if>
+            <if test="groupPrice != null">
+                #{groupPrice,jdbcType=INTEGER},
+            </if>
+            <if test="isGroup != null">
+                #{isGroup,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                #{updated,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        <selectKey resultType="Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.Product">
+        update product_item
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="sellPoint != null">
+                sell_point = #{sellPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=INTEGER},
+            </if>
+            <if test="groupPrice != null">
+                group_price = #{groupPrice,jdbcType=INTEGER},
+            </if>
+            <if test="isGroup != null">
+                is_group = #{isGroup,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                num = #{num,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                cid = #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                updated = #{updated,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.Product">
+        update product_item
+        set title       = #{title,jdbcType=VARCHAR},
+            sell_point  = #{sellPoint,jdbcType=VARCHAR},
+            price       = #{price,jdbcType=INTEGER},
+            group_price = #{groupPrice,jdbcType=INTEGER},
+            is_group    = #{isGroup,jdbcType=INTEGER},
+            num         = #{num,jdbcType=INTEGER},
+            cid         = #{cid,jdbcType=INTEGER},
+            status      = #{status,jdbcType=TINYINT},
+            created     = #{created,jdbcType=TIMESTAMP},
+            updated     = #{updated,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

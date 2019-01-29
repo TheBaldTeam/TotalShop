@@ -39,12 +39,13 @@ public class FileOperation {
 
     public void callTomcat() {
         String path = System.getProperty("user.dir");
-        String command = path+"\\shutdown.bat";//关闭tomcat命令
+//        String command = path+"\\shutdown.bat";//关闭tomcat命令
+        System.out.println(path);
         Runtime runtime = Runtime.getRuntime();//返回与当前的Java应用相关的运行时对象
         //指示Java虚拟机创建一个子进程执行指定的可执行程序，并返回与该子进程对应的Process对象实例
         Process process = null;
         try {
-            process = runtime.exec(command);
+            process = runtime.exec(path);
             runtime.gc();//运行垃圾回收器
             String line = null;
             String content = "";

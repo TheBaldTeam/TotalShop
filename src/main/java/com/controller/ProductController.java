@@ -4,10 +4,12 @@ import com.dao.FileOperation;
 import com.entity.*;
 import com.service.ProductImgService;
 import com.service.ProductService;
+import com.service.SellerPimgService;
 import com.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 /*
  * author:@洪伟
  *
@@ -34,6 +37,9 @@ public class ProductController {
     private VersionService versionService;
     @Autowired
     private ProductImgService productImgService;
+    //关联商品图片/商家
+    @Autowired
+    private SellerPimgService sellerPimgService;
 
     @RequestMapping("/getAll")
     @ResponseBody
@@ -45,8 +51,9 @@ public class ProductController {
     //添加商品，做商品表和版本表操作
     @RequestMapping(value = "/insertP")
     @ResponseBody
-    public Map insertP(Product product, List<String> versionList) {
+    public Map insertP(Product product, String versionList, Integer sellerid) {
         Map<String, Object> map = new HashMap<>();
+        System.out.println(product);
         if (product.getGroupPrice() != 0) {
             product.setIsGroup(1);
         } else {
@@ -57,7 +64,13 @@ public class ProductController {
         product.setUpdated(new Date());
         int isOk = productService.selectKey(product);
         if (isOk > 0) {
-            for (String versionItem : versionList) {
+            SellerWithProductImg sellerWithProductImg = new SellerWithProductImg();
+            sellerWithProductImg.setProductId(product.getId());
+            sellerWithProductImg.setSellerId(sellerid);
+            sellerPimgService.insertSelective(sellerWithProductImg);
+            List<String> versions = JSON.parseArray(versionList,String.class);
+            System.out.println(versions);
+            for (String versionItem : versions) {
                 Version version = new Version();
                 version.setProductId(product.getId());
                 version.setProductName(product.getTitle());
@@ -76,6 +89,7 @@ public class ProductController {
 
     //上传商品图片，做io操作和商品图片表操作
     @RequestMapping("/upload")
+    @ResponseBody
     public Map upload(MultipartFile image, HttpServletRequest request, Integer isCover, Integer productid) throws UnsupportedEncodingException {
         Map<String, Object> map = new HashMap<>();
         //添加商品图片

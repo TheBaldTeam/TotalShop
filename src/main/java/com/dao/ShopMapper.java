@@ -19,5 +19,7 @@ public interface ShopMapper {
 
     List<Shop> selectAll();
 
+    List<Shop> selectLevel();
+
     List<Shop> selectTwo();
 }

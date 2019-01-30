@@ -15,9 +15,15 @@ public class ClassfiyController {
     @Autowired
     private ShopService shopService;
 
+    //查询所有目录
     @RequestMapping("/selectLevel")
     public List<Shop> getStaticImg(){
-        return shopService.selectTwo();
+        return shopService.selectLevel();
     }
 
+    //查询二级目录
+    @RequestMapping("/selectTwo")
+    public List<Shop> selectTwo(){
+        return shopService.selectTwo();
+    }
 }

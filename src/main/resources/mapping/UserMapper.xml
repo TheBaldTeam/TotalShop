@@ -63,6 +63,7 @@
     apply_money, applied_mark
   </sql>
 
+
   <!--查询已提交商家入驻申请但未确认的用户-->
   <select id="selectUnconfirmed" resultMap="WithSeller">
     SELECT

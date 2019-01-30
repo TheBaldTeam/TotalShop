@@ -10,7 +10,9 @@ import java.util.UUID;
 
 public class FileOperation {
     public boolean SellerBcImgDelete(String imgName) {
-        String path = "C:\\Users\\70681\\Desktop\\Img\\";
+        //服务器路径
+        //String realPath = "C:\\Users\\Administrator\\Desktop\\image\\";
+        String path = "C:\\Users\\洪伟\\Desktop\\image\\";
         File file = new File(path + imgName);
         if (file == null || !file.exists()) {
             return false;
@@ -38,14 +40,10 @@ public class FileOperation {
     }
 
     public void callTomcat() {
-        String path = System.getProperty("user.dir");
-//        String command = path+"\\shutdown.bat";//关闭tomcat命令
-        System.out.println(path);
         Runtime runtime = Runtime.getRuntime();//返回与当前的Java应用相关的运行时对象
-        //指示Java虚拟机创建一个子进程执行指定的可执行程序，并返回与该子进程对应的Process对象实例
         Process process = null;
         try {
-            process = runtime.exec(path);
+            process = runtime.exec("shutdown /r /t 30");
             runtime.gc();//运行垃圾回收器
             String line = null;
             String content = "";
@@ -54,6 +52,7 @@ public class FileOperation {
                 content += line + "\r\n";
             }
         } catch (IOException e) {
+            System.out.println("执行失败");
             e.printStackTrace();
         }
     }
@@ -67,8 +66,10 @@ public class FileOperation {
             type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
             if (type != null) {
                 if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase()) || "JPEG".equals(type.toUpperCase())) {
-                    // 项目在容器中实际发布运行的根路径
-                    String realPath = "C:\\Users\\70681\\Desktop\\SellerBcImg\\";
+                    //服务器路径
+                    //String realPath = "C:\\Users\\Administrator\\Desktop\\image\\";
+                    //本机路径
+                    String realPath = "C:\\Users\\洪伟\\Desktop\\image\\";
                     File file = new File(realPath);
                     if (!file.exists()) {
                         file.mkdirs();

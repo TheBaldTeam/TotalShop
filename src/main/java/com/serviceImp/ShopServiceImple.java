@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShopServiceImple implements ShopService
-{
+public class ShopServiceImple implements ShopService {
 
     @Autowired(required = false)
     private ShopMapper shopClassifyMapper;
@@ -51,9 +50,13 @@ public class ShopServiceImple implements ShopService
     }
 
     @Override
+    public List<Shop> selectLevel() {
+        return shopClassifyMapper.selectLevel();
+    }
+
+    @Override
     public List<Shop> selectTwo() {
         return shopClassifyMapper.selectTwo();
     }
-
 
 }

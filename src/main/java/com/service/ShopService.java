@@ -19,6 +19,9 @@ public interface ShopService {
 
     List<Shop> selectAll();
 
+    //查询所有目录
+    List<Shop> selectLevel();
+
     //查询二级目录
     List<Shop> selectTwo();
 }

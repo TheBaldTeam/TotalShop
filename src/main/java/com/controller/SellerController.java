@@ -103,9 +103,13 @@ public class SellerController {
     }
 
     @RequestMapping("/isSeller")
-    public Integer checkIsSeller(Integer userid){
+    public Map checkIsSeller(Integer userid){
+        Map<String, Object> map = new HashMap<>();
         User user = userService.selectByPrimaryKey(userid);
-        return user.getIsSeller();
+        Seller seller = sellerService.selectByUserid(userid);
+        map.put("isSeller", user.getIsSeller());
+        map.put("sellerId", seller.getId());
+        return map;
     }
 }
 

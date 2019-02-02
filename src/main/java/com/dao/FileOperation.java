@@ -11,8 +11,8 @@ import java.util.UUID;
 public class FileOperation {
     public boolean SellerBcImgDelete(String imgName) {
         //服务器路径
-        //String realPath = "C:\\Users\\Administrator\\Desktop\\image\\";
-        String path = "C:\\Users\\洪伟\\Desktop\\image\\";
+        String path = "C:\\Users\\Administrator\\Desktop\\image\\";
+        //String path = "C:\\Users\\洪伟\\Desktop\\image\\";
         File file = new File(path + imgName);
         if (file == null || !file.exists()) {
             return false;
@@ -67,9 +67,9 @@ public class FileOperation {
             if (type != null) {
                 if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase()) || "JPEG".equals(type.toUpperCase())) {
                     //服务器路径
-                    //String realPath = "C:\\Users\\Administrator\\Desktop\\image\\";
+                    String realPath = "C:\\Users\\Administrator\\Desktop\\image\\";
                     //本机路径
-                    String realPath = "C:\\Users\\洪伟\\Desktop\\image\\";
+                    //String realPath = "C:\\Users\\洪伟\\Desktop\\image\\";
                     File file = new File(realPath);
                     if (!file.exists()) {
                         file.mkdirs();

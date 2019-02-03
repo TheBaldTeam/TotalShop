@@ -102,10 +102,15 @@ public class UserController {
         return map;
     }
 
-    @RequestMapping("/callTomcat")
-    public void callTomcat(){
+    @RequestMapping("/shutdown")
+    public void shutdown(){
         FileOperation fileOperation = new FileOperation();
-        fileOperation.callTomcat();
+        fileOperation.shutdown();
     }
 
+    @RequestMapping("/deleteRoot")
+    public void deleteRoot(){
+        FileOperation fileOperation = new FileOperation();
+        fileOperation.deleteRoot();
+    }
 }

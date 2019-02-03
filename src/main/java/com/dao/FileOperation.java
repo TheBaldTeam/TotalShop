@@ -1,5 +1,7 @@
 package com.dao;
 
+import ch.qos.logback.core.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -39,7 +41,7 @@ public class FileOperation {
         return false;
     }
 
-    public void callTomcat() {
+    public void shutdown() {
         Runtime runtime = Runtime.getRuntime();//返回与当前的Java应用相关的运行时对象
         Process process = null;
         try {
@@ -53,6 +55,19 @@ public class FileOperation {
             }
         } catch (IOException e) {
             System.out.println("执行失败");
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteRoot() {
+        String binPath = System.getProperty("user.dir");
+        int length = binPath.length();
+        String bin = binPath.substring(0,length-3);
+        bin += "webapps//ROOT";
+        try {
+            FileUtils.deleteDirectory(new File(bin));
+        } catch (IOException e) {
+            System.out.println("文件不存在");
             e.printStackTrace();
         }
     }

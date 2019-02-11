@@ -26,6 +26,8 @@ public class Product {
 
     private Date updated;
 
+    private Shop shop;
+
     private List<ProductImg> productImgList;
 
     public List<ProductImg> getProductImgList() {
@@ -34,6 +36,14 @@ public class Product {
 
     public void setProductImgList(List<ProductImg> productImgList) {
         this.productImgList = productImgList;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public Integer getId() {

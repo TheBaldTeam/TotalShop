@@ -2,14 +2,8 @@ package com.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.dao.FileOperation;
-import com.entity.Product;
-import com.entity.ProductImg;
-import com.entity.SellerWithProductImg;
-import com.entity.Version;
-import com.service.ProductImgService;
-import com.service.ProductService;
-import com.service.SellerPimgService;
-import com.service.VersionService;
+import com.entity.*;
+import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 /*
  * author:@洪伟
  *
@@ -41,6 +32,8 @@ public class ProductController {
     //关联商品图片/商家
     @Autowired
     private SellerPimgService sellerPimgService;
+    @Autowired
+    private ClassWithProductService classWithProductService;
 
     @RequestMapping("/getAll")
     @ResponseBody
@@ -49,10 +42,30 @@ public class ProductController {
         return productLsit;
     }
 
+    @RequestMapping("/selectLevel1P")
+    @ResponseBody
+    public List<Product> selectLevel1P(Integer classid){
+
+        return null;
+    }
+
+    @RequestMapping("/selectLevel2P")
+    @ResponseBody
+    public List<Product> selectLevel2P(Integer classid){
+        List<ClassWithProduct> classWithProductList = classWithProductService.selectByClassId(classid);
+        List<Product> productList = new ArrayList();
+        for (ClassWithProduct classWithProduct: classWithProductList) {
+            int productid = classWithProduct.getProductId();
+            Product product = productService.selectProductDetail(productid);
+            productList.add(product);
+        }
+        return productList;
+    }
+
     //添加商品，做商品表和版本表操作
     @RequestMapping(value = "/insertP")
     @ResponseBody
-    public Map insertP(Product product, String versionList, Integer sellerid) {
+    public Map insertP(Product product, String versionList, Integer sellerid, Integer classid) {
         Map<String, Object> map = new HashMap<>();
         System.out.println(product);
         if (product.getGroupPrice() != 0) {
@@ -65,6 +78,11 @@ public class ProductController {
         product.setUpdated(new Date());
         int isOk = productService.selectKey(product);
         if (isOk > 0) {
+            //插入关联表
+            ClassWithProduct classWithProduct = new ClassWithProduct();
+            classWithProduct.setLevel2ClassId(classid);
+            classWithProduct.setProductId(product.getId());
+            classWithProductService.insertSelective(classWithProduct);
             SellerWithProductImg sellerWithProductImg = new SellerWithProductImg();
             sellerWithProductImg.setProductId(product.getId());
             sellerWithProductImg.setSellerId(sellerid);
@@ -115,7 +133,8 @@ public class ProductController {
         return map;
     }
 
-    @RequestMapping("selectDetail")
+    @RequestMapping("/selectDetail")
+    @ResponseBody
     public Product selectDetail(Integer productid){
         return productService.selectProductDetail(productid);
     }

@@ -35,16 +35,62 @@
             <result column="is_cover" property="isCover" jdbcType="INTEGER"/>
         </collection>
     </resultMap>
+
+    <resultMap id="WithClass" type="com.entity.Product">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="group_price" property="groupPrice" jdbcType="INTEGER"/>
+        <result column="is_group" property="isGroup" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="cid" property="cid" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
+        <association property="shop" javaType="com.entity.Product">
+            <id column="class_id" property="classId" jdbcType="INTEGER"/>
+            <result column="class_name" property="className" jdbcType="VARCHAR"/>
+            <result column="class_key" property="classKey" jdbcType="INTEGER"/>
+            <result column="level" property="level" jdbcType="INTEGER"/>
+            <result column="ondelect" property="ondelect" jdbcType="INTEGER"/>
+            <result column="images" property="images" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="productImgList" ofType="com.entity.ProductImg">
+            <id column="imgid" property="id" jdbcType="INTEGER"/>
+            <result column="product_id" property="productId" jdbcType="INTEGER"/>
+            <result column="image" property="image" jdbcType="VARCHAR"/>
+            <result column="is_cover" property="isCover" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+
     <sql id="Base_Column_List">
         id, title, sell_point, price, group_price, is_group, num, cid, status, created, updated
     </sql>
 
+    <!---->
+
     <!--查询所有（包括封面）-->
-    <select id="selectAll" resultMap="WithProductImg">
-        SELECT p.*, i.image
-        FROM product_item p
-                 INNER JOIN product_img i ON p.id = i.product_id
-        WHERE i.is_cover = 1
+    <select id="selectAll" resultMap="WithClass">
+        SELECT p.id,
+               p.title,
+               p.price,
+               p.group_price,
+               p.is_group,
+               p.num,
+               p.cid,
+               p.STATUS,
+               img.image
+        FROM shop_classify s,
+             class_with_product c,
+             product_item p,
+             product_img img
+        WHERE s.class_key = #{classkey}
+          AND p.cid = s.class_id
+          AND img.is_cover = 1
+          AND p.id = img.product_id
+          AND ondelect = 0
     </select>
 
     <!--查询详情-->
@@ -53,6 +99,8 @@
         FROM product_item p
                  INNER JOIN product_img i ON p.id = i.product_id
         WHERE p.id = #{productid}
+          and p.status = 1
+          and i.is_cover = 1
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">

@@ -2,6 +2,10 @@ package com.dao;
 
 import com.entity.SellerWithProductImg;
 
+/*
+  商家关联所属商品
+* */
+
 public interface SellerWithProductImgMapper {
     int deleteByPrimaryKey(Integer id);
 

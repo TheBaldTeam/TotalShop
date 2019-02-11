@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-02 08:50:35
+Date: 2019-02-11 17:51:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,12 +24,35 @@ CREATE TABLE `address` (
   `address` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT '地址详情',
   `user_id` int(20) DEFAULT NULL COMMENT '用户id',
   `user_name` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '用户名',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of address
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for class_with_product
+-- ----------------------------
+DROP TABLE IF EXISTS `class_with_product`;
+CREATE TABLE `class_with_product` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `product_id` int(20) DEFAULT NULL,
+  `level2_class_id` int(20) DEFAULT NULL COMMENT '二级目录id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of class_with_product
+-- ----------------------------
+INSERT INTO `class_with_product` VALUES ('1', '15', null);
+INSERT INTO `class_with_product` VALUES ('2', '16', '11');
+INSERT INTO `class_with_product` VALUES ('3', '17', '11');
+INSERT INTO `class_with_product` VALUES ('4', '18', null);
+INSERT INTO `class_with_product` VALUES ('5', '19', null);
+INSERT INTO `class_with_product` VALUES ('6', '20', null);
 
 -- ----------------------------
 -- Table structure for product_img
@@ -40,8 +63,10 @@ CREATE TABLE `product_img` (
   `product_id` int(20) DEFAULT NULL,
   `image` varchar(500) DEFAULT NULL,
   `is_cover` int(20) DEFAULT '0' COMMENT '是否封面',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `product_img_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_img
@@ -65,6 +90,18 @@ INSERT INTO `product_img` VALUES ('16', '13', 'd1dbda65-0a77-4cbd-ab82-7b001fa0e
 INSERT INTO `product_img` VALUES ('17', '13', 'd3f6508b-1013-488d-97fb-1f1849f95e8f.png', '0');
 INSERT INTO `product_img` VALUES ('18', '14', '98a96063-41ab-4792-a0c7-dec532ce06e3.png', '1');
 INSERT INTO `product_img` VALUES ('19', '14', 'c837a471-05e2-491c-b590-e7def86a55c4.png', '0');
+INSERT INTO `product_img` VALUES ('20', '15', '8868d9ef-c2ac-478b-a59f-3980b5c8de50.png', '1');
+INSERT INTO `product_img` VALUES ('21', '15', 'ad3d4569-a345-447f-9f87-cb044071d573.png', '0');
+INSERT INTO `product_img` VALUES ('22', '16', '78213890-05c6-4359-99fa-655d17277ccf.png', '1');
+INSERT INTO `product_img` VALUES ('23', '16', '70484b8b-28b8-4775-a94e-386728831145.png', '0');
+INSERT INTO `product_img` VALUES ('24', '17', 'd8893726-c853-4609-a63a-961df48867b1.png', '1');
+INSERT INTO `product_img` VALUES ('25', '17', '9239935c-4fc2-4060-b301-87ae88bdffdd.png', '0');
+INSERT INTO `product_img` VALUES ('26', '18', 'fe8eefe0-e48e-4a02-9f3a-ddbbebe848da.png', '1');
+INSERT INTO `product_img` VALUES ('27', '18', 'c9c0926c-8797-4d09-972f-5a98886acab9.png', '0');
+INSERT INTO `product_img` VALUES ('28', '19', '30953bec-8ef0-42b7-be65-f5c8c4ef0303.png', '1');
+INSERT INTO `product_img` VALUES ('29', '19', 'f6bd15d6-b6c0-4454-a1d9-4eaac8e53ea5.png', '0');
+INSERT INTO `product_img` VALUES ('30', '20', 'd060ac8c-924e-4a0e-8567-489c95dedc3e.png', '0');
+INSERT INTO `product_img` VALUES ('31', '20', '5a6ce70a-fb76-4039-b48d-d272d17511b5.png', '1');
 
 -- ----------------------------
 -- Table structure for product_item
@@ -85,8 +122,9 @@ CREATE TABLE `product_item` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `cid` (`cid`) USING BTREE,
   KEY `status` (`status`) USING BTREE,
-  KEY `updated` (`updated`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='商品表';
+  KEY `updated` (`updated`) USING BTREE,
+  CONSTRAINT `product_item_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_classify` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='商品表';
 
 -- ----------------------------
 -- Records of product_item
@@ -105,6 +143,12 @@ INSERT INTO `product_item` VALUES ('11', '321', null, '321', '321', '1', '312', 
 INSERT INTO `product_item` VALUES ('12', '321', null, '321', '321', '1', '21', '11', '1', '2019-01-30 16:38:17', '2019-01-30 16:38:17');
 INSERT INTO `product_item` VALUES ('13', '321', null, '312', '321', '1', '21', '11', '1', '2019-01-30 16:41:19', '2019-01-30 16:41:19');
 INSERT INTO `product_item` VALUES ('14', '321', null, '321', '321', '1', '312', '11', '1', '2019-01-30 16:43:34', '2019-01-30 16:43:34');
+INSERT INTO `product_item` VALUES ('15', '321', null, '321', '321', '1', '321', '11', '1', '2019-02-11 11:25:41', '2019-02-11 11:25:41');
+INSERT INTO `product_item` VALUES ('16', '312', null, '321', '321', '1', '21', '11', '1', '2019-02-11 11:28:44', '2019-02-11 11:28:44');
+INSERT INTO `product_item` VALUES ('17', '654654', null, '654', '43', '1', '654', '11', '1', '2019-02-11 16:44:18', '2019-02-11 16:44:18');
+INSERT INTO `product_item` VALUES ('18', '321876', null, '765', '765', '1', '876', '11', '1', '2019-02-11 16:46:45', '2019-02-11 16:46:45');
+INSERT INTO `product_item` VALUES ('19', '312', null, '321', '321', '1', '21', '11', '1', '2019-02-11 16:48:33', '2019-02-11 16:48:33');
+INSERT INTO `product_item` VALUES ('20', '321', null, '321', '321', '1', '321', '11', '1', '2019-02-11 17:51:11', '2019-02-11 17:51:11');
 
 -- ----------------------------
 -- Table structure for seller
@@ -115,7 +159,10 @@ CREATE TABLE `seller` (
   `tel` bigint(50) DEFAULT NULL COMMENT '商户电话',
   `title_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '店铺名字',
   `user_id` int(20) DEFAULT NULL COMMENT '用户id',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `user_id` (`user_id`),
+  KEY `title_name` (`title_name`),
+  CONSTRAINT `seller_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
@@ -133,7 +180,9 @@ CREATE TABLE `seller_address` (
   `address` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '商家地址',
   `seller_id` int(20) DEFAULT NULL COMMENT '商家id',
   `seller_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '店长名字',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `seller_id` (`seller_id`),
+  CONSTRAINT `seller_address_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
@@ -151,7 +200,9 @@ CREATE TABLE `seller_bcimg` (
   `img` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '证件路径',
   `user_id` int(20) DEFAULT NULL COMMENT '用户id',
   `seller_id` int(20) DEFAULT NULL COMMENT '商家id',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `seller_id` (`seller_id`),
+  CONSTRAINT `seller_bcimg_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
@@ -168,12 +219,20 @@ CREATE TABLE `seller_with_product_img` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `seller_id` int(20) DEFAULT NULL,
   `product_id` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `seller_id` (`seller_id`),
+  CONSTRAINT `seller_with_product_img_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of seller_with_product_img
 -- ----------------------------
+INSERT INTO `seller_with_product_img` VALUES ('1', null, '15');
+INSERT INTO `seller_with_product_img` VALUES ('2', null, '16');
+INSERT INTO `seller_with_product_img` VALUES ('3', null, '17');
+INSERT INTO `seller_with_product_img` VALUES ('4', null, '18');
+INSERT INTO `seller_with_product_img` VALUES ('5', null, '19');
+INSERT INTO `seller_with_product_img` VALUES ('6', '9', '20');
 
 -- ----------------------------
 -- Table structure for shop_classify
@@ -304,8 +363,10 @@ CREATE TABLE `version` (
   `product_id` int(20) DEFAULT NULL COMMENT '商品id',
   `product_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '商品名字',
   `version_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '型号名字',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `version_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of version
@@ -323,3 +384,12 @@ INSERT INTO `version` VALUES ('10', '12', '321', '321');
 INSERT INTO `version` VALUES ('11', '12', '321', '45543');
 INSERT INTO `version` VALUES ('12', '13', '321', '321');
 INSERT INTO `version` VALUES ('13', '14', '321', '321');
+INSERT INTO `version` VALUES ('14', '15', '321', '321');
+INSERT INTO `version` VALUES ('15', '15', '321', '312312');
+INSERT INTO `version` VALUES ('16', '16', '312', '321');
+INSERT INTO `version` VALUES ('17', '17', '654654', '654');
+INSERT INTO `version` VALUES ('18', '18', '321876', '543');
+INSERT INTO `version` VALUES ('19', '18', '321876', '756');
+INSERT INTO `version` VALUES ('20', '19', '312', '321');
+INSERT INTO `version` VALUES ('21', '19', '312', '21321');
+INSERT INTO `version` VALUES ('22', '20', '321', '321');

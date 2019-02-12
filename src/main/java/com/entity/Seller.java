@@ -11,6 +11,8 @@ public class Seller {
 
     private Integer userId;
 
+    private String sellerClass;
+
     private List<SellerAddress> sellerAddressList;
 
     private List<SellerBcImg> sellerBcImgList;
@@ -61,5 +63,13 @@ public class Seller {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getSellerClass() {
+        return sellerClass;
+    }
+
+    public void setSellerClass(String sellerClass) {
+        this.sellerClass = sellerClass == null ? null : sellerClass.trim();
     }
 }

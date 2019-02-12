@@ -20,4 +20,6 @@ public interface SellerAddressMapper {
     List<SellerAddress> selectByUserId(Integer sellerid);
 
     int deleteBySellerId(Integer sellerid);
+
+    List<SellerAddress> selectBySellerid(Integer sellerid);
 }

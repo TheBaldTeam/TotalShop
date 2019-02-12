@@ -2,6 +2,8 @@ package com.dao;
 
 import com.entity.Seller;
 
+import java.util.List;
+
 public interface SellerMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -15,15 +17,13 @@ public interface SellerMapper {
 
     int updateByPrimaryKey(Seller record);
 
-    //selectKey
     int selectKey(Seller record);
 
-    //selectByUserid
     Seller selectByUserid(Integer userid);
 
-    //deleteByUserid
     int deleteByUserid(Integer userid);
 
-    //查询未审批详情
     Seller selectUnconfirmDetial(Integer sellerid);
+
+    List<Seller> selectSellerClass(String sellerClass);
 }

@@ -6,6 +6,8 @@ import com.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SellerServiceImple implements SellerService {
 
@@ -60,5 +62,10 @@ public class SellerServiceImple implements SellerService {
     @Override
     public Seller selectUnconfirmDetial(Integer sellerid) {
         return sellerMapper.selectUnconfirmDetial(sellerid);
+    }
+
+    @Override
+    public List<Seller> selectSellerClass(String sellerClass) {
+        return sellerMapper.selectSellerClass(sellerClass);
     }
 }

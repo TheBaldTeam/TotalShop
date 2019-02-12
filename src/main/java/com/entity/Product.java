@@ -26,6 +26,8 @@ public class Product {
 
     private Date updated;
 
+    private Integer salesVolume;
+
     private Shop shop;
 
     private List<ProductImg> productImgList;
@@ -132,5 +134,13 @@ public class Product {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Integer getSalesVolume() {
+        return salesVolume;
+    }
+
+    public void setSalesVolume(Integer salesVolume) {
+        this.salesVolume = salesVolume;
     }
 }

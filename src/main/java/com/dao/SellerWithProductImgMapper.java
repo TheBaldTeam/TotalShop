@@ -1,6 +1,9 @@
 package com.dao;
 
+import com.entity.ClassWithProduct;
 import com.entity.SellerWithProductImg;
+
+import java.util.List;
 
 /*
   商家关联所属商品
@@ -18,4 +21,6 @@ public interface SellerWithProductImgMapper {
     int updateByPrimaryKeySelective(SellerWithProductImg record);
 
     int updateByPrimaryKey(SellerWithProductImg record);
+
+    List<SellerWithProductImg> selectByPid(Integer productid);
 }

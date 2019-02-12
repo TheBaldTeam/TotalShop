@@ -2,6 +2,8 @@ package com.service;
 
 import com.entity.SellerWithProductImg;
 
+import java.util.List;
+
 public interface SellerPimgService {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface SellerPimgService {
     int updateByPrimaryKeySelective(SellerWithProductImg record);
 
     int updateByPrimaryKey(SellerWithProductImg record);
+
+    List<SellerWithProductImg> selectByPid(Integer productid);
 }

@@ -78,7 +78,11 @@ public class UserServiceImple implements UserService {
     @Override
     public Integer selectUnconfirmByUserId(Integer userid) {
         User user = userMapper.selectUnconfirmByUserId(userid);
-        return user.getIsApply();
+        if(user==null){
+            return -1;
+        }else{
+            return user.getIsApply();
+        }
     }
 
 }

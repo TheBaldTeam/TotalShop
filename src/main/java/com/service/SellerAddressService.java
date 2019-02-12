@@ -21,4 +21,6 @@ public interface SellerAddressService {
     List<SellerAddress> selectByUserId(Integer sellerid);
 
     int deleteBySellerId(Integer sellerid);
+
+    List<SellerAddress> selectBySellerid(Integer sellerid);
 }

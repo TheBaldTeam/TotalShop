@@ -18,4 +18,5 @@ public interface ClassWithProductService {
     int updateByPrimaryKey(ClassWithProduct record);
 
     List<ClassWithProduct> selectByClassId(Integer classid);
+
 }

@@ -6,6 +6,8 @@ import com.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VersionServiceImple implements VersionService {
 
@@ -40,5 +42,10 @@ public class VersionServiceImple implements VersionService {
     @Override
     public int updateByPrimaryKey(Version record) {
         return versionMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Version> selectVersionByPid(Integer productid) {
+        return versionMapper.selectVersionByPid(productid);
     }
 }

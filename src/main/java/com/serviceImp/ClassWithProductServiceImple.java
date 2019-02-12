@@ -48,4 +48,6 @@ public class ClassWithProductServiceImple implements ClassWithProductService{
     public List<ClassWithProduct> selectByClassId(Integer classid) {
         return classWithProductMapper.selectByClassId(classid);
     }
+
+
 }

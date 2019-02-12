@@ -2,6 +2,8 @@ package com.service;
 
 import com.entity.Version;
 
+import java.util.List;
+
 public interface VersionService {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface VersionService {
     int updateByPrimaryKeySelective(Version record);
 
     int updateByPrimaryKey(Version record);
+
+    List<Version> selectVersionByPid(Integer productid);
 }

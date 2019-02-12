@@ -18,4 +18,6 @@ public interface ClassWithProductMapper {
     int updateByPrimaryKey(ClassWithProduct record);
 
     List<ClassWithProduct> selectByClassId(Integer classid);
+
+
 }

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -46,6 +47,7 @@ public class SellerController {
             if (isOk > 0) {
                 //插入Seller数据
                 seller.setUserId(userid);
+                System.out.println(seller.getSellerClass());
                 int isOk2 = sellerService.selectKey(seller);
                 if (isOk2 > 0) {
                     //插入sellerAddress
@@ -107,9 +109,19 @@ public class SellerController {
         Map<String, Object> map = new HashMap<>();
         User user = userService.selectByPrimaryKey(userid);
         Seller seller = sellerService.selectByUserid(userid);
-        map.put("isSeller", user.getIsSeller());
-        map.put("sellerId", seller.getId());
+        if (seller==null){
+            map.put("info",-1);
+        }else{
+            map.put("isSeller", user.getIsSeller());
+            map.put("sellerId", seller.getId());
+        }
         return map;
+    }
+
+    @RequestMapping("/selectSellerClass")
+    public List<Seller> selectSellerClass(String sellerClass){
+        List<Seller> sellerList = sellerService.selectSellerClass(sellerClass);
+        return sellerList;
     }
 }
 

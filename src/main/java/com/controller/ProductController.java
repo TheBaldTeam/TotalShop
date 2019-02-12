@@ -35,18 +35,13 @@ public class ProductController {
     @Autowired
     private ClassWithProductService classWithProductService;
 
-    @RequestMapping("/getAll")
-    @ResponseBody
-    public List<Product> getAll() {
-        List<Product> productLsit = productService.selectAll();
-        return productLsit;
-    }
+
 
     @RequestMapping("/selectLevel1P")
     @ResponseBody
-    public List<Product> selectLevel1P(Integer classid){
-
-        return null;
+    public List<Product> selectLevel1P(Integer classkey){
+        List<Product> productList = productService.selectAll(classkey);
+        return productList;
     }
 
     @RequestMapping("/selectLevel2P")
@@ -56,7 +51,7 @@ public class ProductController {
         List<Product> productList = new ArrayList();
         for (ClassWithProduct classWithProduct: classWithProductList) {
             int productid = classWithProduct.getProductId();
-            Product product = productService.selectProductDetail(productid);
+            Product product = productService.selectLevel2P(productid);
             productList.add(product);
         }
         return productList;
@@ -65,7 +60,7 @@ public class ProductController {
     //添加商品，做商品表和版本表操作
     @RequestMapping(value = "/insertP")
     @ResponseBody
-    public Map insertP(Product product, String versionList, Integer sellerid, Integer classid) {
+    public Map insertP(Product product, String versionList, Integer sellerid, Integer cid) {
         Map<String, Object> map = new HashMap<>();
         System.out.println(product);
         if (product.getGroupPrice() != 0) {
@@ -80,7 +75,7 @@ public class ProductController {
         if (isOk > 0) {
             //插入关联表
             ClassWithProduct classWithProduct = new ClassWithProduct();
-            classWithProduct.setLevel2ClassId(classid);
+            classWithProduct.setLevel2ClassId(cid);
             classWithProduct.setProductId(product.getId());
             classWithProductService.insertSelective(classWithProduct);
             SellerWithProductImg sellerWithProductImg = new SellerWithProductImg();
@@ -135,7 +130,7 @@ public class ProductController {
 
     @RequestMapping("/selectDetail")
     @ResponseBody
-    public Product selectDetail(Integer productid){
+    public Map selectDetail(Integer productid){
         return productService.selectProductDetail(productid);
     }
 

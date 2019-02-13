@@ -53,7 +53,7 @@ public class ProductController {
     @RequestMapping("/selectLevel1P")
     @ResponseBody
     public List<Product> selectLevel1P(Integer classid){
-        return productService.selectLevel1p(classid);
+        return productService.selectLevel1P(classid);
     }
 
     @RequestMapping("/selectLevel2P")

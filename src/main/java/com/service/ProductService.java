@@ -28,7 +28,7 @@ public interface ProductService {
     Map selectProductDetail(Integer productid);
 
     //查询一级目录下的商品和商品封面
-    List<Product> selectLevel1p(Integer classid);
+    List<Product> selectLevel1P(Integer classid);
 
     //查询二级目录下的商品和商品封面
     Product selectLevel2P(Integer classid);

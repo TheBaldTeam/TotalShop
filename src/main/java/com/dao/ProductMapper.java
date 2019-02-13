@@ -23,7 +23,7 @@ public interface ProductMapper {
 
     List<Product> selectProductWithImg(Integer productid);
 
-    List<Product> selectLevel1p(Integer classid);
+    List<Product> selectLevel1P(Integer classid);
 
     Product selectLevel2P(Integer classid);
 

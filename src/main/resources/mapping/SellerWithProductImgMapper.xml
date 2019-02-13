@@ -11,7 +11,7 @@
   </sql>
   <!--通过productid查询-->
   <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select * from class_with_product where product_id = #{productid}
+    select * from seller_with_product_img where product_id = #{productid}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

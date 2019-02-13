@@ -29,6 +29,9 @@ public interface SellerService {
     //查询未审批详情
     Seller selectUnconfirmDetial(Integer sellerid);
 
-    //根据selerClass查询seller
-    List<Seller> selectSellerClass(String sellerClass);
+    //根据selerid查找商家旗下前三热销商品
+    List<Seller> selectSellerTopThree(Integer sellerid);
+
+    //通过sellerClass查找seller
+    List<Seller> selectSellerFromSellerClass(String sellerClass);
 }

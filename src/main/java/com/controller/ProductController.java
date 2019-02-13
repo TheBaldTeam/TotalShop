@@ -36,6 +36,12 @@ public class ProductController {
     private ClassWithProductService classWithProductService;
 
 
+    //通过seller查询已上架商品
+    @RequestMapping("/selectFromSeller")
+    @ResponseBody
+    public List<Product> selectFromSelelr(Integer sellerid){
+        return productService.selectFromSeller(sellerid);
+    }
 
     @RequestMapping("/selectLevel1P")
     @ResponseBody
@@ -62,8 +68,10 @@ public class ProductController {
     @ResponseBody
     public Map insertP(Product product, String versionList, Integer sellerid, Integer cid) {
         Map<String, Object> map = new HashMap<>();
-        System.out.println(product);
-        if (product.getGroupPrice() != 0) {
+        //若团购价格不为0则设置为团购商品
+        if(product.getGroupPrice() == null){
+            product.setIsGroup(0);
+        }else if (product.getGroupPrice() != 0) {
             product.setIsGroup(1);
         } else {
             product.setIsGroup(0);

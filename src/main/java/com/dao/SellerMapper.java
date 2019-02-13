@@ -25,5 +25,9 @@ public interface SellerMapper {
 
     Seller selectUnconfirmDetial(Integer sellerid);
 
-    List<Seller> selectSellerClass(String sellerClass);
+    //查找商家热销商品前三
+    List<Seller> selectSellerTopThree(Integer sellerid);
+
+    //通过sellerClass查找seller
+    List<Seller> selectSellerFromSellerClass(String sellerClass);
 }

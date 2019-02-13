@@ -17,6 +17,26 @@ public class Seller {
 
     private List<SellerBcImg> sellerBcImgList;
 
+    private List<Product> productList;
+
+    private List<ProductImg> productImgList;
+
+    public List<ProductImg> getProductImgList() {
+        return productImgList;
+    }
+
+    public void setProductImgList(List<ProductImg> productImgList) {
+        this.productImgList = productImgList;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
     public List<SellerBcImg> getSellerBcImgList() {
         return sellerBcImgList;
     }

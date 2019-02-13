@@ -24,4 +24,7 @@ public interface ProductMapper {
     List<Product> selectProductWithImg(Integer productid);
 
     Product selectLevel2P(Integer productid);
+
+    //查询商户内商品
+    List<Product> selectFromSeller(Integer sellerid);
 }

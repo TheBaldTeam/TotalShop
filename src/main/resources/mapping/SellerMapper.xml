@@ -39,13 +39,63 @@
             <result column="img" jdbcType="VARCHAR" property="img"/>
         </association>
     </resultMap>
+
+    <!--一对多商品+商品图片查询-->
+    <resultMap id="WithProductAndPimg" type="com.entity.Seller">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tel" property="tel" jdbcType="BIGINT"/>
+        <result column="title_name" property="titleName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
+        <collection property="productList" ofType="com.entity.Product">
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="title" jdbcType="VARCHAR" property="title"/>
+            <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
+            <result column="price" jdbcType="INTEGER" property="price"/>
+            <result column="group_price" jdbcType="INTEGER" property="groupPrice"/>
+            <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
+            <result column="num" jdbcType="INTEGER" property="num"/>
+            <result column="cid" jdbcType="INTEGER" property="cid"/>
+            <result column="status" jdbcType="TINYINT" property="status"/>
+            <result column="created" jdbcType="TIMESTAMP" property="created"/>
+            <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+            <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
+            <collection property="productImgList" ofType="com.entity.ProductImg">
+                <id column="id" property="id" jdbcType="INTEGER"/>
+                <result column="product_id" property="productId" jdbcType="INTEGER"/>
+                <result column="image" property="image" jdbcType="VARCHAR"/>
+                <result column="is_cover" property="isCover" jdbcType="INTEGER"/>
+            </collection>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, tel, title_name, user_id, seller_class
     </sql>
 
-    <!--根据商家类型查找商家-->
-    <select id="selectSellerClass" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select * from seller where seller_class = #{sellerClass}
+    <!--通过sellerClass查找商家-->
+    <select id="selectSellerFromSellerClass" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select *
+        from seller
+        where seller_class = #{sellerClass}
+    </select>
+
+    <!--根据商家id查找旗下前三热销商品-->
+    <select id="selectSellerTopThree" resultMap="WithProductAndPimg" parameterType="java.lang.Integer">
+        SELECT s.*, p.id pid, p.*, img.image
+        FROM (
+                     (
+                             seller_with_product_img swp
+                                     INNER JOIN seller s ON s.id = swp.seller_id
+                             )
+                             INNER JOIN product_item p ON p.id = swp.product_id
+                     )
+                 INNER JOIN product_img img ON img.product_id = swp.product_id
+        WHERE s.id = #{sellerid}
+          AND img.is_cover = 1
+        ORDER BY p.sales_volume DESC
+        LIMIT 0,
+              3
     </select>
 
     <!--查询未审批商户详情信息-->

@@ -12,12 +12,14 @@ import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,10 +120,24 @@ public class SellerController {
         return map;
     }
 
+    //显示店铺分类+每个店铺热销前三
     @RequestMapping("/selectSellerClass")
     public List<Seller> selectSellerClass(String sellerClass){
-        List<Seller> sellerList = sellerService.selectSellerClass(sellerClass);
-        return sellerList;
+        //拿到此类别的所有商户
+        List<Seller> sellerList = sellerService.selectSellerFromSellerClass(sellerClass);
+        //遍历商户id并分别查询热销前三
+        List finalList = new ArrayList();
+        for (Seller sellerTemp : sellerList) {
+            Integer sellerid = sellerTemp.getId();
+            List<Seller> sellerAndProductList = sellerService.selectSellerTopThree(sellerid);
+            finalList.add(sellerAndProductList);
+        }
+        return finalList;
+    }
+
+    @RequestMapping("/test")
+    public List test(Integer sellerid){
+        return sellerService.selectSellerTopThree(sellerid);
     }
 }
 

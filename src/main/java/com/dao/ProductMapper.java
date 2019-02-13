@@ -17,13 +17,15 @@ public interface ProductMapper {
 
     int updateByPrimaryKey(Product record);
 
-    List<Product> selectAll(Integer classkey);
+    List<Product> selectAll();
 
     int selectKey(Product record);
 
     List<Product> selectProductWithImg(Integer productid);
 
-    Product selectLevel2P(Integer productid);
+    List<Product> selectLevel1p(Integer classid);
+
+    Product selectLevel2P(Integer classid);
 
     //查询商户内商品
     List<Product> selectFromSeller(Integer sellerid);

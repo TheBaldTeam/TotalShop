@@ -19,7 +19,7 @@ public interface ProductService {
     int updateByPrimaryKey(Product record);
 
     //查询所有（包括商品封面）
-    List<Product> selectAll(Integer classkey);
+    List<Product> selectAll();
 
     //selectKey
     int selectKey(Product record);
@@ -27,8 +27,11 @@ public interface ProductService {
     //查询商品详情
     Map selectProductDetail(Integer productid);
 
+    //查询一级目录下的商品和商品封面
+    List<Product> selectLevel1p(Integer classid);
+
     //查询二级目录下的商品和商品封面
-    Product selectLevel2P(Integer productid);
+    Product selectLevel2P(Integer classid);
 
     //查询商户内商品
     List<Product> selectFromSeller(Integer sellerid);

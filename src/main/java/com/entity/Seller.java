@@ -19,16 +19,6 @@ public class Seller {
 
     private List<Product> productList;
 
-    private List<ProductImg> productImgList;
-
-    public List<ProductImg> getProductImgList() {
-        return productImgList;
-    }
-
-    public void setProductImgList(List<ProductImg> productImgList) {
-        this.productImgList = productImgList;
-    }
-
     public List<Product> getProductList() {
         return productList;
     }

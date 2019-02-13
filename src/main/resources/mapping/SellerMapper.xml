@@ -48,7 +48,7 @@
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
         <collection property="productList" ofType="com.entity.Product">
-            <id column="id" jdbcType="INTEGER" property="id"/>
+            <id column="pid" jdbcType="INTEGER" property="id"/>
             <result column="title" jdbcType="VARCHAR" property="title"/>
             <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
             <result column="price" jdbcType="INTEGER" property="price"/>
@@ -93,6 +93,7 @@
                  INNER JOIN product_img img ON img.product_id = swp.product_id
         WHERE s.id = #{sellerid}
           AND img.is_cover = 1
+          AND p.status = 1
         ORDER BY p.sales_volume DESC
         LIMIT 0,
               3

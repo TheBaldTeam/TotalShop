@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -130,14 +131,16 @@ public class SellerController {
         for (Seller sellerTemp : sellerList) {
             Integer sellerid = sellerTemp.getId();
             List<Seller> sellerAndProductList = sellerService.selectSellerTopThree(sellerid);
-            finalList.add(sellerAndProductList);
+            if(!(sellerAndProductList.isEmpty())){
+                finalList.add(sellerAndProductList);
+            }
         }
         return finalList;
     }
 
     @RequestMapping("/test")
-    public List test(Integer sellerid){
-        return sellerService.selectSellerTopThree(sellerid);
+    public List test(){
+        return sellerService.selectSellerTopThree(1);
     }
 }
 

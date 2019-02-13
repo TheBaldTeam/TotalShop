@@ -58,8 +58,8 @@ public class ProductServiceImple implements ProductService {
     }
 
     @Override
-    public List<Product> selectAll(Integer classkey) {
-        return productMapper.selectAll(classkey);
+    public List<Product> selectAll() {
+        return productMapper.selectAll();
     }
 
     @Override
@@ -88,8 +88,13 @@ public class ProductServiceImple implements ProductService {
     }
 
     @Override
-    public Product selectLevel2P(Integer productid) {
-        return productMapper.selectLevel2P(productid);
+    public List<Product> selectLevel1p(Integer classid) {
+        return productMapper.selectLevel1p(classid);
+    }
+
+    @Override
+    public Product selectLevel2P(Integer classid) {
+        return productMapper.selectLevel2P(classid);
     }
 
     @Override

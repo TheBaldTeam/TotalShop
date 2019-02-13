@@ -29,6 +29,7 @@
         <result column="status" jdbcType="TINYINT" property="status"/>
         <result column="created" jdbcType="TIMESTAMP" property="created"/>
         <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+        <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
         <collection ofType="com.entity.ProductImg" property="productImgList">
             <id column="imgid" jdbcType="INTEGER" property="id"/>
             <result column="product_id" jdbcType="INTEGER" property="productId"/>
@@ -37,7 +38,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="WithClass" type="com.entity.Product">
+    <resultMap id="All" type="com.entity.Product">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
@@ -50,13 +51,15 @@
         <result column="created" jdbcType="TIMESTAMP" property="created"/>
         <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
         <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
-        <association javaType="com.entity.Shop" property="shop">
-            <id column="class_id" jdbcType="INTEGER" property="classId"/>
-            <result column="class_name" jdbcType="VARCHAR" property="className"/>
-            <result column="class_key" jdbcType="INTEGER" property="classKey"/>
-            <result column="level" jdbcType="INTEGER" property="level"/>
-            <result column="ondelect" jdbcType="INTEGER" property="ondelect"/>
-            <result column="images" jdbcType="VARCHAR" property="images"/>
+        <association property="seller" javaType="com.entity.Seller">
+            <id column="sellerid" property="id" jdbcType="INTEGER"/>
+            <result column="tel" property="tel" jdbcType="BIGINT"/>
+            <result column="title_name" property="titleName" jdbcType="VARCHAR"/>
+            <result column="user_id" property="userId" jdbcType="INTEGER"/>
+            <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
+            <collection property="sellerAddressList" ofType="com.entity.SellerAddress">
+                <result column="address" property="address" jdbcType="VARCHAR"/>
+            </collection>
         </association>
         <collection ofType="com.entity.ProductImg" property="productImgList">
             <id column="imgid" jdbcType="INTEGER" property="id"/>
@@ -243,45 +246,74 @@
 
     <!--查询商户内的商品-->
     <select id="selectFromSeller" resultMap="WithProductImg" parameterType="java.lang.Integer">
-        SELECT
-               p.id,
-               p.title,
-               p.price,
-               p.group_price,
-               i.image
-        FROM
-             (
+        SELECT p.id, p.title, p.price, p.group_price, i.image
+        FROM (
                      product_item p
                              INNER JOIN product_img i ON p.id = i.product_id
                      )
                  INNER JOIN seller_with_product_img swp ON swp.product_id = p.id
-        WHERE
-                i.is_cover = 1
+        WHERE i.is_cover = 1
           AND p.status = 1
           AND swp.seller_id = #{sellerid}
     </select>
 
     <!--查询所有（包括封面）-->
-    <select id="selectAll" resultMap="WithClass">
-        SELECT p.*, img.image, seller.id sellerid, seller.title_name, sa.address
-        FROM shop_classify s,
-             class_with_product c,
-             product_item p,
-             product_img img,
-             seller seller,
-             seller_with_product_img swp,
-             seller_address sa
-        WHERE s.class_key = #{classkey}
-          AND p.cid = s.class_id
-          AND img.is_cover = 1
-          AND p.id = img.product_id
-          AND ondelect = 0
-          AND c.level2_class_id = s.class_id
-          AND p.id = swp.product_id
-          AND swp.seller_id = seller.id
-          AND seller.id = sa.seller_id
-          AND p.id = c.product_id
-          AND p.status = 1
+    <select id="selectAll" resultMap="All">
+        SELECT p.id,
+               p.title,
+               p.is_group,
+               p.group_price,
+               p.price,
+               p.sales_volume,
+               p.sell_point,
+               s.id sellerid,
+               s.title_name,
+               pimg.image
+        FROM (
+                (
+                        (
+                                seller_with_product_img swp
+                                        INNER JOIN product_item p ON p.id = swp.product_id
+                                )
+                                INNER JOIN seller s ON s.id = swp.seller_id
+                        )
+                        INNER JOIN product_img pimg ON pimg.product_id = swp.product_id
+                )
+        WHERE pimg.is_cover = 1
+          AND p.`status` = 1
+        ORDER BY p.sales_volume DESC
+        limit 0, 300
+    </select>
+
+    <!--查询一级目录-->
+    <select id="selectLevel1P" parameterType="java.lang.Integer" resultMap="All">
+        SELECT p.id,
+               p.title,
+               p.is_group,
+               p.group_price,
+               p.price,
+               s.title_name,
+               s.id sellerid,
+               pimg.image
+        FROM (
+                (
+                        (
+                                (
+                                        (
+                                                class_with_product cwp
+                                                        INNER JOIN product_item p ON p.id = cwp.product_id
+                                                )
+                                                INNER JOIN shop_classify sc ON sc.class_id = cwp.level2_class_id
+                                        )
+                                        INNER JOIN seller_with_product_img swp ON swp.product_id = p.id
+                                )
+                                INNER JOIN seller s ON s.id = swp.seller_id
+                        )
+                        INNER JOIN product_img pimg ON pimg.product_id = p.id
+                )
+        WHERE p.`status` = 1
+          AND pimg.is_cover = 1
+          AND sc.class_id = #{classid}
     </select>
 
     <!--查询二级目录下所有的商品-->

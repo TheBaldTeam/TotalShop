@@ -32,6 +32,16 @@ public class Product {
 
     private List<ProductImg> productImgList;
 
+    private Seller seller;
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
     public List<ProductImg> getProductImgList() {
         return productImgList;
     }

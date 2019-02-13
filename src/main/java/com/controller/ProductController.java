@@ -43,11 +43,17 @@ public class ProductController {
         return productService.selectFromSeller(sellerid);
     }
 
+    @RequestMapping("/selectHotP")
+    @ResponseBody
+    public List<Product> selectHotP(){
+        List<Product> productList = productService.selectAll();
+        return productList;
+    }
+
     @RequestMapping("/selectLevel1P")
     @ResponseBody
-    public List<Product> selectLevel1P(Integer classkey){
-        List<Product> productList = productService.selectAll(classkey);
-        return productList;
+    public List<Product> selectLevel1P(Integer classid){
+        return productService.selectLevel1p(classid);
     }
 
     @RequestMapping("/selectLevel2P")

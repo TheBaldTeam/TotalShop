@@ -147,6 +147,7 @@ public class ProductController {
         Product product = productService.selectByPrimaryKey(productid);
         if (product != null) {
             product.setStatus((byte) 0);
+            productService.updateByPrimaryKey(product);
             map.put("status", "ok");
             map.put("info", 1);
         } else {

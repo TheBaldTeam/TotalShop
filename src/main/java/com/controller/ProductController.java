@@ -68,7 +68,9 @@ public class ProductController {
         for (ClassWithProduct classWithProduct : classWithProductList) {
             int productid = classWithProduct.getProductId();
             Product product = productService.selectLevel2P(productid);
-            productList.add(product);
+            if(product.getStatus()!=1){
+                productList.add(product);
+            }
         }
         return productList;
     }

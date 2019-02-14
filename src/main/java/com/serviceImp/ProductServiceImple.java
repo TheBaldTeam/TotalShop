@@ -102,5 +102,10 @@ public class ProductServiceImple implements ProductService {
         return productMapper.selectFromSeller(sellerid);
     }
 
+    @Override
+    public List<Product> serchProduct(String pname) {
+        return productMapper.serchProduct(pname);
+    }
+
 
 }

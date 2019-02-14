@@ -1,5 +1,6 @@
 package com.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +11,9 @@ public class Product {
 
     private String sellPoint;
 
-    private Integer price;
+    private BigDecimal price;
 
-    private Integer groupPrice;
+    private BigDecimal groupPrice;
 
     private Integer isGroup;
 
@@ -82,19 +83,19 @@ public class Product {
         this.sellPoint = sellPoint == null ? null : sellPoint.trim();
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Integer getGroupPrice() {
+    public BigDecimal getGroupPrice() {
         return groupPrice;
     }
 
-    public void setGroupPrice(Integer groupPrice) {
+    public void setGroupPrice(BigDecimal groupPrice) {
         this.groupPrice = groupPrice;
     }
 

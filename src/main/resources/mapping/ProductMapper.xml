@@ -5,8 +5,8 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
-        <result column="price" jdbcType="INTEGER" property="price"/>
-        <result column="group_price" jdbcType="INTEGER" property="groupPrice"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="group_price" jdbcType="DECIMAL" property="groupPrice"/>
         <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
         <result column="num" jdbcType="INTEGER" property="num"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
@@ -21,8 +21,8 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
-        <result column="price" jdbcType="INTEGER" property="price"/>
-        <result column="group_price" jdbcType="INTEGER" property="groupPrice"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="group_price" jdbcType="DECIMAL" property="groupPrice"/>
         <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
         <result column="num" jdbcType="INTEGER" property="num"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
@@ -42,8 +42,8 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
-        <result column="price" jdbcType="INTEGER" property="price"/>
-        <result column="group_price" jdbcType="INTEGER" property="groupPrice"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="group_price" jdbcType="DECIMAL" property="groupPrice"/>
         <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
         <result column="num" jdbcType="INTEGER" property="num"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
@@ -100,8 +100,8 @@
         values (#{id,jdbcType=INTEGER},
                 #{title,jdbcType=VARCHAR},
                 #{sellPoint,jdbcType=VARCHAR},
-                #{price,jdbcType=INTEGER},
-                #{groupPrice,jdbcType=INTEGER},
+                #{price,jdbcType=DECIMAL},
+                #{groupPrice,jdbcType=DECIMAL},
                 #{isGroup,jdbcType=INTEGER},
                 #{num,jdbcType=INTEGER},
                 #{cid,jdbcType=INTEGER},
@@ -161,10 +161,10 @@
                 #{sellPoint,jdbcType=VARCHAR},
             </if>
             <if test="price != null">
-                #{price,jdbcType=INTEGER},
+                #{price,jdbcType=DECIMAL},
             </if>
             <if test="groupPrice != null">
-                #{groupPrice,jdbcType=INTEGER},
+                #{groupPrice,jdbcType=DECIMAL},
             </if>
             <if test="isGroup != null">
                 #{isGroup,jdbcType=INTEGER},
@@ -199,10 +199,10 @@
                 sell_point = #{sellPoint,jdbcType=VARCHAR},
             </if>
             <if test="price != null">
-                price = #{price,jdbcType=INTEGER},
+                price = #{price,jdbcType=DECIMAL},
             </if>
             <if test="groupPrice != null">
-                group_price = #{groupPrice,jdbcType=INTEGER},
+                group_price = #{groupPrice,jdbcType=DECIMAL},
             </if>
             <if test="isGroup != null">
                 is_group = #{isGroup,jdbcType=INTEGER},
@@ -232,8 +232,8 @@
         update product_item
         set title        = #{title,jdbcType=VARCHAR},
             sell_point   = #{sellPoint,jdbcType=VARCHAR},
-            price        = #{price,jdbcType=INTEGER},
-            group_price  = #{groupPrice,jdbcType=INTEGER},
+            price        = #{price,jdbcType=DECIMAL},
+            group_price  = #{groupPrice,jdbcType=DECIMAL},
             is_group     = #{isGroup,jdbcType=INTEGER},
             num          = #{num,jdbcType=INTEGER},
             cid          = #{cid,jdbcType=INTEGER},
@@ -326,6 +326,38 @@
           and i.is_cover = 1
     </select>
 
+    <!--根据字符串模糊查询-->
+    <select id="serchProduct" resultMap="All" parameterType="java.lang.String">
+        SELECT p.id,
+               p.title,
+               p.is_group,
+               p.group_price,
+               p.price,
+               s.title_name,
+               s.id sellerid,
+               pimg.image
+        FROM (
+                (
+                        (
+                                (
+                                        (
+                                                class_with_product cwp
+                                                        INNER JOIN product_item p ON p.id = cwp.product_id
+                                                )
+                                                INNER JOIN shop_classify sc ON sc.class_id = cwp.level2_class_id
+                                        )
+                                        INNER JOIN seller_with_product_img swp ON swp.product_id = p.id
+                                )
+                                INNER JOIN seller s ON s.id = swp.seller_id
+                        )
+                        INNER JOIN product_img pimg ON pimg.product_id = p.id
+                )
+        WHERE p.`status` = 1
+          AND pimg.is_cover = 1
+
+          AND p.title like "%"#{pname}"%"
+    </select>
+
     <!--查询商品+图片-->
     <select id="selectProductWithImg" parameterType="java.lang.Integer" resultMap="WithProductImg">
         SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
@@ -386,10 +418,10 @@
                 #{sellPoint,jdbcType=VARCHAR},
             </if>
             <if test="price != null">
-                #{price,jdbcType=INTEGER},
+                #{price,jdbcType=DECIMAL},
             </if>
             <if test="groupPrice != null">
-                #{groupPrice,jdbcType=INTEGER},
+                #{groupPrice,jdbcType=DECIMAL},
             </if>
             <if test="isGroup != null">
                 #{isGroup,jdbcType=INTEGER},

@@ -110,7 +110,7 @@
     FROM
       USER INNER JOIN address AS a ON a.user_id = USER.id
     WHERE
-      USER.id = 1
+      USER.id = #{userid}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

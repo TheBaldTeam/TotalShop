@@ -5,13 +5,13 @@ import com.dao.FileOperation;
 import com.entity.*;
 import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.*;
 /*
  * author:@洪伟
@@ -19,7 +19,7 @@ import java.util.*;
  *
  * */
 
-@Controller
+@RestController
 @RequestMapping("/product")
 public class ProductController {
 
@@ -38,30 +38,26 @@ public class ProductController {
 
     //通过seller查询已上架商品
     @RequestMapping("/selectFromSeller")
-    @ResponseBody
-    public List<Product> selectFromSelelr(Integer sellerid){
+    public List<Product> selectFromSelelr(Integer sellerid) {
         return productService.selectFromSeller(sellerid);
     }
 
     @RequestMapping("/selectHotP")
-    @ResponseBody
-    public List<Product> selectHotP(){
+    public List<Product> selectHotP() {
         List<Product> productList = productService.selectAll();
         return productList;
     }
 
     @RequestMapping("/selectLevel1P")
-    @ResponseBody
-    public List<Product> selectLevel1P(Integer classid){
+    public List<Product> selectLevel1P(Integer classid) {
         return productService.selectLevel1P(classid);
     }
 
     @RequestMapping("/selectLevel2P")
-    @ResponseBody
-    public List<Product> selectLevel2P(Integer classid){
+    public List<Product> selectLevel2P(Integer classid) {
         List<ClassWithProduct> classWithProductList = classWithProductService.selectByClassId(classid);
         List<Product> productList = new ArrayList();
-        for (ClassWithProduct classWithProduct: classWithProductList) {
+        for (ClassWithProduct classWithProduct : classWithProductList) {
             int productid = classWithProduct.getProductId();
             Product product = productService.selectLevel2P(productid);
             productList.add(product);
@@ -71,13 +67,12 @@ public class ProductController {
 
     //添加商品，做商品表和版本表操作
     @RequestMapping(value = "/insertP")
-    @ResponseBody
     public Map insertP(Product product, String versionList, Integer sellerid, Integer cid) {
         Map<String, Object> map = new HashMap<>();
         //若团购价格不为0则设置为团购商品
-        if(product.getGroupPrice() == null){
+        if (product.getGroupPrice() == null) {
             product.setIsGroup(0);
-        }else if (product.getGroupPrice() != 0) {
+        } else if (product.getGroupPrice().compareTo(BigDecimal.ZERO)!=0) {
             product.setIsGroup(1);
         } else {
             product.setIsGroup(0);
@@ -96,7 +91,7 @@ public class ProductController {
             sellerWithProductImg.setProductId(product.getId());
             sellerWithProductImg.setSellerId(sellerid);
             sellerPimgService.insertSelective(sellerWithProductImg);
-            List<String> versions = JSON.parseArray(versionList,String.class);
+            List<String> versions = JSON.parseArray(versionList, String.class);
             System.out.println(versions);
             for (String versionItem : versions) {
                 Version version = new Version();
@@ -117,7 +112,6 @@ public class ProductController {
 
     //上传商品图片，做io操作和商品图片表操作
     @RequestMapping("/upload")
-    @ResponseBody
     public Map upload(MultipartFile image, HttpServletRequest request, Integer isCover, Integer productid) throws UnsupportedEncodingException {
         Map<String, Object> map = new HashMap<>();
         //添加商品图片
@@ -143,9 +137,27 @@ public class ProductController {
     }
 
     @RequestMapping("/selectDetail")
-    @ResponseBody
-    public Map selectDetail(Integer productid){
+    public Map selectDetail(Integer productid) {
         return productService.selectProductDetail(productid);
     }
 
+    @RequestMapping("/productDown")
+    public Map productDown(Integer productid) {
+        Map<String, Object> map = new HashMap<>();
+        Product product = productService.selectByPrimaryKey(productid);
+        if (product != null) {
+            product.setStatus((byte) 0);
+            map.put("status", "ok");
+            map.put("info", 1);
+        } else {
+            map.put("status", "no");
+            map.put("info", -1);
+        }
+        return map;
+    }
+
+    @RequestMapping("/serchProduct")
+    public List<Product> serchProduct(String pname){
+        return productService.serchProduct(pname);
+    }
 }

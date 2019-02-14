@@ -1,13 +1,16 @@
 package com.controller;
 
 import com.dao.FileOperation;
+import com.entity.Address;
 import com.entity.User;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -112,5 +115,21 @@ public class UserController {
     public void deleteRoot(){
         FileOperation fileOperation = new FileOperation();
         fileOperation.deleteRoot();
+    }
+
+    @RequestMapping("/selectScore")
+    public Integer selectScore(Integer userid){
+        return userService.selectByPrimaryKey(userid).getScore();
+    }
+
+    @RequestMapping("selectMoney")
+    public BigDecimal selectMoney(Integer userid){
+        return userService.selectByPrimaryKey(userid).getMoney();
+    }
+
+    @RequestMapping("/selectUserAddress")
+    public List<Address> selectUserAddress(Integer userid){
+        User user = userService.selectAddressByUserId(userid);
+        return user.getAddressList();
     }
 }

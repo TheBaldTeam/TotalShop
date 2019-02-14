@@ -29,4 +29,7 @@ public interface ProductMapper {
 
     //查询商户内商品
     List<Product> selectFromSeller(Integer sellerid);
+
+    //全局模糊查询
+    List<Product> serchProduct(String pname);
 }

@@ -34,4 +34,7 @@ public interface SellerService {
 
     //通过sellerClass查找seller
     List<Seller> selectSellerFromSellerClass(String sellerClass);
+
+    //查询所有
+    List<Seller> selectAll();
 }

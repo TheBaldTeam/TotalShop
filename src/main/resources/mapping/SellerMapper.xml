@@ -99,6 +99,11 @@
               3
     </select>
 
+    <!--查询所有商家-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from seller
+    </select>
+
     <!--查询未审批商户详情信息-->
     <select id="selectUnconfirmDetial" resultMap="WithAddressImg" parameterType="java.lang.Integer">
         SELECT s.*, sa.address, img.img

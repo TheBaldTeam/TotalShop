@@ -73,4 +73,9 @@ public class SellerServiceImple implements SellerService {
     public List<Seller> selectSellerFromSellerClass(String sellerClass) {
         return sellerMapper.selectSellerFromSellerClass(sellerClass);
     }
+
+    @Override
+    public List<Seller> selectAll() {
+        return sellerMapper.selectAll();
+    }
 }

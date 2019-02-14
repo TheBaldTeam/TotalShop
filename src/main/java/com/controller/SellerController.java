@@ -138,6 +138,20 @@ public class SellerController {
         return finalList;
     }
 
+    @RequestMapping("/selectAllSeller")
+    public List<Seller> selectAllSeller(){
+        List<Seller> sellerList = sellerService.selectAll();
+        List finalList = new ArrayList();
+        for (Seller sellerTemp: sellerList) {
+            Integer sellerid = sellerTemp.getId();
+            List<Seller> sellerAndProductList = sellerService.selectSellerTopThree(sellerid);
+            if(!(sellerAndProductList.isEmpty())){
+                finalList.add(sellerAndProductList);
+            }
+        }
+        return finalList;
+    }
+
     @RequestMapping("/test")
     public List test(){
         return sellerService.selectSellerTopThree(1);

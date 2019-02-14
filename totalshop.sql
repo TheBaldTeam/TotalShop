@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-13 17:50:16
+Date: 2019-02-14 12:26:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,11 +27,12 @@ CREATE TABLE `address` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `user_id` (`user_id`),
   CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of address
 -- ----------------------------
+INSERT INTO `address` VALUES ('1', 'User31地址', '31', '1');
 
 -- ----------------------------
 -- Table structure for class_with_product
@@ -104,8 +105,8 @@ CREATE TABLE `product_item` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '商品id，同时也是商品编号',
   `title` varchar(100) DEFAULT NULL COMMENT '商品标题',
   `sell_point` varchar(500) DEFAULT NULL COMMENT '商品卖点',
-  `price` int(20) DEFAULT NULL COMMENT '商品价格，单位为：角',
-  `group_price` int(20) DEFAULT NULL COMMENT '商品拼团价格，单位为：角',
+  `price` decimal(20,2) DEFAULT NULL COMMENT '商品价格，单位为：角',
+  `group_price` decimal(20,2) DEFAULT NULL COMMENT '商品拼团价格，单位为：角',
   `is_group` int(20) DEFAULT NULL,
   `num` int(10) DEFAULT NULL COMMENT '库存数量',
   `cid` int(10) DEFAULT NULL COMMENT '所属类目，叶子类目',
@@ -123,15 +124,15 @@ CREATE TABLE `product_item` (
 -- ----------------------------
 -- Records of product_item
 -- ----------------------------
-INSERT INTO `product_item` VALUES ('22', '3213', null, '321', '11', '1', '321', '11', '1', '2019-02-12 15:41:14', '2019-02-12 15:41:14', '0');
-INSERT INTO `product_item` VALUES ('23', '商品1111', null, '22', null, '0', '22', '11', '1', '2019-02-13 10:10:48', '2019-02-13 10:10:48', '1');
-INSERT INTO `product_item` VALUES ('24', '商品3333', null, '33', null, '0', '333', '11', '1', '2019-02-13 10:11:35', '2019-02-13 10:11:35', '2');
-INSERT INTO `product_item` VALUES ('25', '商品444', null, '123', '123', '1', '21', '11', '1', '2019-02-13 10:18:50', '2019-02-13 10:18:50', '3');
-INSERT INTO `product_item` VALUES ('26', '商家1的商品1', null, '22', null, '0', '22', '11', '1', '2019-02-13 16:03:51', '2019-02-13 16:03:51', '0');
-INSERT INTO `product_item` VALUES ('27', '商家1的商品2', null, '312', '543', '1', '22', '11', '1', '2019-02-13 16:05:03', '2019-02-13 16:05:03', '0');
-INSERT INTO `product_item` VALUES ('28', '商家1的商品3', null, '765', '1232', '1', '33', '11', '1', '2019-02-13 16:05:42', '2019-02-13 16:05:42', '0');
-INSERT INTO `product_item` VALUES ('29', '商家2222的商品11111', null, '22', '22', '1', '22', '11', '1', '2019-02-13 17:36:56', '2019-02-13 17:36:56', '0');
-INSERT INTO `product_item` VALUES ('30', '商家2222的商品2222', null, '222', '222', '1', '22', '11', '1', '2019-02-13 17:37:24', '2019-02-13 17:37:24', '0');
+INSERT INTO `product_item` VALUES ('22', '3213', null, '321.00', '11.00', '1', '321', '11', '1', '2019-02-12 15:41:14', '2019-02-12 15:41:14', '0');
+INSERT INTO `product_item` VALUES ('23', '商品1111', null, '22.00', null, '0', '22', '11', '1', '2019-02-13 10:10:48', '2019-02-13 10:10:48', '1');
+INSERT INTO `product_item` VALUES ('24', '商品3333', null, '33.00', null, '0', '333', '11', '1', '2019-02-13 10:11:35', '2019-02-13 10:11:35', '2');
+INSERT INTO `product_item` VALUES ('25', '商品444', null, '123.00', '123.00', '1', '21', '11', '1', '2019-02-13 10:18:50', '2019-02-13 10:18:50', '3');
+INSERT INTO `product_item` VALUES ('26', '商家1的商品1', null, '22.00', null, '0', '22', '11', '1', '2019-02-13 16:03:51', '2019-02-13 16:03:51', '0');
+INSERT INTO `product_item` VALUES ('27', '商家1的商品2', null, '312.00', '543.00', '1', '22', '11', '1', '2019-02-13 16:05:03', '2019-02-13 16:05:03', '0');
+INSERT INTO `product_item` VALUES ('28', '商家1的商品3', null, '765.00', '1232.00', '1', '33', '11', '1', '2019-02-13 16:05:42', '2019-02-13 16:05:42', '0');
+INSERT INTO `product_item` VALUES ('29', '商家2222的商品11111', null, '22.00', '22.00', '1', '22', '11', '1', '2019-02-13 17:36:56', '2019-02-13 17:36:56', '0');
+INSERT INTO `product_item` VALUES ('30', '商家2222的商品2222', null, '222.00', '222.00', '1', '22', '11', '1', '2019-02-13 17:37:24', '2019-02-13 17:37:24', '0');
 
 -- ----------------------------
 -- Table structure for seller
@@ -314,6 +315,53 @@ INSERT INTO `shop_classify` VALUES ('70', '水乳面霜', '9', '2', '1', null);
 INSERT INTO `shop_classify` VALUES ('71', '护手霜', '9', '2', '1', null);
 INSERT INTO `shop_classify` VALUES ('72', '个人洗护', '9', '2', '1', null);
 INSERT INTO `shop_classify` VALUES ('73', '美妆工具', '9', '2', '1', null);
+
+-- ----------------------------
+-- Table structure for shop_order
+-- ----------------------------
+DROP TABLE IF EXISTS `shop_order`;
+CREATE TABLE `shop_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_sn` varchar(50) DEFAULT NULL COMMENT '订单编号',
+  `add_time` datetime DEFAULT NULL COMMENT '添加时间',
+  `user_name` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `user_address` varchar(200) DEFAULT NULL COMMENT '用户地址',
+  `tel` bigint(50) DEFAULT NULL COMMENT '用户电话',
+  `
+user_id` int(11) DEFAULT NULL COMMENT '用户Id',
+  `seller_id` int(11) DEFAULT NULL,
+  `seller_name` varchar(225) DEFAULT NULL,
+  `total_money` decimal(12,2) DEFAULT NULL COMMENT '总金额',
+  `mark` varchar(225) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of shop_order
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for shop_order_goods
+-- ----------------------------
+DROP TABLE IF EXISTS `shop_order_goods`;
+CREATE TABLE `shop_order_goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `add_time` datetime DEFAULT NULL COMMENT '商品上架时间',
+  `goods_name` varchar(200) DEFAULT NULL,
+  `is_group` int(10) DEFAULT NULL,
+  `price` decimal(12,2) DEFAULT NULL,
+  `group_price` decimal(12,2) DEFAULT NULL,
+  `go_num` int(11) DEFAULT NULL COMMENT '购买数量',
+  `total_price` decimal(12,2) DEFAULT NULL COMMENT '总价',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单表id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of shop_order_goods
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for user

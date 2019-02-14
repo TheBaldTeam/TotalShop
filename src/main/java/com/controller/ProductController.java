@@ -54,7 +54,7 @@ public class ProductController {
     public List<Product> selectLevel1P(Integer classid) {
         List<Shop> shopList = shopService.selectLevel1and2(classid);
         List list = new ArrayList();
-        for (Shop shopTemp: shopList) {
+        for (Shop shopTemp : shopList) {
             Integer level2Id = shopTemp.getTowLevelName().get(0).getClassId();
             list.add(productService.selectLevel1P(level2Id));
         }
@@ -68,7 +68,7 @@ public class ProductController {
         for (ClassWithProduct classWithProduct : classWithProductList) {
             int productid = classWithProduct.getProductId();
             Product product = productService.selectLevel2P(productid);
-            if(product.getStatus()!=1){
+            if (product != null) {
                 productList.add(product);
             }
         }
@@ -82,7 +82,7 @@ public class ProductController {
         //若团购价格不为0则设置为团购商品
         if (product.getGroupPrice() == null) {
             product.setIsGroup(0);
-        } else if (product.getGroupPrice().compareTo(BigDecimal.ZERO)!=0) {
+        } else if (product.getGroupPrice().compareTo(BigDecimal.ZERO) != 0) {
             product.setIsGroup(1);
         } else {
             product.setIsGroup(0);
@@ -168,7 +168,7 @@ public class ProductController {
     }
 
     @RequestMapping("/serchProduct")
-    public List<Product> serchProduct(String pname){
+    public List<Product> serchProduct(String pname) {
         return productService.serchProduct(pname);
     }
 }

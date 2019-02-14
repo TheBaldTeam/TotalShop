@@ -59,4 +59,9 @@ public class ShopServiceImple implements ShopService {
         return shopClassifyMapper.selectTwo();
     }
 
+    @Override
+    public List<Shop> selectLevel1and2(Integer classid) {
+        return shopClassifyMapper.selectLevel1and2(classid);
+    }
+
 }

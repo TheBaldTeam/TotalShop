@@ -22,4 +22,6 @@ public interface ShopMapper {
     List<Shop> selectLevel();
 
     List<Shop> selectTwo();
+
+    List<Shop> selectLevel1and2(Integer classid);
 }

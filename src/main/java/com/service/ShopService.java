@@ -24,4 +24,7 @@ public interface ShopService {
 
     //查询二级目录
     List<Shop> selectTwo();
+
+    //根据classid查询目录
+    List<Shop> selectLevel1and2(Integer classid);
 }

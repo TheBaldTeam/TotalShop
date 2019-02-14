@@ -34,6 +34,8 @@ public class ProductController {
     private SellerPimgService sellerPimgService;
     @Autowired
     private ClassWithProductService classWithProductService;
+    @Autowired
+    private ShopService shopService;
 
 
     //通过seller查询已上架商品
@@ -50,7 +52,13 @@ public class ProductController {
 
     @RequestMapping("/selectLevel1P")
     public List<Product> selectLevel1P(Integer classid) {
-        return productService.selectLevel1P(classid);
+        List<Shop> shopList = shopService.selectLevel1and2(classid);
+        List list = new ArrayList();
+        for (Shop shopTemp: shopList) {
+            Integer level2Id = shopTemp.getTowLevelName().get(0).getClassId();
+            list.add(productService.selectLevel1P(level2Id));
+        }
+        return list;
     }
 
     @RequestMapping("/selectLevel2P")

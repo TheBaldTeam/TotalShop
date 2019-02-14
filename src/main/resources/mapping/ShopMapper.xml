@@ -53,6 +53,20 @@
           AND c2.ondelect = 0
     </select>
 
+    <!--根据classid查询分类表目录-->
+    <select id="selectLevel1and2" resultMap="selectLevel" parameterType="java.lang.Integer">
+        SELECT c1.*,
+               c2.class_id   c2id,
+               c2.class_name c2name,
+               c2.class_key  c2key,
+               c2.LEVEL      c2level,
+               c2.ondelect   c2ondelect,
+               c2.images     c2images
+        FROM shop_classify c1
+                 INNER JOIN shop_classify c2 ON c1.class_id = c2.class_key
+        where c1.class_id = #{classid}
+          AND c2.ondelect = 0
+    </select>
 
     <!--查询二级目录-->
     <select id="selectTwo" resultMap="selectLevel">

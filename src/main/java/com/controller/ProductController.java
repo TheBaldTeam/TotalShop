@@ -50,8 +50,9 @@ public class ProductController {
         return productList;
     }
 
-    /*@RequestMapping("/selectLevel1P")
-    public List<Product> selectLevel1P(Integer classid) {
+    //弃用
+    @RequestMapping("/selectLevel1Ptest")
+    public List<Product> selectLevel1Ptest(Integer classid) {
         List<Shop> shopList = shopService.selectLevel1and2(classid);
         List list = new ArrayList();
         for (Shop shopTemp : shopList) {
@@ -59,14 +60,27 @@ public class ProductController {
             list.add(productService.selectLevel1P(level2Id));
         }
         return list;
-    }*/
+    }
+
+    /**
+     * 根据一级目录id查下面所有关联商品
+     * @param classid
+     * @return
+     */
     @RequestMapping("/selectLevel1P")
     public List<Product> selectLevel1P(Integer classid) {
         Shop shop = shopService.selectLevel1and2(classid).get(0);
         List list = new ArrayList();
         for (Shop shopTemp : shop.getTowLevelName()) {
             Integer level2Id = shopTemp.getClassId();
-            list.add(productService.selectLevel1P(level2Id));
+//            根据2级目录id查所有关联商品，可能为空List
+            List<Product> productList = productService.selectLevel1P(level2Id);
+//            判断list是不是空
+            if(!(productList.isEmpty())) {
+                for(Product product : productList) {
+                    list.add(product);
+                }
+            }
         }
         return list;
     }

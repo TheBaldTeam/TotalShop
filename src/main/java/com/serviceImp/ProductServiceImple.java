@@ -93,7 +93,7 @@ public class ProductServiceImple implements ProductService {
     }
 
     @Override
-    public Product selectLevel2P(Integer classid) {
+    public List<Product> selectLevel2P(Integer classid) {
         return productMapper.selectLevel2P(classid);
     }
 

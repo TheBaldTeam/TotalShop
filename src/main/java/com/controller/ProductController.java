@@ -87,16 +87,7 @@ public class ProductController {
 
     @RequestMapping("/selectLevel2P")
     public List<Product> selectLevel2P(Integer classid) {
-        List<ClassWithProduct> classWithProductList = classWithProductService.selectByClassId(classid);
-        List<Product> productList = new ArrayList();
-        for (ClassWithProduct classWithProduct : classWithProductList) {
-            int productid = classWithProduct.getProductId();
-            Product product = productService.selectLevel2P(productid);
-            if (product != null) {
-                productList.add(product);
-            }
-        }
-        return productList;
+        return productService.selectLevel2P(classid);
     }
 
     //添加商品，做商品表和版本表操作

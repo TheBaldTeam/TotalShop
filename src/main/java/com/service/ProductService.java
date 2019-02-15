@@ -31,7 +31,7 @@ public interface ProductService {
     List<Product> selectLevel1P(Integer classid);
 
     //查询二级目录下的商品和商品封面
-    Product selectLevel2P(Integer classid);
+    List<Product> selectLevel2P(Integer classid);
 
     //查询商户内商品
     List<Product> selectFromSeller(Integer sellerid);

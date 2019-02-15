@@ -25,7 +25,7 @@ public interface ProductMapper {
 
     List<Product> selectLevel1P(Integer classid);
 
-    Product selectLevel2P(Integer classid);
+    List<Product> selectLevel2P(Integer classid);
 
     //查询商户内商品
     List<Product> selectFromSeller(Integer sellerid);

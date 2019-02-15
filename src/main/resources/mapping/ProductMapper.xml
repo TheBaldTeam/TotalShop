@@ -292,6 +292,7 @@
                p.is_group,
                p.group_price,
                p.price,
+               p.sales_volume,
                s.title_name,
                s.id sellerid,
                pimg.image
@@ -317,15 +318,21 @@
     </select>
 
 
-
     <!--查询二级目录下所有的商品-->
     <select id="selectLevel2P" parameterType="java.lang.Integer" resultMap="WithProductImg">
         SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
-        FROM product_item p
-                 INNER JOIN product_img i ON p.id = i.product_id
-        WHERE p.id = #{productid}
-          and p.status = 1
-          and i.is_cover = 1
+        FROM (
+                (
+                        product_item p
+                                INNER JOIN product_img i ON p.id = i.product_id
+                        )
+                        INNER JOIN shop_classify sc ON sc.class_id = p.cid
+                )
+        WHERE p.STATUS = 1
+          AND i.is_cover = 1
+          and p.cid = #{classid}
+        ORDER BY p.title, p.sales_volume desc
+
     </select>
 
     <!--根据字符串模糊查询-->
@@ -356,7 +363,6 @@
                 )
         WHERE p.`status` = 1
           AND pimg.is_cover = 1
-
           AND p.title like "%"#{pname}"%"
     </select>
 

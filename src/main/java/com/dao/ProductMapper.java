@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
@@ -25,7 +26,7 @@ public interface ProductMapper {
 
     List<Product> selectLevel1P(Integer classid);
 
-    List<Product> selectLevel2P(Integer classid);
+    List<Product> selectLevel2P(Map<String, Object> map);
 
     //查询商户内商品
     List<Product> selectFromSeller(Integer sellerid);

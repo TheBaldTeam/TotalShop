@@ -64,6 +64,7 @@ public class ProductController {
 
     /**
      * 根据一级目录id查下面所有关联商品
+     *
      * @param classid
      * @return
      */
@@ -76,8 +77,8 @@ public class ProductController {
 //            根据2级目录id查所有关联商品，可能为空List
             List<Product> productList = productService.selectLevel1P(level2Id);
 //            判断list是不是空
-            if(!(productList.isEmpty())) {
-                for(Product product : productList) {
+            if (!(productList.isEmpty())) {
+                for (Product product : productList) {
                     list.add(product);
                 }
             }
@@ -86,8 +87,11 @@ public class ProductController {
     }
 
     @RequestMapping("/selectLevel2P")
-    public List<Product> selectLevel2P(Integer classid) {
-        return productService.selectLevel2P(classid);
+    public List<Product> selectLevel2P(Integer classid, Integer operationCode) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("classid", classid);
+        map.put("operationCode", operationCode);
+        return productService.selectLevel2P(map);
     }
 
     //添加商品，做商品表和版本表操作

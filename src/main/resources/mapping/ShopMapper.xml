@@ -49,7 +49,8 @@
                c2.images     c2images
         FROM shop_classify c1,
              shop_classify c2
-        WHERE c1.class_id = c2.class_key
+        WHERE c1.ondelect = 0
+          AND c1.class_id = c2.class_key
           AND c2.ondelect = 0
     </select>
 

@@ -50,12 +50,22 @@ public class ProductController {
         return productList;
     }
 
-    @RequestMapping("/selectLevel1P")
+    /*@RequestMapping("/selectLevel1P")
     public List<Product> selectLevel1P(Integer classid) {
         List<Shop> shopList = shopService.selectLevel1and2(classid);
         List list = new ArrayList();
         for (Shop shopTemp : shopList) {
             Integer level2Id = shopTemp.getTowLevelName().get(0).getClassId();
+            list.add(productService.selectLevel1P(level2Id));
+        }
+        return list;
+    }*/
+    @RequestMapping("/selectLevel1P")
+    public List<Product> selectLevel1P(Integer classid) {
+        Shop shop = shopService.selectLevel1and2(classid).get(0);
+        List list = new ArrayList();
+        for (Shop shopTemp : shop.getTowLevelName()) {
+            Integer level2Id = shopTemp.getClassId();
             list.add(productService.selectLevel1P(level2Id));
         }
         return list;

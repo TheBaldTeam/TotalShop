@@ -71,8 +71,8 @@ public class SellerServiceImple implements SellerService {
     }
 
     @Override
-    public List<Product> selectSellerTopNine(Integer sellerid) {
-        return selectSellerTopNine(sellerid);
+    public List<Seller> selectSellerTopNine(Integer sellerid) {
+        return sellerMapper.selectSellerTopNine(sellerid);
     }
 
     @Override

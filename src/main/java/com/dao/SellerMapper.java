@@ -30,7 +30,7 @@ public interface SellerMapper {
     List<Seller> selectSellerTopThree(Integer sellerid);
 
     //查找商家热销商品前九
-    List<Product> selectSellerTopNine(Integer sellerid);
+    List<Seller> selectSellerTopNine(Integer sellerid);
 
     //通过sellerClass查找seller
     List<Seller> selectSellerFromSellerClass(String sellerClass);

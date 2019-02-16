@@ -32,5 +32,5 @@ public interface ProductMapper {
     List<Product> selectFromSeller(Integer sellerid);
 
     //全局模糊查询
-    List<Product> serchProduct(String pname);
+    List<Product> serchProduct(Map<String, Object> map);
 }

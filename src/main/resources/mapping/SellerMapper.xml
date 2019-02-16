@@ -73,6 +73,7 @@
         id, tel, title_name, user_id, seller_class
     </sql>
 
+
     <!--通过sellerClass查找商家-->
     <select id="selectSellerFromSellerClass" resultMap="BaseResultMap" parameterType="java.lang.String">
         select *

@@ -152,9 +152,12 @@ public class SellerController {
         return finalList;
     }
 
-    @RequestMapping("/test")
-    public List test(){
-        return sellerService.selectSellerTopThree(1);
+    //通过sellerid查询商家详情信息
+    @RequestMapping("/selectSellerDetail")
+    public Map selectSellerDetail(Integer sellerid){
+        return null;
     }
+
+
 }
 

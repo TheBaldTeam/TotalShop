@@ -345,7 +345,7 @@
 
 
     <!--根据字符串模糊查询-->
-    <select id="serchProduct" resultMap="All" parameterType="java.lang.String">
+    <select id="serchProduct" resultMap="All" parameterType="map">
         SELECT p.id,
                p.title,
                p.is_group,
@@ -373,6 +373,15 @@
         WHERE p.`status` = 1
           AND pimg.is_cover = 1
           AND p.title like "%"#{pname}"%"
+        <if test="operationCode == 1">
+            ORDER BY p.title, p.sales_volume desc
+        </if>
+        <if test="operationCode == 2">
+            ORDER BY p.sales_volume desc
+        </if>
+        <if test="operationCode == 3">
+            ORDER BY p.price, p.group_price desc
+        </if>
     </select>
 
     <!--查询商品+图片-->

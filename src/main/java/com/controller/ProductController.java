@@ -70,18 +70,22 @@ public class ProductController {
      */
     @RequestMapping("/selectLevel1P")
     public List<Product> selectLevel1P(Integer classid) {
-        Shop shop = shopService.selectLevel1and2(classid).get(0);
         List list = new ArrayList();
-        for (Shop shopTemp : shop.getTowLevelName()) {
-            Integer level2Id = shopTemp.getClassId();
+        if(shopService.selectLevel1and2(classid).isEmpty()){
+            Shop shop = shopService.selectLevel1and2(classid).get(0);
+            for (Shop shopTemp : shop.getTowLevelName()) {
+                Integer level2Id = shopTemp.getClassId();
 //            根据2级目录id查所有关联商品，可能为空List
-            List<Product> productList = productService.selectLevel1P(level2Id);
+                List<Product> productList = productService.selectLevel1P(level2Id);
 //            判断list是不是空
-            if (!(productList.isEmpty())) {
-                for (Product product : productList) {
-                    list.add(product);
+                if (!(productList.isEmpty())) {
+                    for (Product product : productList) {
+                        list.add(product);
+                    }
                 }
             }
+        }else{
+            return null;
         }
         return list;
     }
@@ -187,7 +191,10 @@ public class ProductController {
     }
 
     @RequestMapping("/serchProduct")
-    public List<Product> serchProduct(String pname) {
-        return productService.serchProduct(pname);
+    public List<Product> serchProduct(String panme, Integer operationCode) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("operationCode", operationCode);
+        map.put("pname", panme);
+        return productService.serchProduct(map);
     }
 }

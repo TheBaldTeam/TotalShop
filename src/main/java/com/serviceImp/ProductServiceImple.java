@@ -103,8 +103,9 @@ public class ProductServiceImple implements ProductService {
     }
 
     @Override
-    public List<Product> serchProduct(String pname) {
-        return productMapper.serchProduct(pname);
+    public //全局模糊查询
+    List<Product> serchProduct(Map<String, Object> map) {
+        return productMapper.serchProduct(map);
     }
 
 

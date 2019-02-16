@@ -100,6 +100,25 @@
               3
     </select>
 
+    <!--根据商家id查找旗下前九热销商品-->
+    <select id="selectSellerTopNine" resultMap="WithProductAndPimg" parameterType="java.lang.Integer">
+        SELECT s.*, p.id pid, p.*, img.image
+        FROM (
+                     (
+                             seller_with_product_img swp
+                                     INNER JOIN seller s ON s.id = swp.seller_id
+                             )
+                             INNER JOIN product_item p ON p.id = swp.product_id
+                     )
+                 INNER JOIN product_img img ON img.product_id = swp.product_id
+        WHERE s.id = #{sellerid}
+          AND img.is_cover = 1
+          AND p.status = 1
+        ORDER BY p.sales_volume DESC
+        LIMIT 0,
+              9
+    </select>
+
     <!--查询所有商家-->
     <select id="selectAll" resultMap="BaseResultMap">
         select * from seller

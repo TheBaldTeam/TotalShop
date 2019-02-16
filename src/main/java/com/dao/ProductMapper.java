@@ -22,6 +22,10 @@ public interface ProductMapper {
 
     int selectKey(Product record);
 
+    //查询商品+封面
+    Product selectProductWithImgF(Integer productid);
+
+    //查询商品+详情图
     List<Product> selectProductWithImg(Integer productid);
 
     List<Product> selectLevel1P(Integer classid);
@@ -33,4 +37,6 @@ public interface ProductMapper {
 
     //全局模糊查询
     List<Product> serchProduct(Map<String, Object> map);
+
+
 }

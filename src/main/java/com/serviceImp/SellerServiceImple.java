@@ -1,6 +1,7 @@
 package com.serviceImp;
 
 import com.dao.SellerMapper;
+import com.entity.Product;
 import com.entity.Seller;
 import com.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,11 @@ public class SellerServiceImple implements SellerService {
     @Override
     public List<Seller> selectSellerTopThree(Integer sellerid) {
         return sellerMapper.selectSellerTopThree(sellerid);
+    }
+
+    @Override
+    public List<Product> selectSellerTopNine(Integer sellerid) {
+        return selectSellerTopNine(sellerid);
     }
 
     @Override

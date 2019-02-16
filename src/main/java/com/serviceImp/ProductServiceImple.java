@@ -88,6 +88,11 @@ public class ProductServiceImple implements ProductService {
     }
 
     @Override
+    public Product selectProductWithImgF(Integer productid) {
+        return productMapper.selectProductWithImgF(productid);
+    }
+
+    @Override
     public List<Product> selectLevel1P(Integer classid) {
         return productMapper.selectLevel1P(classid);
     }

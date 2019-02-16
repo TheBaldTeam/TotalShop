@@ -6,6 +6,9 @@ import com.service.CollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class CollectServiceImple implements CollectService {
 
@@ -40,5 +43,20 @@ public class CollectServiceImple implements CollectService {
     @Override
     public int updateByPrimaryKey(Collect record) {
         return collectMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public int selectBySellerId(Integer sellerid) {
+        return collectMapper.selectBySellerId(sellerid);
+    }
+
+    @Override
+    public Collect selectByUseridOr(Map<String, Object> map) {
+        return collectMapper.selectByUseridOr(map);
+    }
+
+    @Override
+    public List<Collect> selectProductByUserid(Integer userid) {
+        return collectMapper.selectProductByUserid(userid);
     }
 }

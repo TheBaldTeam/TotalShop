@@ -5,10 +5,7 @@ import com.entity.Seller;
 import com.entity.SellerAddress;
 import com.entity.SellerBcImg;
 import com.entity.User;
-import com.service.SellerAddressService;
-import com.service.SellerBcImgService;
-import com.service.SellerService;
-import com.service.UserService;
+import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +33,8 @@ public class SellerController {
     private SellerBcImgService sellerBcImgService;
     @Autowired(required = false)
     private SellerAddressService sellerAddressService;
+    @Autowired(required = false)
+    private CollectService collectService;
 
     //提交入驻申请
     @RequestMapping(value = "/applyforSeller")
@@ -155,7 +154,10 @@ public class SellerController {
     //通过sellerid查询商家详情信息
     @RequestMapping("/selectSellerDetail")
     public Map selectSellerDetail(Integer sellerid){
-        return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("sellerDetail", sellerService.selectSellerTopNine(sellerid));
+        map.put("collectNum", collectService.selectBySellerId(sellerid));
+        return map;
     }
 
 

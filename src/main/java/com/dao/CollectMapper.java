@@ -2,6 +2,9 @@ package com.dao;
 
 import com.entity.Collect;
 
+import java.util.List;
+import java.util.Map;
+
 public interface CollectMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +17,10 @@ public interface CollectMapper {
     int updateByPrimaryKeySelective(Collect record);
 
     int updateByPrimaryKey(Collect record);
+
+    int selectBySellerId(Integer sellerid);
+
+    Collect selectByUseridOr(Map<String, Object> map);
+
+    List<Collect> selectProductByUserid(Integer userid);
 }

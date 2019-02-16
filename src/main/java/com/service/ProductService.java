@@ -27,6 +27,9 @@ public interface ProductService {
     //查询商品详情
     Map selectProductDetail(Integer productid);
 
+    //查询商品+封面
+    Product selectProductWithImgF(Integer productid);
+
     //查询一级目录下的商品和商品封面
     List<Product> selectLevel1P(Integer classid);
 
@@ -38,4 +41,6 @@ public interface ProductService {
 
     //全局模糊查询
     List<Product> serchProduct(Map<String, Object> map);
+
+
 }

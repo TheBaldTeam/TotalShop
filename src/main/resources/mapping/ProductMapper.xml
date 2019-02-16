@@ -384,7 +384,7 @@
         </if>
     </select>
 
-    <!--查询商品+图片-->
+    <!--查询商品+详情图片-->
     <select id="selectProductWithImg" parameterType="java.lang.Integer" resultMap="WithProductImg">
         SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
         FROM product_item p
@@ -393,6 +393,17 @@
           and p.status = 1
           and i.is_cover = 0
     </select>
+
+    <!--查询商品+封面图片-->
+    <select id="selectProductWithImgF" parameterType="java.lang.Integer" resultMap="WithProductImg">
+        SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
+        FROM product_item p
+                 INNER JOIN product_img i ON p.id = i.product_id
+        WHERE p.id = #{productid}
+          and p.status = 1
+          and i.is_cover = 1
+    </select>
+
     <insert id="selectKey" parameterType="com.entity.Product">
         insert into product_item
         <trim prefix="(" suffix=")" suffixOverrides=",">

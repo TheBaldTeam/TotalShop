@@ -192,12 +192,12 @@ public class ProductController {
     }
 
     @RequestMapping("/serchProduct")
-    public List<Product> serchProduct(String panme, @RequestParam(required = false)Integer operationCode) {
+    public List<Product> serchProduct(String pname, @RequestParam(required = false)Integer operationCode) {
         Map<String, Object> map = new HashMap<>();
-        if(operationCode != null){
+        if(operationCode != null) {
             map.put("operationCode", operationCode);
         }
-        map.put("pname", panme);
+        map.put("pname", pname);
         return productService.serchProduct(map);
     }
 }

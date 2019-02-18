@@ -11,7 +11,7 @@
         id, user_id, seller_id, product_id
     </sql>
     <!--通过sellerid查询商家收藏数量-->
-    <select id="selectBySellerId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectBySellerId" resultType="Integer" parameterType="java.lang.Integer">
         select count(*)
         from collect
         where seller_id = #{sellerid}

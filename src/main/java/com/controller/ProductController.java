@@ -6,6 +6,7 @@ import com.entity.*;
 import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,7 +72,7 @@ public class ProductController {
     @RequestMapping("/selectLevel1P")
     public List<Product> selectLevel1P(Integer classid) {
         List list = new ArrayList();
-        if(shopService.selectLevel1and2(classid).isEmpty()){
+        if(!(shopService.selectLevel1and2(classid).isEmpty())){
             Shop shop = shopService.selectLevel1and2(classid).get(0);
             for (Shop shopTemp : shop.getTowLevelName()) {
                 Integer level2Id = shopTemp.getClassId();
@@ -191,9 +192,11 @@ public class ProductController {
     }
 
     @RequestMapping("/serchProduct")
-    public List<Product> serchProduct(String panme, Integer operationCode) {
+    public List<Product> serchProduct(String panme, @RequestParam(required = false)Integer operationCode) {
         Map<String, Object> map = new HashMap<>();
-        map.put("operationCode", operationCode);
+        if(operationCode != null){
+            map.put("operationCode", operationCode);
+        }
         map.put("pname", panme);
         return productService.serchProduct(map);
     }

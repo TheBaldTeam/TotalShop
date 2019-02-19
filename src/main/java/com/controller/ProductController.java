@@ -37,6 +37,9 @@ public class ProductController {
     private ClassWithProductService classWithProductService;
     @Autowired
     private ShopService shopService;
+    @Autowired
+    private CollectService collectService;
+
 
 
     //通过seller查询已上架商品

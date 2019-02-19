@@ -23,4 +23,6 @@ public interface CollectMapper {
     Collect selectByUseridOr(Map<String, Object> map);
 
     List<Collect> selectProductByUserid(Integer userid);
+
+    List<Collect> selectByProductid(Integer productid);
 }

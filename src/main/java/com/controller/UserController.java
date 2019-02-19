@@ -204,6 +204,19 @@ public class UserController {
         return map;
     }
 
+    //查询用户是否收藏到此商品
+    @RequestMapping("/checkIsCollect")
+    public Integer checkIsCollect(Integer productid, Integer userid){
+        Map<String, Object> collectMap = new HashMap<>();
+        collectMap.put("userid", userid);
+        collectMap.put("productid", productid);
+        Collect collect = collectService.selectByUseridOr(collectMap);
+        if (collect!=null){
+            return 1;
+        }
+        return 0;
+    }
+
     //查询所有收藏商品并返回商品+图片List
     @RequestMapping("/selectCollectDetail")
     public List selectCollectDetail(Integer userid) {
@@ -218,4 +231,6 @@ public class UserController {
         }
         return finalList;
     }
+
+
 }

@@ -59,4 +59,9 @@ public class CollectServiceImple implements CollectService {
     public List<Collect> selectProductByUserid(Integer userid) {
         return collectMapper.selectProductByUserid(userid);
     }
+
+    @Override
+    public List<Collect> selectByProductid(Integer productid) {
+        return collectMapper.selectByProductid(productid);
+    }
 }

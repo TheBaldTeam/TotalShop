@@ -26,4 +26,7 @@ public interface CollectService {
 
     //通过userid查询多条商品收藏数据
     List<Collect> selectProductByUserid(Integer userid);
+
+    //通过productid查询
+    List<Collect> selectByProductid(Integer productid);
 }

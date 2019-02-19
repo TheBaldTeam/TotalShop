@@ -30,7 +30,9 @@
 
     <!--通过productid查询数据-->
     <select id="selectByProductid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select * from collect where product_id = #{productid}
+        select *
+        from collect
+        where product_id = #{productid}
     </select>
 
     <!--通过userid查询多条数据-->
@@ -38,7 +40,7 @@
         select c.product_id
         from collect c
         where user_id = #{userid}
-        AND seller_id = null
+          AND seller_id is null
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select

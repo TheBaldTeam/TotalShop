@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-16 16:38:08
+Date: 2019-02-19 15:40:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,9 +25,9 @@ CREATE TABLE `address` (
   `user_id` int(20) DEFAULT NULL COMMENT '用户id',
   `user_name` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '用户名',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `user_id` (`user_id`),
+  KEY `user_id` (`user_id`) USING BTREE,
   CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of address
@@ -41,20 +41,18 @@ CREATE TABLE `class_with_product` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `product_id` int(20) DEFAULT NULL,
   `level2_class_id` int(20) DEFAULT NULL COMMENT '二级目录id',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of class_with_product
 -- ----------------------------
-INSERT INTO `class_with_product` VALUES ('17', '31', '11');
-INSERT INTO `class_with_product` VALUES ('18', '32', '12');
-INSERT INTO `class_with_product` VALUES ('19', '33', '13');
-INSERT INTO `class_with_product` VALUES ('20', '34', '20');
-INSERT INTO `class_with_product` VALUES ('21', '35', '11');
-INSERT INTO `class_with_product` VALUES ('22', '36', '12');
-INSERT INTO `class_with_product` VALUES ('23', '37', '13');
-INSERT INTO `class_with_product` VALUES ('24', '38', '14');
+INSERT INTO `class_with_product` VALUES ('25', '39', '11');
+INSERT INTO `class_with_product` VALUES ('26', '40', '56');
+INSERT INTO `class_with_product` VALUES ('27', '41', '56');
+INSERT INTO `class_with_product` VALUES ('28', '42', '11');
+INSERT INTO `class_with_product` VALUES ('29', '43', '21');
+INSERT INTO `class_with_product` VALUES ('30', '44', '29');
 
 -- ----------------------------
 -- Table structure for collect
@@ -66,13 +64,12 @@ CREATE TABLE `collect` (
   `seller_id` int(20) DEFAULT NULL,
   `product_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of collect
 -- ----------------------------
-INSERT INTO `collect` VALUES ('1', '33', '21', '31');
-INSERT INTO `collect` VALUES ('2', '33', null, '33');
+INSERT INTO `collect` VALUES ('5', '33', null, null);
 
 -- ----------------------------
 -- Table structure for product_img
@@ -83,24 +80,35 @@ CREATE TABLE `product_img` (
   `product_id` int(20) DEFAULT NULL,
   `image` varchar(500) DEFAULT NULL,
   `is_cover` int(20) DEFAULT '0' COMMENT '是否封面',
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `product_id` (`product_id`) USING BTREE,
   CONSTRAINT `product_img_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of product_img
 -- ----------------------------
-INSERT INTO `product_img` VALUES ('57', '31', '28dcdf43-ab8f-4383-b88d-15e3f74f87d6.png', '1');
-INSERT INTO `product_img` VALUES ('58', '31', '513e34dc-e583-434d-92a9-ea39094219bc.png', '0');
-INSERT INTO `product_img` VALUES ('59', '32', '128d76d2-0e8d-4620-8fcb-f6dac93499fb.png', '1');
-INSERT INTO `product_img` VALUES ('60', '32', '30e2f89a-91e6-4e40-aa6b-591594e04f91.png', '0');
-INSERT INTO `product_img` VALUES ('61', '33', '38a882d5-8660-4d0f-bd1f-0b8c53e653b9.png', '0');
-INSERT INTO `product_img` VALUES ('62', '33', 'a194cd72-ae2e-4ad9-8cf7-036d6a410536.png', '1');
-INSERT INTO `product_img` VALUES ('63', '34', 'd88c1aab-ac29-41f9-96ee-42255af184fb.jpg', '0');
-INSERT INTO `product_img` VALUES ('64', '34', 'e5a866a3-0bba-4ea8-9855-2e127b4856c2.png', '1');
-INSERT INTO `product_img` VALUES ('65', '35', '58f324f5-1018-4338-a2ca-675dbe682c13.png', '1');
-INSERT INTO `product_img` VALUES ('66', '35', '63c122e6-d9a9-4cb6-8a3b-df01735604a5.png', '0');
+INSERT INTO `product_img` VALUES ('67', '39', '5f686614-7571-45ce-a4ca-07f66c366b4d.png', '1');
+INSERT INTO `product_img` VALUES ('68', '39', 'd8b5bb6d-6f7e-4104-9aba-1842ed069cef.jpg', '0');
+INSERT INTO `product_img` VALUES ('69', '40', 'c98c001e-d0c5-4fbb-bd6e-0852c8823eaa.jpg', '1');
+INSERT INTO `product_img` VALUES ('70', '40', '274fff63-f7d6-4d35-be03-95c16e25ab3e.jpg', '0');
+INSERT INTO `product_img` VALUES ('71', '40', '3508f5f6-a983-45fc-af5a-3feb6fdf1c2f.jpg', '0');
+INSERT INTO `product_img` VALUES ('72', '40', '2ed0790a-af2d-4fb1-b867-dbabbdea314f.jpg', '0');
+INSERT INTO `product_img` VALUES ('73', '41', '8a4c7bc4-3781-4093-92e0-fb37b23d2c9b.jpg', '1');
+INSERT INTO `product_img` VALUES ('74', '41', '947664d7-911a-46bc-97a0-427de0bac2d6.jpg', '0');
+INSERT INTO `product_img` VALUES ('75', '41', '4202da3f-7dfe-4eaf-a4df-5ab94b9502db.jpg', '0');
+INSERT INTO `product_img` VALUES ('76', '41', 'daa88041-8270-4b42-9284-0f09c4a7beb6.jpg', '0');
+INSERT INTO `product_img` VALUES ('77', '42', 'be468e87-bc46-49c4-b42b-2efd94d6c31a.jpg', '1');
+INSERT INTO `product_img` VALUES ('78', '42', '02cd8b9a-2c35-4040-b70f-9afc29cd8b44.jpg', '0');
+INSERT INTO `product_img` VALUES ('79', '42', 'f563f1d8-665a-4fcc-af8a-0fcfaa7e33de.jpg', '0');
+INSERT INTO `product_img` VALUES ('80', '42', 'e426c9ee-39f4-4820-a825-ebd1ce8568f7.jpg', '0');
+INSERT INTO `product_img` VALUES ('81', '43', '5131915f-a871-4156-ae2a-465ed734dbbb.jpg', '1');
+INSERT INTO `product_img` VALUES ('82', '43', '60d0e115-0d90-4b85-9aa2-10fd03349b7d.jpg', '0');
+INSERT INTO `product_img` VALUES ('83', '43', '5fa21393-3eef-4d64-a2a3-08f8c3853359.jpg', '0');
+INSERT INTO `product_img` VALUES ('84', '43', 'c370eb20-1ddc-4375-8181-246749988f4a.jpg', '0');
+INSERT INTO `product_img` VALUES ('85', '44', '5908c4e5-fa90-4fb8-b71f-b4487320e794.jpg', '0');
+INSERT INTO `product_img` VALUES ('86', '44', '35d45cbf-39f8-4e15-8fa5-0fc6b654fea0.jpg', '1');
+INSERT INTO `product_img` VALUES ('87', '44', 'd7583e13-b902-49e3-9846-5c2ddb000299.jpg', '0');
 
 -- ----------------------------
 -- Table structure for product_item
@@ -124,19 +132,17 @@ CREATE TABLE `product_item` (
   KEY `status` (`status`) USING BTREE,
   KEY `updated` (`updated`) USING BTREE,
   CONSTRAINT `product_item_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_classify` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='商品表';
 
 -- ----------------------------
 -- Records of product_item
 -- ----------------------------
-INSERT INTO `product_item` VALUES ('31', '商家1的商品1', null, '22.00', '22.00', '1', '22', '11', '1', '2019-02-16 10:36:40', '2019-02-16 10:36:40', '0');
-INSERT INTO `product_item` VALUES ('32', '商家1的商品2', null, '22.00', null, '0', '22', '12', '1', '2019-02-16 10:37:22', '2019-02-16 10:37:22', '0');
-INSERT INTO `product_item` VALUES ('33', '商家1的商品3', null, '33.00', null, '0', '33', '13', '1', '2019-02-16 10:38:41', '2019-02-16 10:38:41', '0');
-INSERT INTO `product_item` VALUES ('34', '商家1的商品4', null, '44.00', '33.00', '1', '44', '20', '1', '2019-02-16 10:39:15', '2019-02-16 10:39:15', '0');
-INSERT INTO `product_item` VALUES ('35', '商家2的商品1', null, '22.00', '22.00', '1', '321', '11', '1', '2019-02-16 11:09:51', '2019-02-16 11:09:51', '0');
-INSERT INTO `product_item` VALUES ('36', '商家2的商品1', null, '22.00', '22.00', '1', '321', '12', '1', '2019-02-16 11:10:52', '2019-02-16 11:10:52', '0');
-INSERT INTO `product_item` VALUES ('37', '商家2的商品3', null, '22.00', '22.00', '1', '321', '13', '1', '2019-02-16 11:11:14', '2019-02-16 11:11:14', '0');
-INSERT INTO `product_item` VALUES ('38', '商家2的商品4', null, '22.00', '22.00', '1', '321', '14', '1', '2019-02-16 11:11:20', '2019-02-16 11:11:20', '0');
+INSERT INTO `product_item` VALUES ('39', '外套男士春秋季2019新款韩版潮流春装潮牌上衣服', null, '128.00', '118.00', '1', '22', '11', '1', '2019-02-16 20:04:12', '2019-02-16 20:04:12', '0');
+INSERT INTO `product_item` VALUES ('40', 'VIVO X21 全屏幕指纹 vivox21 手机', null, '1770.00', '1700.00', '1', '10', '56', '0', '2019-02-18 15:37:13', '2019-02-18 15:37:13', '0');
+INSERT INTO `product_item` VALUES ('41', 'VIVO X21 全屏幕指纹 vivox21 手机', null, '1790.00', '1680.00', '1', '100', '56', '1', '2019-02-18 15:43:47', '2019-02-18 15:43:47', '0');
+INSERT INTO `product_item` VALUES ('42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', null, '35.00', '29.00', '1', '50', '11', '0', '2019-02-18 15:52:21', '2019-02-18 15:52:21', '0');
+INSERT INTO `product_item` VALUES ('43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', null, '35.00', '29.00', '1', '50', '21', '1', '2019-02-18 15:55:23', '2019-02-18 15:55:23', '0');
+INSERT INTO `product_item` VALUES ('44', '苏泊尔5L双胆智能电压力锅家用高压锅电饭煲全自动官', null, '268.00', '240.00', '1', '50', '29', '1', '2019-02-18 16:04:30', '2019-02-18 16:04:30', '0');
 
 -- ----------------------------
 -- Table structure for seller
@@ -149,16 +155,16 @@ CREATE TABLE `seller` (
   `user_id` int(20) DEFAULT NULL COMMENT '用户id',
   `seller_class` varchar(225) COLLATE utf8_bin DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `user_id` (`user_id`),
-  KEY `title_name` (`title_name`),
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `title_name` (`title_name`) USING BTREE,
   CONSTRAINT `seller_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of seller
 -- ----------------------------
-INSERT INTO `seller` VALUES ('21', '1', '1', '33', '连锁超市');
-INSERT INTO `seller` VALUES ('22', '2', '2', '34', '便利店');
+INSERT INTO `seller` VALUES ('24', '18718212688', '几何符号旗舰店', '35', '连锁超市');
+INSERT INTO `seller` VALUES ('25', '13763012343', '七彩人生', '36', '服饰其他');
 
 -- ----------------------------
 -- Table structure for seller_address
@@ -170,15 +176,15 @@ CREATE TABLE `seller_address` (
   `seller_id` int(20) DEFAULT NULL COMMENT '商家id',
   `seller_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '店长名字',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `seller_id` (`seller_id`),
+  KEY `seller_id` (`seller_id`) USING BTREE,
   CONSTRAINT `seller_address_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of seller_address
 -- ----------------------------
-INSERT INTO `seller_address` VALUES ('27', '1', '21', '1');
-INSERT INTO `seller_address` VALUES ('28', '2', '22', '2');
+INSERT INTO `seller_address` VALUES ('30', '湛江市海田路65号', '24', '李生');
+INSERT INTO `seller_address` VALUES ('31', '湛江市赤坎区', '25', '13149988');
 
 -- ----------------------------
 -- Table structure for seller_bcimg
@@ -190,15 +196,15 @@ CREATE TABLE `seller_bcimg` (
   `user_id` int(20) DEFAULT NULL COMMENT '用户id',
   `seller_id` int(20) DEFAULT NULL COMMENT '商家id',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `seller_id` (`seller_id`),
+  KEY `seller_id` (`seller_id`) USING BTREE,
   CONSTRAINT `seller_bcimg_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of seller_bcimg
 -- ----------------------------
-INSERT INTO `seller_bcimg` VALUES ('19', '19e3e5b8-5e56-473a-854e-fcf3d7ef97ce.jpg', '33', '21');
-INSERT INTO `seller_bcimg` VALUES ('20', '3f4df1dd-d218-4a28-b3c9-d5af40d5bfd0.png', '34', '22');
+INSERT INTO `seller_bcimg` VALUES ('21', 'e42079d4-3784-4304-a555-fa4cc2b1318a.jpg', '35', '24');
+INSERT INTO `seller_bcimg` VALUES ('22', '7d9d2ec1-07cf-4649-9c01-a7b65e1e042c.jpg', '36', '25');
 
 -- ----------------------------
 -- Table structure for seller_with_product_img
@@ -208,22 +214,20 @@ CREATE TABLE `seller_with_product_img` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `seller_id` int(20) DEFAULT NULL,
   `product_id` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `seller_id` (`seller_id`),
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `seller_id` (`seller_id`) USING BTREE,
   CONSTRAINT `seller_with_product_img_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of seller_with_product_img
 -- ----------------------------
-INSERT INTO `seller_with_product_img` VALUES ('17', '21', '31');
-INSERT INTO `seller_with_product_img` VALUES ('18', '21', '32');
-INSERT INTO `seller_with_product_img` VALUES ('19', '21', '33');
-INSERT INTO `seller_with_product_img` VALUES ('20', '21', '34');
-INSERT INTO `seller_with_product_img` VALUES ('21', '22', '35');
-INSERT INTO `seller_with_product_img` VALUES ('22', '22', '36');
-INSERT INTO `seller_with_product_img` VALUES ('23', '22', '37');
-INSERT INTO `seller_with_product_img` VALUES ('24', '22', '38');
+INSERT INTO `seller_with_product_img` VALUES ('25', '24', '39');
+INSERT INTO `seller_with_product_img` VALUES ('26', '25', '40');
+INSERT INTO `seller_with_product_img` VALUES ('27', '25', '41');
+INSERT INTO `seller_with_product_img` VALUES ('28', '25', '42');
+INSERT INTO `seller_with_product_img` VALUES ('29', '25', '43');
+INSERT INTO `seller_with_product_img` VALUES ('30', '25', '44');
 
 -- ----------------------------
 -- Table structure for shop_classify
@@ -239,7 +243,7 @@ CREATE TABLE `shop_classify` (
   PRIMARY KEY (`class_id`) USING BTREE,
   KEY `fk_id` (`class_key`) USING BTREE,
   CONSTRAINT `fk_id` FOREIGN KEY (`class_key`) REFERENCES `shop_classify` (`class_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT COMMENT='分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT COMMENT='分类表';
 
 -- ----------------------------
 -- Records of shop_classify
@@ -317,6 +321,7 @@ INSERT INTO `shop_classify` VALUES ('70', '水乳面霜', '9', '2', '1', null);
 INSERT INTO `shop_classify` VALUES ('71', '护手霜', '9', '2', '1', null);
 INSERT INTO `shop_classify` VALUES ('72', '个人洗护', '9', '2', '1', null);
 INSERT INTO `shop_classify` VALUES ('73', '美妆工具', '9', '2', '1', null);
+INSERT INTO `shop_classify` VALUES ('74', '手机', '6', '2', '0', 'shouji.png');
 
 -- ----------------------------
 -- Table structure for shop_order
@@ -335,8 +340,8 @@ user_id` int(11) DEFAULT NULL COMMENT '用户Id',
   `seller_name` varchar(225) DEFAULT NULL,
   `total_money` decimal(12,2) DEFAULT NULL COMMENT '总金额',
   `mark` varchar(225) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of shop_order
@@ -358,8 +363,8 @@ CREATE TABLE `shop_order_goods` (
   `go_num` int(11) DEFAULT NULL COMMENT '购买数量',
   `total_price` decimal(12,2) DEFAULT NULL COMMENT '总价',
   `order_id` int(11) DEFAULT NULL COMMENT '订单表id',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of shop_order_goods
@@ -383,13 +388,19 @@ CREATE TABLE `user` (
   `apply_money` decimal(50,0) DEFAULT '0' COMMENT '申请金额',
   `applied_mark` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '申请后返回备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('33', '1', 'c4ca4238a0b923820dcc509a6f75849b', '0', '1', '1', '0', '0', '1', '1', '0', '');
 INSERT INTO `user` VALUES ('34', '2', 'c81e728d9d4c2f636f067f89cc14862c', '0', '1', '2', '0', '0', '0', '1', '0', '');
+INSERT INTO `user` VALUES ('35', '李生', '202cb962ac59075b964b07152d234b70', '0', '1', '18718212688', '0', '0', '1', '1', '0', '');
+INSERT INTO `user` VALUES ('36', '13149988', '12413116f0327ab857ceb2b9dcf7580e', '0', '1', '13763012343', '0', '0', '1', '1', '0', '');
+INSERT INTO `user` VALUES ('37', '8058', 'f54c77d59132ac26a4fb7e8e611d1dd3', '0', '0', '18520081873', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('38', '19860729', '7c7f6cd41099e91abdc5a89ba3a3687a', '0', '0', '18218870150', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('39', '720108', '629ddea77ebb0009363816cf35cbc3f9', '0', '0', '15113611112', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('40', '1823810554', '4a6ea9d394695e30110f0ba9f75822a3', '0', '0', '15768862291', '0', '0', '0', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for version
@@ -401,18 +412,31 @@ CREATE TABLE `version` (
   `product_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '商品名字',
   `version_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '型号名字',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `product_id` (`product_id`),
+  KEY `product_id` (`product_id`) USING BTREE,
   CONSTRAINT `version_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of version
 -- ----------------------------
-INSERT INTO `version` VALUES ('41', '31', '商家1的商品1', '122');
-INSERT INTO `version` VALUES ('42', '32', '商家1的商品2', '22');
-INSERT INTO `version` VALUES ('43', '33', '商家1的商品3', '33');
-INSERT INTO `version` VALUES ('44', '34', '商家1的商品4', '44');
-INSERT INTO `version` VALUES ('45', '35', '商家2的商品1', '22');
-INSERT INTO `version` VALUES ('46', '36', '商家2的商品1', '22');
-INSERT INTO `version` VALUES ('47', '37', '商家2的商品3', '22');
-INSERT INTO `version` VALUES ('48', '38', '商家2的商品4', '22');
+INSERT INTO `version` VALUES ('49', '39', '外套男士春秋季2019新款韩版潮流春装潮牌上衣服', 'M');
+INSERT INTO `version` VALUES ('50', '39', '外套男士春秋季2019新款韩版潮流春装潮牌上衣服', 'L');
+INSERT INTO `version` VALUES ('51', '40', 'VIVO X21 全屏幕指纹 vivox21 手机', '6+128G');
+INSERT INTO `version` VALUES ('52', '40', 'VIVO X21 全屏幕指纹 vivox21 手机', '6+64G');
+INSERT INTO `version` VALUES ('53', '41', 'VIVO X21 全屏幕指纹 vivox21 手机', '6+64G');
+INSERT INTO `version` VALUES ('54', '41', 'VIVO X21 全屏幕指纹 vivox21 手机', '6+128G');
+INSERT INTO `version` VALUES ('55', '42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', 'H07白黑');
+INSERT INTO `version` VALUES ('56', '42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '39');
+INSERT INTO `version` VALUES ('57', '42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '40');
+INSERT INTO `version` VALUES ('58', '42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '41');
+INSERT INTO `version` VALUES ('59', '42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '42');
+INSERT INTO `version` VALUES ('60', '42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '');
+INSERT INTO `version` VALUES ('61', '42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '43');
+INSERT INTO `version` VALUES ('62', '43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', 'H07');
+INSERT INTO `version` VALUES ('63', '43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '39');
+INSERT INTO `version` VALUES ('64', '43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '40');
+INSERT INTO `version` VALUES ('65', '43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '41');
+INSERT INTO `version` VALUES ('66', '43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '42');
+INSERT INTO `version` VALUES ('67', '43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '43');
+INSERT INTO `version` VALUES ('68', '44', '苏泊尔5L双胆智能电压力锅家用高压锅电饭煲全自动官', '5L');
+INSERT INTO `version` VALUES ('69', '44', '苏泊尔5L双胆智能电压力锅家用高压锅电饭煲全自动官', 'CYSB50YCWI');

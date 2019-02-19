@@ -38,6 +38,7 @@
         select c.product_id
         from collect c
         where user_id = #{userid}
+        AND seller_id = null
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select

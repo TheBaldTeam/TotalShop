@@ -39,8 +39,17 @@ public class ProductController {
     private ShopService shopService;
     @Autowired
     private CollectService collectService;
+    @Autowired
+    private SellerService sellerService;
 
-
+    //通过sellerid查询商家所有上架商品+图片
+    @RequestMapping("/selectPdBySellerid")
+    public List<Seller> selectSellerDetail(Integer sellerid,Integer operation) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("sellerid", sellerid);
+        map.put("operation", operation);
+        return sellerService.selectSellerDetail(map);
+    }
 
     //通过seller查询已上架商品
     @RequestMapping("/selectFromSeller")

@@ -351,6 +351,7 @@
         p.is_group,
         p.group_price,
         p.price,
+        p.sales_volume,
         s.title_name,
         s.id sellerid,
         pimg.image

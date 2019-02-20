@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SellerServiceImple implements SellerService {
@@ -83,5 +84,10 @@ public class SellerServiceImple implements SellerService {
     @Override
     public List<Seller> selectAll() {
         return sellerMapper.selectAll();
+    }
+
+    @Override
+    public List<Seller> selectSellerDetail(Map<String, Object> map) {
+        return sellerMapper.selectSellerDetail(map);
     }
 }

@@ -4,6 +4,7 @@ import com.entity.Product;
 import com.entity.Seller;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SellerMapper {
     int deleteByPrimaryKey(Integer id);
@@ -37,4 +38,7 @@ public interface SellerMapper {
 
     //查询所有
     List<Seller> selectAll();
+
+    //查询商家所有上架商品+图片
+    List<Seller> selectSellerDetail(Map<String, Object> map);
 }

@@ -1,10 +1,7 @@
 package com.controller;
 
 import com.dao.FileOperation;
-import com.entity.Seller;
-import com.entity.SellerAddress;
-import com.entity.SellerBcImg;
-import com.entity.User;
+import com.entity.*;
 import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +32,9 @@ public class SellerController {
     private SellerAddressService sellerAddressService;
     @Autowired(required = false)
     private CollectService collectService;
+    @Autowired(required = false)
+    private SellerVisitService sellerVisitService;
+
 
     //提交入驻申请
     @RequestMapping(value = "/applyforSeller")
@@ -107,13 +107,13 @@ public class SellerController {
     }
 
     @RequestMapping("/isSeller")
-    public Map checkIsSeller(Integer userid){
+    public Map checkIsSeller(Integer userid) {
         Map<String, Object> map = new HashMap<>();
         User user = userService.selectByPrimaryKey(userid);
         Seller seller = sellerService.selectByUserid(userid);
-        if (seller==null){
-            map.put("info",-1);
-        }else{
+        if (seller == null) {
+            map.put("info", -1);
+        } else {
             map.put("isSeller", user.getIsSeller());
             map.put("sellerId", seller.getId());
         }
@@ -122,7 +122,7 @@ public class SellerController {
 
     //显示店铺分类+每个店铺热销前三
     @RequestMapping("/selectSellerClass")
-    public List<Seller> selectSellerClass(String sellerClass){
+    public List<Seller> selectSellerClass(String sellerClass) {
         //拿到此类别的所有商户
         List<Seller> sellerList = sellerService.selectSellerFromSellerClass(sellerClass);
         //遍历商户id并分别查询热销前三
@@ -130,7 +130,7 @@ public class SellerController {
         for (Seller sellerTemp : sellerList) {
             Integer sellerid = sellerTemp.getId();
             List<Seller> sellerAndProductList = sellerService.selectSellerTopThree(sellerid);
-            if(!(sellerAndProductList.isEmpty())){
+            if (!(sellerAndProductList.isEmpty())) {
                 finalList.add(sellerAndProductList);
             }
         }
@@ -138,27 +138,42 @@ public class SellerController {
     }
 
     @RequestMapping("/selectAllSeller")
-    public List<Seller> selectAllSeller(){
+    public List<Seller> selectAllSeller() {
         List<Seller> sellerList = sellerService.selectAll();
         List finalList = new ArrayList();
-        for (Seller sellerTemp: sellerList) {
+        for (Seller sellerTemp : sellerList) {
             Integer sellerid = sellerTemp.getId();
             List<Seller> sellerAndProductList = sellerService.selectSellerTopThree(sellerid);
-            if(!(sellerAndProductList.isEmpty())){
+            if (!(sellerAndProductList.isEmpty())) {
                 finalList.add(sellerAndProductList);
             }
         }
         return finalList;
     }
 
-    //通过sellerid查询商家详情信息
-    @RequestMapping("/selectSellerDetail")
-    public Map selectSellerDetail(Integer sellerid){
-        Map<String, Object> map = new HashMap<>();
-        map.put("sellerDetail", sellerService.selectSellerTopNine(sellerid));
-        map.put("collectNum", collectService.selectBySellerId(sellerid));
-        return map;
+
+
+    //新增访问人数
+    @RequestMapping("/addVisitNum")
+    public Integer addVisitNum(@RequestParam(required = false) Integer sellerid, @RequestParam(required = false) Integer productid) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("productid", productid);
+        map.put("sellerid", sellerid);
+        int isOk = sellerVisitService.insertVistNum(map);
+        if (isOk > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
+
+    //查询访客人数
+    @RequestMapping("/getVisitNum")
+    public Long getVisitNum(Integer sellerid){
+        SellerVisit sellerVisit = sellerVisitService.selectBySellerid(sellerid);
+        return sellerVisit.getVisitNum();
+    }
+
 
 
 }

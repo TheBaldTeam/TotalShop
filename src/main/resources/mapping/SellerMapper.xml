@@ -75,10 +75,41 @@
 
 
     <!--通过sellerClass查找商家-->
-    <select id="selectSellerFromSellerClass" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectSellerFromSellerClass" resultMap="WithAddressImg" parameterType="java.lang.String">
         select *
         from seller
+        inner join seller_address a on seller.id = a.seller_id
         where seller_class = #{sellerClass}
+          AND a.address like "%湛江市%"
+    </select>
+
+    <!--查该商家的所有上架中的商品+封面图-->
+    <select id="selectSellerDetail" resultMap="WithProductAndPimg" parameterType="map">
+        SELECT s.*, p.id pid, p.*, img.image
+        FROM (
+                     (
+                             seller_with_product_img swp
+                                     INNER JOIN seller s ON s.id = swp.seller_id
+                             )
+                             INNER JOIN product_item p ON p.id = swp.product_id
+                     )
+                 INNER JOIN product_img img ON img.product_id = swp.product_id
+        WHERE s.id = #{sellerid}
+          AND img.is_cover = 1
+          AND p.status = 1
+        <if test="operation == 1">
+            ORDER BY p.title, p.price ASC ,
+            p.sales_volume DESC
+        </if>
+        <if test="operation == 2">
+            ORDER BY p.sales_volume DESC
+        </if>
+        <if test="operation == 3">
+            ORDER BY p.price, p.group_price ASC
+        </if>
+        <if test="operation == 4">
+            ORDER BY p.id DESC
+        </if>
     </select>
 
     <!--根据商家id查找旗下前三热销商品-->
@@ -121,7 +152,8 @@
 
     <!--查询所有商家-->
     <select id="selectAll" resultMap="BaseResultMap">
-        select * from seller
+        select *
+        from seller
     </select>
 
     <!--查询未审批商户详情信息-->

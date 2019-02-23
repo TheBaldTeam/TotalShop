@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-19 15:40:55
+Date: 2019-02-23 11:07:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,7 +42,7 @@ CREATE TABLE `class_with_product` (
   `product_id` int(20) DEFAULT NULL,
   `level2_class_id` int(20) DEFAULT NULL COMMENT '二级目录id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of class_with_product
@@ -53,6 +53,7 @@ INSERT INTO `class_with_product` VALUES ('27', '41', '56');
 INSERT INTO `class_with_product` VALUES ('28', '42', '11');
 INSERT INTO `class_with_product` VALUES ('29', '43', '21');
 INSERT INTO `class_with_product` VALUES ('30', '44', '29');
+INSERT INTO `class_with_product` VALUES ('31', '45', '11');
 
 -- ----------------------------
 -- Table structure for collect
@@ -83,7 +84,7 @@ CREATE TABLE `product_img` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `product_id` (`product_id`) USING BTREE,
   CONSTRAINT `product_img_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of product_img
@@ -109,6 +110,8 @@ INSERT INTO `product_img` VALUES ('84', '43', 'c370eb20-1ddc-4375-8181-246749988
 INSERT INTO `product_img` VALUES ('85', '44', '5908c4e5-fa90-4fb8-b71f-b4487320e794.jpg', '0');
 INSERT INTO `product_img` VALUES ('86', '44', '35d45cbf-39f8-4e15-8fa5-0fc6b654fea0.jpg', '1');
 INSERT INTO `product_img` VALUES ('87', '44', 'd7583e13-b902-49e3-9846-5c2ddb000299.jpg', '0');
+INSERT INTO `product_img` VALUES ('88', '45', '54bfca1d-a25b-43ba-b3dd-744eb2cb963e.png', '1');
+INSERT INTO `product_img` VALUES ('89', '45', '2169b3a7-8f93-41f1-9e41-16777bfe7a87.png', '0');
 
 -- ----------------------------
 -- Table structure for product_item
@@ -132,7 +135,7 @@ CREATE TABLE `product_item` (
   KEY `status` (`status`) USING BTREE,
   KEY `updated` (`updated`) USING BTREE,
   CONSTRAINT `product_item_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_classify` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='商品表';
 
 -- ----------------------------
 -- Records of product_item
@@ -143,6 +146,7 @@ INSERT INTO `product_item` VALUES ('41', 'VIVO X21 全屏幕指纹 vivox21 手�
 INSERT INTO `product_item` VALUES ('42', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', null, '35.00', '29.00', '1', '50', '11', '0', '2019-02-18 15:52:21', '2019-02-18 15:52:21', '0');
 INSERT INTO `product_item` VALUES ('43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', null, '35.00', '29.00', '1', '50', '21', '1', '2019-02-18 15:55:23', '2019-02-18 15:55:23', '0');
 INSERT INTO `product_item` VALUES ('44', '苏泊尔5L双胆智能电压力锅家用高压锅电饭煲全自动官', null, '268.00', '240.00', '1', '50', '29', '1', '2019-02-18 16:04:30', '2019-02-18 16:04:30', '0');
+INSERT INTO `product_item` VALUES ('45', '测试商品', null, '20.90', '10.99', '1', '22', '11', '1', '2019-02-21 16:13:14', '2019-02-21 16:13:14', '0');
 
 -- ----------------------------
 -- Table structure for seller
@@ -207,6 +211,23 @@ INSERT INTO `seller_bcimg` VALUES ('21', 'e42079d4-3784-4304-a555-fa4cc2b1318a.j
 INSERT INTO `seller_bcimg` VALUES ('22', '7d9d2ec1-07cf-4649-9c01-a7b65e1e042c.jpg', '36', '25');
 
 -- ----------------------------
+-- Table structure for seller_visit
+-- ----------------------------
+DROP TABLE IF EXISTS `seller_visit`;
+CREATE TABLE `seller_visit` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `seller_id` int(20) DEFAULT NULL,
+  `visit_num` bigint(50) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of seller_visit
+-- ----------------------------
+INSERT INTO `seller_visit` VALUES ('1', '24', '0');
+INSERT INTO `seller_visit` VALUES ('3', '25', '0');
+
+-- ----------------------------
 -- Table structure for seller_with_product_img
 -- ----------------------------
 DROP TABLE IF EXISTS `seller_with_product_img`;
@@ -217,7 +238,7 @@ CREATE TABLE `seller_with_product_img` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `seller_id` (`seller_id`) USING BTREE,
   CONSTRAINT `seller_with_product_img_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of seller_with_product_img
@@ -228,6 +249,7 @@ INSERT INTO `seller_with_product_img` VALUES ('27', '25', '41');
 INSERT INTO `seller_with_product_img` VALUES ('28', '25', '42');
 INSERT INTO `seller_with_product_img` VALUES ('29', '25', '43');
 INSERT INTO `seller_with_product_img` VALUES ('30', '25', '44');
+INSERT INTO `seller_with_product_img` VALUES ('31', '24', '45');
 
 -- ----------------------------
 -- Table structure for shop_classify
@@ -329,7 +351,7 @@ INSERT INTO `shop_classify` VALUES ('74', '手机', '6', '2', '0', 'shouji.png')
 DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE `shop_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_sn` varchar(50) DEFAULT NULL COMMENT '订单编号',
+  `order_sn` varchar(225) DEFAULT NULL COMMENT '订单编号',
   `add_time` datetime DEFAULT NULL COMMENT '添加时间',
   `user_name` varchar(50) DEFAULT NULL COMMENT '用户名',
   `user_address` varchar(200) DEFAULT NULL COMMENT '用户地址',
@@ -339,6 +361,7 @@ user_id` int(11) DEFAULT NULL COMMENT '用户Id',
   `seller_id` int(11) DEFAULT NULL,
   `seller_name` varchar(225) DEFAULT NULL,
   `total_money` decimal(12,2) DEFAULT NULL COMMENT '总金额',
+  `order_status` int(20) DEFAULT '0' COMMENT '0为待支付，1为支付成功',
   `mark` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -414,7 +437,7 @@ CREATE TABLE `version` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `product_id` (`product_id`) USING BTREE,
   CONSTRAINT `version_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of version
@@ -440,3 +463,4 @@ INSERT INTO `version` VALUES ('66', '43', '2019新款鞋子男韩版潮流小白
 INSERT INTO `version` VALUES ('67', '43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', '43');
 INSERT INTO `version` VALUES ('68', '44', '苏泊尔5L双胆智能电压力锅家用高压锅电饭煲全自动官', '5L');
 INSERT INTO `version` VALUES ('69', '44', '苏泊尔5L双胆智能电压力锅家用高压锅电饭煲全自动官', 'CYSB50YCWI');
+INSERT INTO `version` VALUES ('70', '45', '测试商品', '22');

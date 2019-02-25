@@ -8,6 +8,8 @@ public class ShopOrder {
 
     private String orderSn;
 
+    private String expressSn;
+
     private Date addTime;
 
     private String userName;
@@ -16,8 +18,7 @@ public class ShopOrder {
 
     private Long tel;
 
-    private Integer
-            userId;
+    private Integer userId;
 
     private Integer sellerId;
 
@@ -43,6 +44,14 @@ public class ShopOrder {
 
     public void setOrderSn(String orderSn) {
         this.orderSn = orderSn == null ? null : orderSn.trim();
+    }
+
+    public String getExpressSn() {
+        return expressSn;
+    }
+
+    public void setExpressSn(String expressSn) {
+        this.expressSn = expressSn == null ? null : expressSn.trim();
     }
 
     public Date getAddTime() {

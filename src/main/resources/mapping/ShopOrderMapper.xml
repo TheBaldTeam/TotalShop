@@ -14,12 +14,13 @@ userId" jdbcType="INTEGER" />
     <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
     <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
     <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
     <result column="mark" property="mark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_sn, add_time, user_name, user_address, tel, 
 user_id, seller_id, seller_name, 
-    total_money, mark
+    total_money, order_status, mark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -36,12 +37,14 @@ user_id, seller_id, seller_name,
       user_name, user_address, tel, 
       
 user_id, seller_id, seller_name, 
-      total_money, mark)
+      total_money, order_status, mark
+      )
     values (#{id,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
       #{userName,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, #{tel,jdbcType=BIGINT}, 
       #{
 userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, #{sellerName,jdbcType=VARCHAR}, 
-      #{totalMoney,jdbcType=DECIMAL}, #{mark,jdbcType=VARCHAR})
+      #{totalMoney,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, #{mark,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.ShopOrder" >
     insert into shop_order
@@ -77,6 +80,9 @@ user_id,
       </if>
       <if test="totalMoney != null" >
         total_money,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
       </if>
       <if test="mark != null" >
         mark,
@@ -114,6 +120,9 @@ userId,jdbcType=INTEGER},
       </if>
       <if test="totalMoney != null" >
         #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
       </if>
       <if test="mark != null" >
         #{mark,jdbcType=VARCHAR},
@@ -153,6 +162,9 @@ userId,jdbcType=INTEGER},
       <if test="totalMoney != null" >
         total_money = #{totalMoney,jdbcType=DECIMAL},
       </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
       <if test="mark != null" >
         mark = #{mark,jdbcType=VARCHAR},
       </if>
@@ -172,6 +184,7 @@ userId,jdbcType=INTEGER},
       seller_id = #{sellerId,jdbcType=INTEGER},
       seller_name = #{sellerName,jdbcType=VARCHAR},
       total_money = #{totalMoney,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=INTEGER},
       mark = #{mark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

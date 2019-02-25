@@ -16,13 +16,16 @@ public class ShopOrder {
 
     private Long tel;
 
-    private Integer userId;
+    private Integer
+            userId;
 
     private Integer sellerId;
 
     private String sellerName;
 
     private BigDecimal totalMoney;
+
+    private Integer orderStatus;
 
     private String mark;
 
@@ -104,6 +107,14 @@ public class ShopOrder {
 
     public void setTotalMoney(BigDecimal totalMoney) {
         this.totalMoney = totalMoney;
+    }
+
+    public Integer getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public String getMark() {

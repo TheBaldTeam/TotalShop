@@ -9,9 +9,7 @@
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="BIGINT" />
-    <result column="
-user_id" property="
-userId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
     <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
     <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
@@ -199,4 +197,10 @@ userId,jdbcType=INTEGER},
       mark = #{mark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByOrderSn" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_order
+    where order_sn = #{orderSn,jdbcType=VARCHAR}
+  </select>
 </mapper>

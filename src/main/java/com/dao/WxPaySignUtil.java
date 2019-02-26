@@ -49,7 +49,8 @@ public class WxPaySignUtil {
         String result = sb.toString();
         result += "key=" + PayConfigure.getKey();
         System.out.println("签名数据："+result);
-        result = new Md5Util().md5(result).toUpperCase();
+        result = DigestUtils.md5Hex(result).toUpperCase();
+        System.out.println("签名后数据："+result);
         return result;
 
 	}

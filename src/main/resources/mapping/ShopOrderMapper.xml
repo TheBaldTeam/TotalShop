@@ -17,8 +17,7 @@
     <result column="mark" property="mark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_sn, express_sn, add_time, user_name, user_address, tel, 
-user_id, seller_id, 
+    id, order_sn, express_sn, add_time, user_name, user_address, tel, user_id, seller_id, 
     seller_name, total_money, order_status, mark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -34,14 +33,12 @@ user_id, seller_id,
   <insert id="insert" parameterType="com.entity.ShopOrder" >
     insert into shop_order (id, order_sn, express_sn, 
       add_time, user_name, user_address, 
-      tel, 
-user_id, seller_id, 
+      tel, user_id, seller_id, 
       seller_name, total_money, order_status, 
       mark)
     values (#{id,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{expressSn,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=BIGINT}, #{
-userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, 
+      #{tel,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, 
       #{sellerName,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, 
       #{mark,jdbcType=VARCHAR})
   </insert>
@@ -69,10 +66,8 @@ userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER},
       <if test="tel != null" >
         tel,
       </if>
-      <if test="
-userId != null" >
-        
-user_id,
+      <if test="userId != null" >
+      	user_id,
       </if>
       <if test="sellerId != null" >
         seller_id,
@@ -112,10 +107,8 @@ user_id,
       <if test="tel != null" >
         #{tel,jdbcType=BIGINT},
       </if>
-      <if test="
-userId != null" >
-        #{
-userId,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="sellerId != null" >
         #{sellerId,jdbcType=INTEGER},
@@ -155,11 +148,8 @@ userId,jdbcType=INTEGER},
       <if test="tel != null" >
         tel = #{tel,jdbcType=BIGINT},
       </if>
-      <if test="
-userId != null" >
-        
-user_id = #{
-userId,jdbcType=INTEGER},
+      <if test="userId != null" >
+		user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="sellerId != null" >
         seller_id = #{sellerId,jdbcType=INTEGER},
@@ -187,9 +177,7 @@ userId,jdbcType=INTEGER},
       user_name = #{userName,jdbcType=VARCHAR},
       user_address = #{userAddress,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=BIGINT},
-      
-user_id = #{
-userId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
       seller_id = #{sellerId,jdbcType=INTEGER},
       seller_name = #{sellerName,jdbcType=VARCHAR},
       total_money = #{totalMoney,jdbcType=DECIMAL},

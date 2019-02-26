@@ -36,7 +36,6 @@ public class OrderController {
 	
 	/**
 	 * 统一下单接口
-	 * @param openid
 	 * @return
 	 */
 	@RequestMapping("/vipPay")
@@ -123,7 +122,6 @@ public class OrderController {
 	
 	/**
 	 * 支付成功回调接口
-	 * @param args
 	 */
 	@RequestMapping("/payCallback")
 	public void wxNotify(HttpServletRequest request,HttpServletResponse response) throws Exception{

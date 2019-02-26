@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-23 11:07:30
+Date: 2019-02-26 10:01:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,6 +31,23 @@ CREATE TABLE `address` (
 
 -- ----------------------------
 -- Records of address
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for admin_profit
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_profit`;
+CREATE TABLE `admin_profit` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(225) DEFAULT NULL COMMENT '密码',
+  `shop_percent` double(50,2) DEFAULT NULL COMMENT '平台扣点',
+  `seller_apply_money` decimal(12,2) DEFAULT NULL COMMENT '商家入驻费用',
+  `vip_money` decimal(12,2) DEFAULT NULL COMMENT '会员费用',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_profit
 -- ----------------------------
 
 -- ----------------------------
@@ -352,6 +369,7 @@ DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE `shop_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_sn` varchar(225) DEFAULT NULL COMMENT '订单编号',
+  `express_sn` varchar(225) DEFAULT NULL COMMENT '快递单号',
   `add_time` datetime DEFAULT NULL COMMENT '添加时间',
   `user_name` varchar(50) DEFAULT NULL COMMENT '用户名',
   `user_address` varchar(200) DEFAULT NULL COMMENT '用户地址',
@@ -361,7 +379,7 @@ user_id` int(11) DEFAULT NULL COMMENT '用户Id',
   `seller_id` int(11) DEFAULT NULL,
   `seller_name` varchar(225) DEFAULT NULL,
   `total_money` decimal(12,2) DEFAULT NULL COMMENT '总金额',
-  `order_status` int(20) DEFAULT '0' COMMENT '0为待支付，1为支付成功',
+  `order_status` int(20) DEFAULT '0' COMMENT '0为待支付，1为支付成功，2为待发货，3已发货，',
   `mark` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;

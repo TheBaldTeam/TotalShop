@@ -81,13 +81,13 @@ public class OrderController {
 				long time = System.currentTimeMillis() / 1000;
 				signInfo.setTimeStamp(String.valueOf(time));
 				signInfo.setNonceStr(UUID.randomUUID().toString().trim().replaceAll("-", ""));
-				signInfo.setRepay_id("prepay_id=" + returnInfo.getPrepay_id());
+				signInfo.setPrepay_id("prepay_id=" + returnInfo.getPrepay_id());
 				signInfo.setSignType("MD5");
 				// 生成签名
 				String sign1 = WxPaySignUtil.getSign(signInfo);
 				payInfo.put("timeStamp", signInfo.getTimeStamp());
 				payInfo.put("nonceStr", signInfo.getNonceStr());
-				payInfo.put("package", signInfo.getRepay_id());
+				payInfo.put("package", signInfo.getPrepay_id());
 				payInfo.put("signType", signInfo.getSignType());
 				payInfo.put("paySign", sign1);
 				payInfo.put("status", 200);
@@ -140,19 +140,21 @@ public class OrderController {
         Map map = WxPaySignUtil.doXMLParse(notityXml);
  
         String returnCode = (String) map.get("return_code");
+        System.out.println(map);
         if("SUCCESS".equals(returnCode)){
             //验证签名是否正确
             Map<String, String> validParams = WxPaySignUtil.paraFilter(map);  //回调验签时需要去除sign和空值参数
             String validStr = WxPaySignUtil.createLinkString(validParams);//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
             String sign = WxPaySignUtil.sign(validStr, PayConfigure.getKey(), "utf-8").toUpperCase();//拼装生成服务器端验证的签名
             // 因为微信回调会有八次之多,所以当第一次回调成功了,那么我们就不再执行逻辑了
-           
+            System.out.println("sign="+sign);
             //根据微信官网的介绍，此处不仅对回调的参数进行验签，还需要对返回的金额与系统订单的金额进行比对等
             if(sign.equals(map.get("sign"))){
             	//数据库获取金额
-            	if(1 == (int)map.get("total_fee")) {
+            	if(1 == Integer.valueOf((String) map.get("total_fee"))) {
                 /**此处添加自己的业务逻辑代码start**/
                   // bla bla bla....
+            		System.out.println("此处添加自己的业务逻辑代码start"+(String)map.get("out_trade_no"));
             		Integer upStatus = shopOrderService.setPayStatus((String)map.get("out_trade_no"),1);
             		if(upStatus==1) {
             			//更改状态成功

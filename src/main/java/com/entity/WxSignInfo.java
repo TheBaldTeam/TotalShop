@@ -1,5 +1,7 @@
 package com.entity;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * 签名实体类
  * @author l
@@ -10,8 +12,8 @@ public class WxSignInfo {
 		private String appId;//小程序ID	
 		private String timeStamp;//时间戳	
 		private String nonceStr;//随机串	
-//		@XStreamAlias("package")
-		private String repay_id;//统一下单接口返回的 prepay_id 参数值
+		@XStreamAlias("package")
+		private String prepay_id;//统一下单接口返回的 prepay_id 参数值
 		private String signType;//签名方式
 		
 		public String getAppId() {
@@ -32,11 +34,11 @@ public class WxSignInfo {
 		public void setNonceStr(String nonceStr) {
 			this.nonceStr = nonceStr;
 		}
-		public String getRepay_id() {
-			return repay_id;
+		public String getPrepay_id() {
+			return prepay_id;
 		}
-		public void setRepay_id(String repay_id) {
-			this.repay_id = repay_id;
+		public void setPrepay_id(String prepay_id) {
+			this.prepay_id = prepay_id;
 		}
 		public String getSignType() {
 			return signType;

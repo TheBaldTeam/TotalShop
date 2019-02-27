@@ -374,8 +374,7 @@ CREATE TABLE `shop_order` (
   `user_name` varchar(50) DEFAULT NULL COMMENT '用户名',
   `user_address` varchar(200) DEFAULT NULL COMMENT '用户地址',
   `tel` bigint(50) DEFAULT NULL COMMENT '用户电话',
-  `
-user_id` int(11) DEFAULT NULL COMMENT '用户Id',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户Id',
   `seller_id` int(11) DEFAULT NULL,
   `seller_name` varchar(225) DEFAULT NULL,
   `total_money` decimal(12,2) DEFAULT NULL COMMENT '总金额',

@@ -34,4 +34,7 @@ public interface UserService {
 
     //通过userid查询是否为提交申请用户
     Integer selectUnconfirmByUserId(Integer userid);
+
+    //selectKey
+    Integer selectKey(User record);
 }

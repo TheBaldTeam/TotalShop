@@ -85,4 +85,9 @@ public class UserServiceImple implements UserService {
         }
     }
 
+    @Override
+    public Integer selectKey(User record) {
+        return userMapper.selectKey(record);
+    }
+
 }

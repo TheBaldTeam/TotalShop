@@ -1,14 +1,8 @@
 package com.controller;
 
 import com.dao.FileOperation;
-import com.entity.Address;
-import com.entity.Collect;
-import com.entity.Product;
-import com.entity.User;
-import com.service.AddressService;
-import com.service.CollectService;
-import com.service.ProductService;
-import com.service.UserService;
+import com.entity.*;
+import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +26,8 @@ public class UserController {
     private AddressService addressService;
     @Autowired(required = false)
     private ProductService productService;
+    @Autowired
+    private ReferrerService referrerService;
 
     //用户登录
     @RequestMapping(value = "/login")
@@ -75,15 +71,21 @@ public class UserController {
 
     //用户注册
     @RequestMapping(value = "/registered")
-    public Map registered(User user) {
+    public Map registered(User user, @RequestParam(required = false) Integer referrer_id) {
         Map<String, Object> map = new HashMap<>();
         User userCheck = userService.checkTel(user.getTel());
         if (userCheck != null) {
             map.put("status", "no");
             map.put("info", -9);//电话号码已存在
         } else {
-            int isOk = userService.insertSelective(user);
+            int isOk = userService.selectKey(user);
             if (isOk > 0) {
+                if(referrer_id != null && referrer_id != -1){
+                    Referrer referrer = new Referrer();
+                    referrer.setReferrerId(referrer_id);
+                    referrer.setUserId(user.getId());
+                    referrerService.insertSelective(referrer);
+                }
                 map.put("status", "ok");
                 map.put("info", 1);//1代表注册成功
             } else {
@@ -232,5 +234,15 @@ public class UserController {
         return finalList;
     }
 
+    //查询用户是否为VIP
+    @RequestMapping("/isVip")
+    public Integer isVip(Integer userid){
+        User user = userService.selectByPrimaryKey(userid);
+        if(user.getIsVip() == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 
 }

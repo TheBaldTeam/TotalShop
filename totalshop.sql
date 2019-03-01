@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-02-26 10:01:14
+Date: 2019-03-01 11:26:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,9 +40,14 @@ DROP TABLE IF EXISTS `admin_profit`;
 CREATE TABLE `admin_profit` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `password` varchar(225) DEFAULT NULL COMMENT '密码',
+  `percent_class` varchar(225) DEFAULT NULL COMMENT '扣点类目名',
   `shop_percent` double(50,2) DEFAULT NULL COMMENT '平台扣点',
   `seller_apply_money` decimal(12,2) DEFAULT NULL COMMENT '商家入驻费用',
   `vip_money` decimal(12,2) DEFAULT NULL COMMENT '会员费用',
+  `bonus_pools` decimal(12,2) DEFAULT NULL COMMENT '奖金池金额',
+  `pools_persent` int(20) DEFAULT NULL COMMENT '奖金池百分比',
+  `discount_amount` decimal(12,2) DEFAULT NULL COMMENT '全场优惠金额',
+  `discount_persent` int(20) DEFAULT NULL COMMENT '奖金池百分比',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -88,6 +93,22 @@ CREATE TABLE `collect` (
 -- Records of collect
 -- ----------------------------
 INSERT INTO `collect` VALUES ('5', '33', null, null);
+
+-- ----------------------------
+-- Table structure for product_comment_freight
+-- ----------------------------
+DROP TABLE IF EXISTS `product_comment_freight`;
+CREATE TABLE `product_comment_freight` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `product_id` int(20) DEFAULT NULL,
+  `comment` varchar(500) DEFAULT NULL COMMENT '评论',
+  `freight` decimal(12,2) DEFAULT NULL COMMENT '运费',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product_comment_freight
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for product_img
@@ -164,6 +185,21 @@ INSERT INTO `product_item` VALUES ('42', '2019新款鞋子男韩版潮流小白�
 INSERT INTO `product_item` VALUES ('43', '2019新款鞋子男韩版潮流小白鞋百搭休闲运动潮鞋春', null, '35.00', '29.00', '1', '50', '21', '1', '2019-02-18 15:55:23', '2019-02-18 15:55:23', '0');
 INSERT INTO `product_item` VALUES ('44', '苏泊尔5L双胆智能电压力锅家用高压锅电饭煲全自动官', null, '268.00', '240.00', '1', '50', '29', '1', '2019-02-18 16:04:30', '2019-02-18 16:04:30', '0');
 INSERT INTO `product_item` VALUES ('45', '测试商品', null, '20.90', '10.99', '1', '22', '11', '1', '2019-02-21 16:13:14', '2019-02-21 16:13:14', '0');
+
+-- ----------------------------
+-- Table structure for referrer
+-- ----------------------------
+DROP TABLE IF EXISTS `referrer`;
+CREATE TABLE `referrer` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `user_id` int(20) DEFAULT NULL,
+  `referrer_id` int(20) DEFAULT NULL COMMENT '推荐人id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of referrer
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for seller
@@ -374,12 +410,14 @@ CREATE TABLE `shop_order` (
   `user_name` varchar(50) DEFAULT NULL COMMENT '用户名',
   `user_address` varchar(200) DEFAULT NULL COMMENT '用户地址',
   `tel` bigint(50) DEFAULT NULL COMMENT '用户电话',
-  `user_id` int(11) DEFAULT NULL COMMENT '用户Id',
+  `
+user_id` int(11) DEFAULT NULL COMMENT '用户Id',
   `seller_id` int(11) DEFAULT NULL,
   `seller_name` varchar(225) DEFAULT NULL,
   `total_money` decimal(12,2) DEFAULT NULL COMMENT '总金额',
   `order_status` int(20) DEFAULT '0' COMMENT '0为待支付，1为支付成功，2为待发货，3已发货，',
   `mark` varchar(225) DEFAULT NULL,
+  `is_pick` int(20) DEFAULT NULL COMMENT '1.用户自提 2.快递发货',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -403,6 +441,7 @@ CREATE TABLE `shop_order_goods` (
   `go_num` int(11) DEFAULT NULL COMMENT '购买数量',
   `total_price` decimal(12,2) DEFAULT NULL COMMENT '总价',
   `order_id` int(11) DEFAULT NULL COMMENT '订单表id',
+  `p_version` varchar(225) DEFAULT NULL COMMENT '商品版本',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 

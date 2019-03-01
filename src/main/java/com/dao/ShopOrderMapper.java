@@ -15,6 +15,5 @@ public interface ShopOrderMapper {
 
     int updateByPrimaryKey(ShopOrder record);
 
-	ShopOrder selectByOrderSn(String orderSn);
-	
+    ShopOrder selectByOrderSn(String orderSn);
 }

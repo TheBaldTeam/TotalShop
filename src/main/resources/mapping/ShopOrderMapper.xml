@@ -9,16 +9,20 @@
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="
+user_id" property="
+userId" jdbcType="INTEGER" />
     <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
     <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
     <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
     <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
     <result column="mark" property="mark" jdbcType="VARCHAR" />
+    <result column="is_pick" property="isPick" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_sn, express_sn, add_time, user_name, user_address, tel, user_id, seller_id, 
-    seller_name, total_money, order_status, mark
+    id, order_sn, express_sn, add_time, user_name, user_address, tel, 
+user_id, seller_id, 
+    seller_name, total_money, order_status, mark, is_pick
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -33,14 +37,16 @@
   <insert id="insert" parameterType="com.entity.ShopOrder" >
     insert into shop_order (id, order_sn, express_sn, 
       add_time, user_name, user_address, 
-      tel, user_id, seller_id, 
+      tel, 
+user_id, seller_id, 
       seller_name, total_money, order_status, 
-      mark)
+      mark, is_pick)
     values (#{id,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{expressSn,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, 
+      #{tel,jdbcType=BIGINT}, #{
+userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, 
       #{sellerName,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, 
-      #{mark,jdbcType=VARCHAR})
+      #{mark,jdbcType=VARCHAR}, #{isPick,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.ShopOrder" >
     insert into shop_order
@@ -66,8 +72,10 @@
       <if test="tel != null" >
         tel,
       </if>
-      <if test="userId != null" >
-      	user_id,
+      <if test="
+userId != null" >
+        
+user_id,
       </if>
       <if test="sellerId != null" >
         seller_id,
@@ -83,6 +91,9 @@
       </if>
       <if test="mark != null" >
         mark,
+      </if>
+      <if test="isPick != null" >
+        is_pick,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -107,8 +118,10 @@
       <if test="tel != null" >
         #{tel,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+      <if test="
+userId != null" >
+        #{
+userId,jdbcType=INTEGER},
       </if>
       <if test="sellerId != null" >
         #{sellerId,jdbcType=INTEGER},
@@ -124,6 +137,9 @@
       </if>
       <if test="mark != null" >
         #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="isPick != null" >
+        #{isPick,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -148,8 +164,11 @@
       <if test="tel != null" >
         tel = #{tel,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
-		user_id = #{userId,jdbcType=INTEGER},
+      <if test="
+userId != null" >
+        
+user_id = #{
+userId,jdbcType=INTEGER},
       </if>
       <if test="sellerId != null" >
         seller_id = #{sellerId,jdbcType=INTEGER},
@@ -166,6 +185,9 @@
       <if test="mark != null" >
         mark = #{mark,jdbcType=VARCHAR},
       </if>
+      <if test="isPick != null" >
+        is_pick = #{isPick,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -177,18 +199,15 @@
       user_name = #{userName,jdbcType=VARCHAR},
       user_address = #{userAddress,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=INTEGER},
+      
+user_id = #{
+userId,jdbcType=INTEGER},
       seller_id = #{sellerId,jdbcType=INTEGER},
       seller_name = #{sellerName,jdbcType=VARCHAR},
       total_money = #{totalMoney,jdbcType=DECIMAL},
       order_status = #{orderStatus,jdbcType=INTEGER},
-      mark = #{mark,jdbcType=VARCHAR}
+      mark = #{mark,jdbcType=VARCHAR},
+      is_pick = #{isPick,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByOrderSn" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from shop_order
-    where order_sn = #{orderSn,jdbcType=VARCHAR}
-  </select>
 </mapper>

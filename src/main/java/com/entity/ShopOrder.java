@@ -18,7 +18,8 @@ public class ShopOrder {
 
     private Long tel;
 
-    private Integer userId;
+    private Integer 
+userId;
 
     private Integer sellerId;
 
@@ -29,6 +30,8 @@ public class ShopOrder {
     private Integer orderStatus;
 
     private String mark;
+
+    private Integer isPick;
 
     public Integer getId() {
         return id;
@@ -87,11 +90,15 @@ public class ShopOrder {
     }
 
     public Integer getuserId() {
-        return userId;
+        return 
+userId;
     }
 
-    public void setuserId(Integer userId) {
-        this.userId = userId;
+    public void setuserId(Integer
+userId) {
+        this.
+userId = 
+userId;
     }
 
     public Integer getSellerId() {
@@ -132,5 +139,13 @@ public class ShopOrder {
 
     public void setMark(String mark) {
         this.mark = mark == null ? null : mark.trim();
+    }
+
+    public Integer getIsPick() {
+        return isPick;
+    }
+
+    public void setIsPick(Integer isPick) {
+        this.isPick = isPick;
     }
 }

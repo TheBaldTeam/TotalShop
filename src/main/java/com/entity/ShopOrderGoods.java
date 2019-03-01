@@ -26,6 +26,8 @@ public class ShopOrderGoods {
 
     private Integer orderId;
 
+    private String pVersion;
+
     public Integer getId() {
         return id;
     }
@@ -112,5 +114,13 @@ public class ShopOrderGoods {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public String getpVersion() {
+        return pVersion;
+    }
+
+    public void setpVersion(String pVersion) {
+        this.pVersion = pVersion == null ? null : pVersion.trim();
     }
 }
